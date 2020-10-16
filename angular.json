@@ -159,7 +159,7 @@
         }
       }
     },
-    "manifest": {
+    "fire-alarm": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -190,26 +190,26 @@
           "skipTests": true
         }
       },
-      "root": "client/manifest",
-      "sourceRoot": "client/manifest/src",
+      "root": "client/fire-alarm",
+      "sourceRoot": "client/fire-alarm/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/manifest",
-            "index": "client/manifest/src/index.html",
-            "main": "client/manifest/src/main.ts",
-            "polyfills": "client/manifest/src/polyfills.ts",
-            "tsConfig": "client/manifest/tsconfig.app.json",
+            "outputPath": "dist/fire-alarm",
+            "index": "client/fire-alarm/src/index.html",
+            "main": "client/fire-alarm/src/main.ts",
+            "polyfills": "client/fire-alarm/src/polyfills.ts",
+            "tsConfig": "client/fire-alarm/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "client/manifest/src/favicon.ico",
-              "client/manifest/src/assets",
+              "client/fire-alarm/src/favicon.ico",
+              "client/fire-alarm/src/assets",
               {
                 "glob": "**/*",
                 "input": "./assets",
-                "output": "client/manifest/src/assets"
+                "output": "client/fire-alarm/src/assets"
               }
             ],
             "styles": [
@@ -223,8 +223,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "client/manifest/src/environments/environment.ts",
-                  "with": "client/manifest/src/environments/environment.prod.ts"
+                  "replace": "client/fire-alarm/src/environments/environment.ts",
+                  "with": "client/fire-alarm/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -253,26 +253,26 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "manifest:build",
+            "browserTarget": "fire-alarm:build",
             "port": 3000
           },
           "configurations": {
             "production": {
-              "browserTarget": "manifest:build:production"
+              "browserTarget": "fire-alarm:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "manifest:build"
+            "browserTarget": "fire-alarm:build"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "client/manifest/tsconfig.app.json"
+              "client/fire-alarm/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"
