@@ -1,0 +1,29 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~roboto-fontface/css/roboto/roboto-fontface.css';
+@import './icons.scss';
+@import './styles.scss';
+@import './snacker.scss';
+@import './glow.scss';
+@import './utils.scss';
+
+$light-primary: mat-palette($mat-blue, 800);
+$light-accent: mat-palette($mat-amber, 500);
+$light-warn: mat-palette($mat-red, 500);
+
+$dark-primary: mat-palette($mat-blue, A200);
+$dark-accent: mat-palette($mat-amber, A200);
+$dark-warn: mat-palette($mat-red, A200);
+
+.app-light {
+  $default-theme: mat-light-theme($light-primary, $light-accent);
+  @include style-theme($default-theme);
+  @include style-glow($default-theme);
+  @include angular-material-theme($default-theme);
+}
+
+.app-dark {
+  $default-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+  @include style-theme($default-theme);
+  @include style-glow($default-theme);
+  @include angular-material-theme($default-theme);
+}

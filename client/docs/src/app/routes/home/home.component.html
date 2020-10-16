@@ -1,0 +1,48 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<section fxLayout="row"
+         fxLayoutAlign="start stretch"
+         [style.height.%]="100">
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           class="p8 mr12 el4 background app-bar"
+           (mouseenter)="preview = true"
+           (mouseleave)="preview = false">
+    <ng-container *ngIf="routing.folder else loading">
+      <section *ngIf="expanded || preview"
+               [style.min-width.px]="256">
+        <sidemenu [folder]="routing.folder"
+                  [navDisabled]="!(routing.folder?.breadcrumbs?.length > 0)"
+                  [homeDisabled]="!(routing.folder?.breadcrumbs?.length > 0)"
+                  [isLight]="themer.isLight"
+                  (navigate)="navigateUp($event)"
+                  (theme)="themer.toggleTheme()"></sidemenu>
+        <section class="p8">
+          <folder [folder]="routing.folder"
+                  [root]="routing.setRootName()"
+                  [size]="10"
+                  (documentSelected)="selectDocument($event)"
+                  (folderSelected)="selectFolder($event)"></folder>
+        </section>
+      </section>
+    </ng-container>
+    <span fxFlex></span>
+    <toggle fxFlexAlign="end"
+            [active]="expanded"
+            (toggle)="toggleExpanded()"></toggle>
+  </section>
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           fxFlex>
+    <p class="mat-title color primary"
+       fxFlexAlign="center"
+       *ngIf="!(routing.document)"
+       [style.margin-top.px]="12">Select a Markdown document to render!</p>
+    <section id="renderOutlet"
+             class="overflow"
+             [ngClass]="routing.document && 'p4 pt12'"
+             fxFlex></section>
+  </section>
+</section>

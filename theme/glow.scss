@@ -1,0 +1,326 @@
+@import './styles.scss';
+
+@mixin style-glow($theme) {
+  $p: map-get($theme, primary);
+  $a: map-get($theme, accent);
+  $w: map-get($theme, warn);
+
+  $primary: mat-color($p);
+  $accent: mat-color($a);
+  $warn: mat-color($w);
+
+  .glow-1-primary {
+    @include mat-elevation(1, $primary);
+  }
+
+  .glow-2-primary {
+    @include mat-elevation(2, $primary);
+  }
+
+  .glow-3-primary {
+    @include mat-elevation(3, $primary);
+  }
+
+  .glow-4-primary {
+    @include mat-elevation(4, $primary);
+  }
+
+  .glow-5-primary {
+    @include mat-elevation(5, $primary);
+  }
+
+  .glow-6-primary {
+    @include mat-elevation(6, $primary);
+  }
+
+  .glow-7-primary {
+    @include mat-elevation(7, $primary);
+  }
+
+  .glow-8-primary {
+    @include mat-elevation(8, $primary);
+  }
+
+  .glow-9-primary {
+    @include mat-elevation(9, $primary);
+  }
+
+  .glow-10-primary {
+    @include mat-elevation(10, $primary);
+  }
+
+  .glow-11-primary {
+    @include mat-elevation(11, $primary);
+  }
+
+  .glow-12-primary {
+    @include mat-elevation(12, $primary);
+  }
+
+  .glow-13-primary {
+    @include mat-elevation(13, $primary);
+  }
+
+  .glow-14-primary {
+    @include mat-elevation(14, $primary);
+  }
+
+  .glow-15-primary {
+    @include mat-elevation(15, $primary);
+  }
+
+  .glow-16-primary {
+    @include mat-elevation(16, $primary);
+  }
+
+  .glow-17-primary {
+    @include mat-elevation(17, $primary);
+  }
+
+  .glow-18-primary {
+    @include mat-elevation(18, $primary);
+  }
+
+  .glow-19-primary {
+    @include mat-elevation(19, $primary);
+  }
+
+  .glow-20-primary {
+    @include mat-elevation(20, $primary);
+  }
+
+  .glow-21-primary {
+    @include mat-elevation(21, $primary);
+  }
+
+  .glow-22-primary {
+    @include mat-elevation(22, $primary);
+  }
+
+  .glow-23-primary {
+    @include mat-elevation(23, $primary);
+  }
+
+  .glow-24-primary {
+    @include mat-elevation(24, $primary);
+  }
+
+  .glowing-primary {
+    @include mat-elevation-transition;
+    @include mat-elevation(4, $primary);
+
+    &:hover {
+      @include mat-elevation(8, $primary);
+    }
+  }
+
+  .glow-1-accent {
+    @include mat-elevation(1, $accent);
+  }
+
+  .glow-2-accent {
+    @include mat-elevation(2, $accent);
+  }
+
+  .glow-3-accent {
+    @include mat-elevation(3, $accent);
+  }
+
+  .glow-4-accent {
+    @include mat-elevation(4, $accent);
+  }
+
+  .glow-5-accent {
+    @include mat-elevation(5, $accent);
+  }
+
+  .glow-6-accent {
+    @include mat-elevation(6, $accent);
+  }
+
+  .glow-7-accent {
+    @include mat-elevation(7, $accent);
+  }
+
+  .glow-8-accent {
+    @include mat-elevation(8, $accent);
+  }
+
+  .glow-9-accent {
+    @include mat-elevation(9, $accent);
+  }
+
+  .glow-10-accent {
+    @include mat-elevation(10, $accent);
+  }
+
+  .glow-11-accent {
+    @include mat-elevation(11, $accent);
+  }
+
+  .glow-12-accent {
+    @include mat-elevation(12, $accent);
+  }
+
+  .glow-13-accent {
+    @include mat-elevation(13, $accent);
+  }
+
+  .glow-14-accent {
+    @include mat-elevation(14, $accent);
+  }
+
+  .glow-15-accent {
+    @include mat-elevation(15, $accent);
+  }
+
+  .glow-16-accent {
+    @include mat-elevation(16, $accent);
+  }
+
+  .glow-17-accent {
+    @include mat-elevation(17, $accent);
+  }
+
+  .glow-18-accent {
+    @include mat-elevation(18, $accent);
+  }
+
+  .glow-19-accent {
+    @include mat-elevation(19, $accent);
+  }
+
+  .glow-20-accent {
+    @include mat-elevation(20, $accent);
+  }
+
+  .glow-21-accent {
+    @include mat-elevation(21, $accent);
+  }
+
+  .glow-22-accent {
+    @include mat-elevation(22, $accent);
+  }
+
+  .glow-23-accent {
+    @include mat-elevation(23, $accent);
+  }
+
+  .glow-24-accent {
+    @include mat-elevation(24, $accent);
+  }
+
+  .glowing-accent {
+    @include mat-elevation-transition;
+    @include mat-elevation(4, $accent);
+
+    &:hover {
+      @include mat-elevation(8, $accent);
+    }
+  }
+
+  .glow-1-warn {
+    @include mat-elevation(1, $warn);
+  }
+
+  .glow-2-warn {
+    @include mat-elevation(2, $warn);
+  }
+
+  .glow-3-warn {
+    @include mat-elevation(3, $warn);
+  }
+
+  .glow-4-warn {
+    @include mat-elevation(4, $warn);
+  }
+
+  .glow-5-warn {
+    @include mat-elevation(5, $warn);
+  }
+
+  .glow-6-warn {
+    @include mat-elevation(6, $warn);
+  }
+
+  .glow-7-warn {
+    @include mat-elevation(7, $warn);
+  }
+
+  .glow-8-warn {
+    @include mat-elevation(8, $warn);
+  }
+
+  .glow-9-warn {
+    @include mat-elevation(9, $warn);
+  }
+
+  .glow-10-warn {
+    @include mat-elevation(10, $warn);
+  }
+
+  .glow-11-warn {
+    @include mat-elevation(11, $warn);
+  }
+
+  .glow-12-warn {
+    @include mat-elevation(12, $warn);
+  }
+
+  .glow-13-warn {
+    @include mat-elevation(13, $warn);
+  }
+
+  .glow-14-warn {
+    @include mat-elevation(14, $warn);
+  }
+
+  .glow-15-warn {
+    @include mat-elevation(15, $warn);
+  }
+
+  .glow-16-warn {
+    @include mat-elevation(16, $warn);
+  }
+
+  .glow-17-warn {
+    @include mat-elevation(17, $warn);
+  }
+
+  .glow-18-warn {
+    @include mat-elevation(18, $warn);
+  }
+
+  .glow-19-warn {
+    @include mat-elevation(19, $warn);
+  }
+
+  .glow-20-warn {
+    @include mat-elevation(20, $warn);
+  }
+
+  .glow-21-warn {
+    @include mat-elevation(21, $warn);
+  }
+
+  .glow-22-warn {
+    @include mat-elevation(22, $warn);
+  }
+
+  .glow-23-warn {
+    @include mat-elevation(23, $warn);
+  }
+
+  .glow-24-warn {
+    @include mat-elevation(24, $warn);
+  }
+
+  .glowing-warn {
+    @include mat-elevation-transition;
+    @include mat-elevation(4, $warn);
+
+    &:hover {
+      @include mat-elevation(8, $warn);
+    }
+  }
+}

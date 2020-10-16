@@ -1,0 +1,24 @@
+<section fxLayout="row"
+         fxLayoutAlign="start center"
+         class="p4 mb8">
+  <p class="mat-title"
+     fxFlex
+     [style.margin.px]="0">{{heading}}</p>
+  <button mat-icon-button
+          [matTooltip]="navTip"
+          [disabled]="navDisabled"
+          (click)="navigate.emit(folder)">
+    <mat-icon>{{navIcon}}</mat-icon>
+  </button>
+  <button [routerLink]="root"
+          mat-icon-button
+          [matTooltip]="homeTip"
+          [disabled]="homeDisabled">
+    <mat-icon>{{homeIcon}}</mat-icon>
+  </button>
+  <button mat-icon-button (click)="theme.emit()">
+    <mat-icon [color]="isLight ? lightColor : darkColor">
+      {{isLight ? lightIcon : darkIcon}}
+    </mat-icon>
+  </button>
+</section>

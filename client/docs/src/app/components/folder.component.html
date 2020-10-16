@@ -1,0 +1,29 @@
+<section [style.margin.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <mat-icon class="fa-sm color primary"
+              fontSet="far"
+              fontIcon="fa-folder"
+              [style.height.px]="12"
+              [style.width.px]="20"></mat-icon>
+    <span *ngIf="showSelf"
+          class="cursor-pointer mat-body-strong color primary"
+          (click)="folderSelected.emit(folder)">{{root ? root : folder.name}}</span>
+  </section>
+  <section *ngIf="folder?.documents?.length > 0 || folder?.folders?.length > 0">
+    <ng-container *ngIf="folder?.documents?.length > 0">
+      <section *ngFor="let d of folder.documents"
+               [style.margin.px]="size">
+        <span class="cursor-pointer"
+              (click)="documentSelected.emit(d)">{{d.name}}</span>
+      </section>
+    </ng-container>
+    <ng-container *ngIf="folder?.folders?.length > 0">
+      <folder *ngFor="let f of folder.folders"
+              [folder]="f"
+              [size]="10"
+              (documentSelected)="documentSelected.emit($event)"
+              (folderSelected)="folderSelected.emit($event)"></folder>
+    </ng-container>
+  </section>
+</section>
