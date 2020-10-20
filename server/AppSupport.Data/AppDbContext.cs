@@ -8,6 +8,7 @@ namespace AppSupport.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        public DbSet<Branch> Branches { get; set; }
         public DbSet<Manifest> Manifests { get; set; }
         public DbSet<ManifestPlane> ManifestPlanes { get; set; }
         public DbSet<ManifestPlanePerson> ManifestPlanePeople { get; set; }

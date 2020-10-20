@@ -8,6 +8,19 @@ namespace AppSupport.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Branch",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branch", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Organization",
                 columns: table => new
                 {
@@ -18,20 +31,6 @@ namespace AppSupport.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organization", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rank",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Label = table.Column<string>(nullable: true),
-                    Grade = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rank", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,6 +52,29 @@ namespace AppSupport.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rank",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BranchId = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
+                    Label = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Grade = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rank", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rank_Branch_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branch",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,12 +152,12 @@ namespace AppSupport.Data.Migrations
                     OrganizationId = table.Column<int>(nullable: false),
                     RankId = table.Column<int>(nullable: false),
                     DodId = table.Column<int>(nullable: false),
-                    Ssn = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     MiddleName = table.Column<string>(nullable: true),
                     Nickname = table.Column<string>(nullable: true),
                     Occupation = table.Column<string>(nullable: true),
+                    Ssn = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -214,7 +236,13 @@ namespace AppSupport.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ManifestPlaneId = table.Column<int>(nullable: false),
-                    PersonId = table.Column<int>(nullable: false)
+                    PersonId = table.Column<int>(nullable: false),
+                    Branch = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    Occupation = table.Column<string>(nullable: true),
+                    Organization = table.Column<string>(nullable: true),
+                    Rank = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -300,6 +328,11 @@ namespace AppSupport.Data.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rank_BranchId",
+                table: "Rank",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Template_OrganizationId",
                 table: "Template",
                 column: "OrganizationId");
@@ -356,6 +389,9 @@ namespace AppSupport.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Template");
+
+            migrationBuilder.DropTable(
+                name: "Branch");
 
             migrationBuilder.DropTable(
                 name: "Organization");
