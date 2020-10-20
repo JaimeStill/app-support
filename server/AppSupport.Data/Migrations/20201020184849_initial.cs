@@ -47,6 +47,7 @@ namespace AppSupport.Data.Migrations
                     Email = table.Column<string>(nullable: true),
                     SocketName = table.Column<string>(nullable: true),
                     IsAdmin = table.Column<bool>(nullable: false),
+                    IsHr = table.Column<bool>(nullable: false),
                     IsTech = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

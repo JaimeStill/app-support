@@ -13,6 +13,7 @@ namespace AppSupport.Data.Entities
         public string Email { get; set; }
         public string SocketName { get; set; }
         public bool IsAdmin { get; set; }
+        public bool IsHr { get; set; }
         public bool IsTech { get; set; }
     }
 }

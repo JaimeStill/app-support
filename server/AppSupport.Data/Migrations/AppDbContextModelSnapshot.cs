@@ -330,6 +330,9 @@ namespace AppSupport.Data.Migrations
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsHr")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsTech")
                         .HasColumnType("bit");
 

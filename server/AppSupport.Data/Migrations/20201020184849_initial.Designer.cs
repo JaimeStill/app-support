@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppSupport.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20201020175815_initial")]
+    [Migration("20201020184849_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,6 +330,9 @@ namespace AppSupport.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHr")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsTech")
