@@ -1,0 +1,28 @@
+ContextDetails
+
+User: ehowell
+Local IP: ::1
+Local Port: 5000
+Remote IP: ::1
+Remote Port: 50159
+Content Type: 
+URL: http://localhost:5000/api/branch/getBranch/1
+
+Headers
+Cache-Control : max-age=0
+Connection : keep-alive
+Accept : text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+Accept-Encoding : gzip, deflate, br
+Accept-Language : en-US,en;q=0.9
+Cookie : io=q-8uwrET7tTL3GSDAAAA; .AspNetCore.Session=CfDJ8NVO4zBbWSdLvg%2B2wBI%2FbRI%2FjYZnKJL2%2BD%2Br8DfCWT1CMVDT3XAPU0AW1scTrpGbBGPoG3Hv%2F%2BFDwEVXt0IDWnSwfzgVkKBzpJOQXcM4BNlHC9WjDEy1uUVFJTO%2BsbzDZNQ1DiRpxBGgFhmunK944ljKKqqSAwbQLFbbiVK4k2mV; .AspNetCore.Cookies=CfDJ8NVO4zBbWSdLvg-2wBI_bRL214oF8cCpCh8MT6snDdYrn8OgxZgbm73larNbi4mVYAlz1OTqSJ_Nk24usFolchc5TqJHDjADJVC5MB9o1LzrWWypl9Gopde-JCmxhn9kbf_-ozpZznY6mrSS0UT0xP5lXCQ_0Star2ExWhfCwvoMSZBuI58v-ZpXX-kgzEv22jzWe2XF-sq6jYW9Nmi-u8kstuaR8hiGy9201YTKKvwNCILWpSxTGRJCkd__2F1CXtZKubKFu2U9AcgoOle-LBOgtsaEi43ATClbv6qmBGUSKrK5LzspR-KjUzXhq3DQYR3ihZ7Q4g3iBvcPCx-1G5X49xGmgqBaUFmpq9xIIgdOyAaUGcZ187QBPTVbQ8lGNfi2JONqrPTiSJLLShm-740V90-jgzmg6UBHUOauSokAmKO3A5CJafV7XYa2Rc3niAyiikdKeXaF_U3pfg71HNo
+Host : localhost:5000
+User-Agent : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36
+DNT : 1
+Upgrade-Insecure-Requests : 1
+Sec-Fetch-Site : none
+Sec-Fetch-Mode : navigate
+Sec-Fetch-User : ?1
+Sec-Fetch-Dest : document
+
+Exception Details
+Expression of type 'System.Linq.IOrderedQueryable`1[AppSupport.Data.Entities.Rank]' cannot be used for return type 'System.Linq.IOrderedEnumerable`1[AppSupport.Data.Entities.Rank]'
