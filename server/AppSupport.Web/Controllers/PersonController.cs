@@ -20,7 +20,7 @@ namespace AppSupport.Web.Controllers
             this.db = db;
         }
 
-        [HttpGet("[action")]
+        [HttpGet("[action]")]
         [ProducesResponseType(typeof(QueryResult<Person>), 200)]
         public async Task<IActionResult> QueryPeople(
             [FromQuery]string page,

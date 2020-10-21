@@ -13,6 +13,12 @@ namespace AppSupport.Data.Extensions
 {
     public static class PersonExtensions
     {
+        static IQueryable<Person> SetIncludes(this DbSet<Person> people) =>
+            people
+                .Include(x => x.Organization)
+                .Include(x => x.Rank)
+                    .ThenInclude(x => x.Branch);
+
         static IQueryable<Person> Search(this IQueryable<Person> people, string search) =>
             people.Where(x => x.FirstName.ToLower().Contains(search.ToLower()));
 
@@ -24,7 +30,7 @@ namespace AppSupport.Data.Extensions
             string sort
         ) {
             var container = new QueryContainer<Person>(
-                db.People,
+                db.People.SetIncludes(),
                 page, pageSize, search, sort
             );
 

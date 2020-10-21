@@ -13,6 +13,9 @@ namespace AppSupport.Data.Extensions
 {
     public static class PlaneExtensions
     {
+        static IQueryable<Plane> SetIncludes(this DbSet<Plane> planes) =>
+            planes.Include(x => x.Organization);
+
         static IQueryable<Plane> Search(this IQueryable<Plane> planes, string search) =>
             planes.Where(x => x.Name.ToLower().Contains(search.ToLower()));
 
@@ -24,7 +27,7 @@ namespace AppSupport.Data.Extensions
             string sort
         ) {
             var container = new QueryContainer<Plane>(
-                db.Planes,
+                db.Planes.SetIncludes(),
                 page, pageSize, search, sort
             );
 

@@ -20,14 +20,15 @@ namespace AppSupport.Web.Controllers
             this.db = db;
         }
 
-        [HttpGet("[action")]
+        [HttpGet("[action]/{branchId}")]
         [ProducesResponseType(typeof(QueryResult<Rank>), 200)]
         public async Task<IActionResult> QueryRanks(
+            [FromRoute]int branchId,
             [FromQuery]string page,
             [FromQuery]string pageSize,
             [FromQuery]string search,
             [FromQuery]string sort
-        ) => Ok(await db.QueryRanks(page, pageSize, search, sort));
+        ) => Ok(await db.QueryRanks(branchId, page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
         public async Task<Rank> GetRank([FromRoute]int id) => await db.GetRank(id);

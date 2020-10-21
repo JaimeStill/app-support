@@ -13,18 +13,22 @@ namespace AppSupport.Data.Extensions
 {
     public static class RankExtensions
     {
+        static IQueryable<Rank> SetIncludes(this DbSet<Rank> ranks) =>
+            ranks.Include(x => x.Branch);
+
         static IQueryable<Rank> Search(this IQueryable<Rank> ranks, string search) =>
             ranks.Where(x => x.Label.ToLower().Contains(search.ToLower()));
 
         public static async Task<QueryResult<Rank>> QueryRanks(
             this AppDbContext db,
+            int branchId,
             string page,
             string pageSize,
             string search,
             string sort
         ) {
             var container = new QueryContainer<Rank>(
-                db.Ranks,
+                db.Ranks.SetIncludes().Where(x => x.BranchId == branchId),
                 page, pageSize, search, sort
             );
 
