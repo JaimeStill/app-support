@@ -1,0 +1,33 @@
+<section fxLayout="row"
+         fxLayoutAlign="start stretch"
+         class="background card elevated"
+         [style.width.px]="size">
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           fxFlex
+           class="container">
+    <section fxLayout="row"
+             fxLayoutAlign="start center">
+      <p class="mat-body-strong"
+         fxFlex>{{rank?.label}}</p>
+      <p>{{rank?.order}}</p>
+    </section>
+    <p>{{rank?.name}}</p>
+    <p>{{rank?.grade}}</p>
+  </section>
+  <section fxLayout="column"
+           fxLayoutAlign="space-between center"
+           class="background stacked container">
+    <button mat-icon-button
+            matTooltip="Edit"
+            (click)="edit.emit(rank)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button
+            color="warn"
+            matTooltip="Remove"
+            (click)="remove.emit(rank)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </section>
+</section>

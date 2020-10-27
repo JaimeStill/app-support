@@ -65,7 +65,7 @@
   }
 
   code.primary,
-  a {
+  a.link {
     color: $primary;
   }
 
@@ -74,8 +74,13 @@
   }
 
   code.warn,
-  a:visited {
+  a.link:visited {
     color: $warn;
+  }
+
+  a.mat-list-item.active,
+  a.mat-tab-link.active {
+    color: $primary;
   }
 }
 
@@ -85,9 +90,78 @@ html, body, app-root {
   height: 100%;
 }
 
+.background.card {
+  margin: 4px;
+}
+
+.container {
+  padding: 8px;
+}
+
 .app-container {
   overflow: auto;
   height: 100%;
+}
+
+mat-toolbar.mat-toolbar.app-toolbar {
+  padding: 0 8px;
+
+  button.mat-icon-button,
+  mat-form-field.mat-form-field {
+    margin: 0 8px 0 0;
+  }
+
+  button.mat-stroked-button {
+    margin: 0 4px;
+  }
+
+  button.mat-stroked-button:first-child {
+    margin-left: 8px;
+  }
+}
+
+nav.mat-tab-nav-bar.wrapped div.mat-tab-links {
+  flex-wrap: wrap;
+}
+
+nav.mat-tab-nav-bar.scrolled {
+  white-space: nowrap;
+  overflow: auto;
+
+  div.mat-tab-links {
+    display: block;
+  }
+}
+
+a.mat-tab-link,
+mat-tab.mat-tab {
+  min-width: 80px;
+}
+
+mat-tab-group.mat-tab-group.flexible div.mat-tab-labels {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-items: space-evenly;
+
+  div.mat-tab-label {
+    flex-grow: 1;
+    flex-basis: auto;
+    min-width: 0;
+  }
+}
+
+nav.mat-tab-nav-bar.flexible div.mat-tab-links {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-items: space-evenly;
+
+  a.mat-tab-link {
+    flex-grow: 1;
+    flex-basis: auto;
+    min-width: 0;
+  }
 }
 
 .el2 {

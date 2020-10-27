@@ -1,0 +1,71 @@
+<mat-toolbar class="app-toolbar">
+  <button mat-stroked-button
+          color="primary"
+          (click)="addBranch()">Add Branch</button>
+  <button mat-stroked-button
+          color="accent"
+          (click)="addRank()">Add Rank</button>
+</mat-toolbar>
+<section fxLayout="row"
+         fxLayoutAlign="start stretch">
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           class="container">
+    <p class="mat-title">Branches</p>
+    <ng-template #loadingBranches>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="branchSrc.queryResult$ | async as query else loadingBranches">
+      <searchbar label="Search Branches"
+                 [minimum]="1"
+                 (search)="branchSrc.onSearch($event)"
+                 (clear)="branchSrc.clearSearch()"></searchbar>
+      <mat-paginator [length]="query?.totalCount"
+                     [pageSize]="query?.pageSize"
+                     [pageSizeOptions]="branchSrc.pageSizeOptions"
+                     [pageIndex]="query?.page - 1"
+                     (page)="branchSrc.onPage($event)"></mat-paginator>
+      <branch-card *ngFor="let b of query.data"
+                   [branch]="b"
+                   [selected]="branch?.id === b?.id"
+                   (select)="selectBranch($event)"
+                   (edit)="editBranch($event)"
+                   (remove)="removeBranch($event)">
+      </branch-card>
+    </ng-container>
+  </section>
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           fxFlex
+           class="container">
+    <p class="mat-title">Ranks</p>
+    <ng-container *ngIf="branch?.id > 0">
+      <ng-template #loadingRanks>
+        <mat-progress-bar mode="indeterminate"
+                          color="accent"></mat-progress-bar>
+      </ng-template>
+      <ng-container *ngIf="rankSrc.queryResult$ | async as query else loadingRanks">
+        <searchbar label="Search Ranks"
+                   [minimum]="1"
+                   (search)="rankSrc.onSearch($event)"
+                   (clear)="rankSrc.clearSearch()"></searchbar>
+        <mat-paginator [length]="query?.totalCount"
+                       [pageSize]="query?.pageSize"
+                       [pageSizeOptions]="rankSrc.pageSizeOptions"
+                       [pageIndex]="query?.page - 1"
+                       (page)="rankSrc.onPage($event)"></mat-paginator>
+        <section fxLayout="row | wrap"
+                 fxLayoutAlign="start stretch"
+                 class="container">
+          <rank-card *ngFor="let r of query.data"
+                     [rank]="r"
+                     (edit)="editRank($event)"
+                     (remove)="removeRank($event)"></rank-card>
+        </section>
+      </ng-container>
+    </ng-container>
+    <p class="mat-subheading-2"
+       *ngIf="!(branch?.id > 0)">Select a Branch to Manage Ranks</p>
+  </section>
+</section>

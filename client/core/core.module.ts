@@ -43,7 +43,10 @@ import { Pipes } from './pipes';
     MaterialModule
   ],
   exports: [
-    MaterialModule,
+    ...ApiComponents,
+    ...ApiDialogs,
+    ...ApiDirectives,
+    ...ApiPipes,
     ...Components,
     ...Dialogs,
     ...Directives,

@@ -1,7 +1,10 @@
 import { BannerComponent } from './banner';
+import { SearchbarComponent } from './searchbar';
 
 export const Components = [
-  BannerComponent
+  BannerComponent,
+  SearchbarComponent
 ];
 
 export * from './banner';
+export * from './searchbar';

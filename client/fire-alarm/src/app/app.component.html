@@ -8,6 +8,12 @@
                  color="primary">
       <span fxFlex>Fire Alarm</span>
       <button mat-icon-button
+              matTooltip="Settings"
+              routerLink="admin"
+              routerLinkActive="active">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-icon-button
               (click)="themer.toggleTheme()">
         <mat-icon [color]="themer.isLight ? 'accent' : 'default'">
           {{themer.isLight ? 'brightness_5' : 'brightness_3'}}

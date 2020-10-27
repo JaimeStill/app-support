@@ -1,12 +1,23 @@
 import { Route } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+
+import {
+  AdminComponents,
+  AdminRoutes
+} from './admin';
+
+import {
+  HomeComponents,
+  HomeRoutes
+} from './home';
 
 export const RouteComponents = [
-  HomeComponent
+  ...AdminComponents,
+  ...HomeComponents
 ];
 
 export const Routes: Route[] = [
-  { path: 'home', component: HomeComponent },
+  ...AdminRoutes,
+  ...HomeRoutes,
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
