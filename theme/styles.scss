@@ -86,7 +86,7 @@
   }
 
   code.primary,
-  a.link {
+  a {
     color: $primary;
   }
 
@@ -95,8 +95,15 @@
   }
 
   code.warn,
-  a.link:visited {
+  a:visited {
     color: $warn;
+  }
+
+  a.mat-list-item,
+  a.mat-tab-link,
+  a.mat-list-item:visited,
+  a.mat-tab-link:visited {
+    color: $foreground;
   }
 
   a.mat-list-item.active,
@@ -109,10 +116,16 @@
   }
 }
 
-html, body, app-root {
+html, body, app-root, .app-frame {
   overflow: hidden;
   margin: 0;
   height: 100%;
+}
+
+.app-container {
+  overflow: auto;
+  height: calc(100% - 64px);
+  box-sizing: border-box;
 }
 
 .background.card {
@@ -121,11 +134,6 @@ html, body, app-root {
 
 .container {
   padding: 8px;
-}
-
-.app-container {
-  overflow: auto;
-  height: 100%;
 }
 
 mat-toolbar.mat-toolbar.app-toolbar {
@@ -224,4 +232,10 @@ nav.mat-tab-nav-bar.flexible div.mat-tab-links {
 
 .backdropped {
   transition: backdrop-filter 100ms ease-in;
+}
+
+@media (min-width: 0) and (max-width: 599px) {
+  .app-container {
+    height: calc(100% - 56px);
+  }
 }

@@ -47,7 +47,7 @@
       </ng-template>
       <ng-container *ngIf="rankSrc.queryResult$ | async as query else loadingRanks">
         <section fxLayout="row"
-                 fxLayoutAlign="center stretch"
+                 fxLayoutAlign="center start"
                  fxLayoutGap="8px"
                  class="container">
           <searchbar label="Search Ranks"
@@ -62,7 +62,7 @@
                          (page)="rankSrc.onPage($event)"></mat-paginator>
         </section>
         <section fxLayout="row | wrap"
-                 fxLayoutAlign="start stretch"
+                 fxLayoutAlign="start start"
                  class="container">
           <rank-card *ngFor="let r of query.data"
                      [rank]="r"
