@@ -16,8 +16,16 @@ namespace AppSupport.Data.Extensions
         static IQueryable<Rank> SetIncludes(this DbSet<Rank> ranks) =>
             ranks.Include(x => x.Branch);
 
-        static IQueryable<Rank> Search(this IQueryable<Rank> ranks, string search) =>
-            ranks.Where(x => x.Label.ToLower().Contains(search.ToLower()));
+        static IQueryable<Rank> Search(this IQueryable<Rank> ranks, string search)
+        {
+            search = search.ToLower();
+
+            return ranks.Where(x =>
+                x.Label.ToLower().Contains(search) ||
+                x.Name.ToLower().Contains(search) ||
+                x.Grade.ToLower().Contains(search)
+            );
+        }
 
         public static async Task<QueryResult<Rank>> QueryRanks(
             this AppDbContext db,
@@ -41,7 +49,7 @@ namespace AppSupport.Data.Extensions
 
         public static async Task AddRank(this AppDbContext db, Rank rank)
         {
-            if (await rank.Validate(db))
+            if (rank.Validate())
             {
                 await db.Ranks.AddAsync(rank);
                 await db.SaveChangesAsync();
@@ -50,8 +58,9 @@ namespace AppSupport.Data.Extensions
 
         public static async Task UpdateRank(this AppDbContext db, Rank rank)
         {
-            if (await rank.Validate(db))
+            if (rank.Validate())
             {
+                rank.ClearNavProps();
                 db.Ranks.Update(rank);
                 await db.SaveChangesAsync();
             }
@@ -63,25 +72,16 @@ namespace AppSupport.Data.Extensions
             await db.SaveChangesAsync();
         }
 
-        static async Task<bool> Validate(this Rank rank, AppDbContext db)
+        static bool Validate(this Rank rank)
         {
             if (string.IsNullOrEmpty(rank.Label))
             {
                 throw new AppException("Rank must have a label", ExceptionType.Validation);
             }
 
-            var check = await db.Ranks
-                .FirstOrDefaultAsync(x =>
-                    x.Id != rank.Id &&
-                    x.Label.ToLower() == rank.Label.ToLower()
-                );
-
-            if (check != null)
-            {
-                throw new AppException($"{rank.Label} is already a Rank", ExceptionType.Validation);
-            }
-
             return true;
         }
+
+        static void ClearNavProps(this Rank rank) => rank.Branch = null;
     }
 }

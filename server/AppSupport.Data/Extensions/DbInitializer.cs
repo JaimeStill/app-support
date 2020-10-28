@@ -14,6 +14,21 @@ namespace AppSupport.Data.Extensions
             await db.Database.MigrateAsync();
             Console.WriteLine("Database initialized");
 
+            if (!await db.Organizations.AnyAsync())
+            {
+                Console.WriteLine("Seeding organizations...");
+
+                var organizations = new List<Organization>
+                {
+                    new Organization { Name = "Microsoft" },
+                    new Organization { Name = "Apple" },
+                    new Organization { Name = "Google" }
+                };
+
+                await db.Organizations.AddRangeAsync(organizations);
+                await db.SaveChangesAsync();
+            }
+
             if (!await db.Branches.AnyAsync())
             {
                 Console.WriteLine("Seeding branches...");
@@ -506,70 +521,70 @@ namespace AppSupport.Data.Extensions
                                 Grade = "O1",
                                 Label = "ENS",
                                 Name = "Ensign",
-                                Order = 18
+                                Order = 17
                             },
                             new Rank
                             {
                                 Grade = "O2",
                                 Label = "LTJG",
                                 Name = "Lieutenant Junior Grade",
-                                Order = 19
+                                Order = 18
                             },
                             new Rank
                             {
                                 Grade = "O3",
                                 Label = "LT",
                                 Name = "Lieutenant",
-                                Order = 20
+                                Order = 19
                             },
                             new Rank
                             {
                                 Grade = "O4",
                                 Label = "LCDR",
                                 Name = "Lieutenant Commander",
-                                Order = 21
+                                Order = 20
                             },
                             new Rank
                             {
                                 Grade = "O5",
                                 Label = "CDR",
                                 Name = "Commander",
-                                Order = 22
+                                Order = 21
                             },
                             new Rank
                             {
                                 Grade = "O6",
                                 Label = "CAPT",
                                 Name = "Captain",
-                                Order = 23
+                                Order = 22
                             },
                             new Rank
                             {
                                 Grade = "O7",
                                 Label = "RDML",
                                 Name = "Rear Admiral Lower Half",
-                                Order = 24
+                                Order = 23
                             },
                             new Rank
                             {
                                 Grade = "O8",
                                 Label = "RADM",
                                 Name = "Rear Admiral Upper Half",
-                                Order = 25
+                                Order = 24
                             },
                             new Rank
                             {
                                 Grade = "O9",
                                 Label = "VADM",
                                 Name = "Vice Admiral",
-                                Order = 26
+                                Order = 25
                             },
                             new Rank
                             {
                                 Grade = "O10",
                                 Label = "ADM",
                                 Name = "Admiral",
-                                Order = 27
+                                Order = 26
                             }
                         }
                     },

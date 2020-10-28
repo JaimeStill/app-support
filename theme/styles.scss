@@ -14,6 +14,7 @@
   $background: mat-color($b, background);
   $background-card: mat-color($b, card);
   $foreground: mat-color($f, text);
+  $divider: mat-color($f, divider);
   $app-bar: mat-color($b, app-bar);
 
   $primary-contrast: mat-color($p, default-contrast);
@@ -52,6 +53,26 @@
     color: $background;
   }
 
+  .card-outline {
+    border: 1px solid $foreground;
+  }
+
+  .card-outline-divider {
+    border: 1px solid $divider;
+  }
+
+  .card-outline-primary {
+    border: 1px solid $primary;
+  }
+
+  .card-outline-accent {
+    border: 1px solid $accent;
+  }
+
+  .card-outline-warn {
+    border: 1px solid $warn;
+  }
+
   .color.primary {
     color: $primary;
   }
@@ -81,6 +102,10 @@
   a.mat-list-item.active,
   a.mat-tab-link.active {
     color: $primary;
+  }
+
+  mat-paginator.mat-paginator {
+    background-color: $background;
   }
 }
 

@@ -11,6 +11,9 @@ import { Branch } from '../models';
 
 @Injectable()
 export class BranchService {
+  private branches = new BehaviorSubject<Branch[]>(null);
+  branches$ = this.branches.asObservable();
+
   private branch = new BehaviorSubject<Branch>(null);
   branch$ = this.branch.asObservable();
 
@@ -19,6 +22,12 @@ export class BranchService {
     private snacker: SnackerService,
     @Optional() private config: ServerConfig
   ) { }
+
+  getBranches = () => this.http.get<Branch[]>(`${this.config.api}branch/getBranches`)
+    .subscribe(
+      data => this.branches.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
+    );
 
   getBranch = (id: number): Promise<Branch> => new Promise((resolve) => {
     this.http.get<Branch>(`${this.config.api}branch/getBranch/${id}`)

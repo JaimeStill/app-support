@@ -46,15 +46,21 @@
                           color="accent"></mat-progress-bar>
       </ng-template>
       <ng-container *ngIf="rankSrc.queryResult$ | async as query else loadingRanks">
-        <searchbar label="Search Ranks"
-                   [minimum]="1"
-                   (search)="rankSrc.onSearch($event)"
-                   (clear)="rankSrc.clearSearch()"></searchbar>
-        <mat-paginator [length]="query?.totalCount"
-                       [pageSize]="query?.pageSize"
-                       [pageSizeOptions]="rankSrc.pageSizeOptions"
-                       [pageIndex]="query?.page - 1"
-                       (page)="rankSrc.onPage($event)"></mat-paginator>
+        <section fxLayout="row"
+                 fxLayoutAlign="center stretch"
+                 fxLayoutGap="8px"
+                 class="container">
+          <searchbar label="Search Ranks"
+                     fxFlex
+                     [minimum]="1"
+                     (search)="rankSrc.onSearch($event)"
+                     (clear)="rankSrc.clearSearch()"></searchbar>
+          <mat-paginator [length]="query?.totalCount"
+                         [pageSize]="query?.pageSize"
+                         [pageSizeOptions]="rankSrc.pageSizeOptions"
+                         [pageIndex]="query?.page - 1"
+                         (page)="rankSrc.onPage($event)"></mat-paginator>
+        </section>
         <section fxLayout="row | wrap"
                  fxLayoutAlign="start stretch"
                  class="container">

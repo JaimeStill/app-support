@@ -1,1 +1,42 @@
-<p class="mat-title">Organizations</p>
+<mat-toolbar class="app-toolbar">
+  <button mat-stroked-button
+          color="primary"
+          (click)="addOrganization()">
+    Add Organization
+  </button>
+</mat-toolbar>
+<section class="container">
+  <p class="mat-title">Organizations</p>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="orgSrc.queryResult$ | async as query else loading">
+    <section fxLayout="row"
+             fxLayoutAlign="center stretch"
+             fxLayoutGap="8px"
+             class="container">
+      <searchbar label="Search Organizations"
+                 fxFlex
+                 [minimum]="1"
+                 (search)="orgSrc.onSearch($event)"
+                 (clear)="orgSrc.clearSearch()"></searchbar>
+      <mat-paginator [length]="query?.totalCount"
+                     [pageSize]="query?.pageSize"
+                     [pageSizeOptions]="orgSrc.pageSizeOptions"
+                     [pageIndex]="query?.page - 1"
+                     (page)="orgSrc.onPage($event)"></mat-paginator>
+    </section>
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start stretch"
+             *ngIf="query?.data.length > 0"
+             class="container">
+      <organization-card *ngFor="let o of query.data"
+                         [organization]="o"
+                         (edit)="editOrganization($event)"
+                         (remove)="removeOrganization($event)"></organization-card>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(query?.data.length > 0)">No Organizations Available</p>
+  </ng-container>
+</section>

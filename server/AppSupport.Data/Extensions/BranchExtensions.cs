@@ -31,6 +31,11 @@ namespace AppSupport.Data.Extensions
             return await container.Query((people, s) => people.Search(s));
         }
 
+        public static async Task<List<Branch>> GetBranches(this AppDbContext db) =>
+            await db.Branches
+                .OrderBy(x => x.Name)
+                .ToListAsync();
+
         public static async Task<Branch> GetBranch(this AppDbContext db, int id) =>
             await db.Branches
                 .FindAsync(id);

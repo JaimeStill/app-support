@@ -1,29 +1,22 @@
 <section fxLayout="row"
          fxLayoutAlign="center center"
-         class="background card"
-         [ngClass]="selected ? 'card-outline-primary' : 'card-outline-divider'"
+         class="background card elevated"
          [style.width.px]="size">
   <span class="mat-body-strong container"
-        fxFlex>{{branch?.name}}</span>
+        fxFlex>{{organization?.name}}</span>
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
            class="background stacked container">
     <button mat-icon-button
             color="warn"
             matTooltip="Remove"
-            (click)="remove.emit(branch)">
+            (click)="remove.emit(organization)">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button
             matTooltip="Edit"
-            (click)="edit.emit(branch)">
+            (click)="edit.emit(organization)">
       <mat-icon>edit</mat-icon>
-    </button>
-    <button mat-icon-button
-            [matTooltip]="selected ? 'Deselect' : 'Select'"
-            (click)="select.emit(branch)">
-      <mat-icon *ngIf="selected">keyboard_arrow_right</mat-icon>
-      <mat-icon *ngIf="!(selected)">keyboard_arrow_left</mat-icon>
     </button>
   </section>
 </section>

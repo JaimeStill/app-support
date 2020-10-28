@@ -1,0 +1,52 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>
+    <span *ngIf="rank?.id > 0">Update Rank</span>
+    <span *ngIf="!(rank?.id > 0)">Add Rank</span>
+  </h2>
+  <mat-dialog-content>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <section *ngIf="branchSvc.branches$ | async as branches else loading"
+             fxLayout="column"
+             fxLayoutAlign="start stretch"
+             class="container">
+      <mat-form-field>
+        <mat-label>Branch</mat-label>
+        <mat-select [(ngModel)]="rank.branchId">
+          <mat-option *ngFor="let b of branches"
+                      [value]="b.id">{{b.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Order</mat-label>
+        <input type="number"
+               matInput
+               [(ngModel)]="rank.order" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Label</mat-label>
+        <input matInput
+               [(ngModel)]="rank.label" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput
+               [(ngModel)]="rank.name" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Grade</mat-label>
+        <input matInput
+               [(ngModel)]="rank.grade" />
+      </mat-form-field>
+    </section>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            (click)="saveRank()">Save</button>
+    <button mat-button
+            color="warn"
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

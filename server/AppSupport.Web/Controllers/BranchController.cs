@@ -29,6 +29,9 @@ namespace AppSupport.Web.Controllers
             [FromQuery]string sort
         ) => Ok(await db.QueryBranches(page, pageSize, search, sort));
 
+        [HttpGet("[action]")]
+        public async Task<List<Branch>> GetBranches() => await db.GetBranches();
+
         [HttpGet("[action]/{id}")]
         public async Task<Branch> GetBranch([FromRoute]int id) => await db.GetBranch(id);
 

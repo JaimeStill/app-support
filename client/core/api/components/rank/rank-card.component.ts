@@ -12,7 +12,7 @@ import { Rank } from '../../models';
   templateUrl: 'rank-card.component.html'
 })
 export class RankCardComponent {
-  @Input() size = 280;
+  @Input() size = 360;
   @Input() rank: Rank;
   @Output() edit = new EventEmitter<Rank>();
   @Output() remove = new EventEmitter<Rank>();

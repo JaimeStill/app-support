@@ -3,8 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 
 import {
   Branch,
-  ConfirmDialog,
   Rank,
+  BranchDialog,
+  ConfirmDialog,
+  RankDialog,
   BranchService,
   BranchSource,
   RankService,
@@ -32,9 +34,21 @@ export class RanksBranchesRoute {
     public rankSrc: RankSource
   ) { }
 
-  addBranch = () => { }
+  addBranch = () => this.dialog.open(BranchDialog, {
+    data: {} as Branch,
+    disableClose: true,
+    width: '600px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.branchSrc.forceRefresh());
 
-  addRank = () => { }
+  addRank = () => this.dialog.open(RankDialog, {
+    data: {} as Rank,
+    disableClose: true,
+    width: '600px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.rankSrc.baseUrl && this.rankSrc.forceRefresh());
 
   selectBranch = (b: Branch) => {
     if (this.branch?.id === b.id) {
@@ -45,7 +59,13 @@ export class RanksBranchesRoute {
     }
   }
 
-  editBranch = (b: Branch) => { }
+  editBranch = (b: Branch) => this.dialog.open(BranchDialog, {
+    data: Object.assign({} as Branch, b),
+    disableClose: true,
+    width: '600px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.branchSrc.forceRefresh());
 
   removeBranch = (b: Branch) => this.dialog.open(ConfirmDialog, {
     disableClose: true,
@@ -60,7 +80,13 @@ export class RanksBranchesRoute {
     res && this.branchSrc.forceRefresh();
   })
 
-  editRank = (r: Rank) => { }
+  editRank = (r: Rank) => this.dialog.open(RankDialog, {
+    data: Object.assign({} as Rank, r),
+    disableClose: true,
+    width: '600px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.rankSrc.baseUrl && this.rankSrc.forceRefresh());
 
   removeRank = (r: Rank) => this.dialog.open(ConfirmDialog, {
     disableClose: true,
