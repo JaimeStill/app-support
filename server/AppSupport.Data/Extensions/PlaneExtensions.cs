@@ -34,6 +34,11 @@ namespace AppSupport.Data.Extensions
             return await container.Query((planes, s) => planes.Search(s));
         }
 
+        static void ClearNavProps(this Plane plane)
+        {
+            plane.Organization = null;
+        }
+
         public static async Task<Plane> GetPlane(this AppDbContext db, int id) =>
             await db.Planes
                 .FindAsync(id);
@@ -51,6 +56,7 @@ namespace AppSupport.Data.Extensions
         {
             if (await plane.Validate(db))
             {
+                plane.ClearNavProps();
                 db.Planes.Update(plane);
                 await db.SaveChangesAsync();
             }

@@ -11,6 +11,9 @@ import { Organization } from '../models';
 
 @Injectable()
 export class OrganizationService {
+  private organizations = new BehaviorSubject<Organization[]>(null);
+  organizations$ = this.organizations.asObservable();
+
   private organization = new BehaviorSubject<Organization>(null);
   organization$ = this.organization.asObservable();
 
@@ -19,6 +22,12 @@ export class OrganizationService {
     private snacker: SnackerService,
     @Optional() private config: ServerConfig
   ) { }
+
+  getOrganizations = () => this.http.get<Organization[]>(`${this.config.api}organization/getOrganizations`)
+    .subscribe(
+      data => this.organizations.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
+    );
 
   getOrganization = (id: number): Promise<Organization> => new Promise((resolve) => {
     this.http.get<Organization>(`${this.config.api}organization/getOrganization/${id}`)
