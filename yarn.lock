@@ -136,10 +136,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/cdk@^10.2.5":
-  version "10.2.5"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-10.2.5.tgz#768204ff4db1282297d15f382970f151f87434ec"
-  integrity sha512-SI/YdaxfkttG92A0uGRixyJkfTKHn0GIU+7BCSRq0d31ru3Ugfln+jr+5/xttxWr88CNPTfpGaUt0ZuSqYCzqw==
+"@angular/cdk@^10.2.6":
+  version "10.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-10.2.6.tgz#6130b261f7cdc5a130b608c711d1ea7139b11a06"
+  integrity sha512-7bvls1XiLejPirVC4ocdtmc/fgfPSG0BNwUvarl34g6ybj8mR+WDagMWnZMt0VXsnago2ImhGdD7YB9oJ3CpBQ==
   dependencies:
     tslib "^2.0.0"
   optionalDependencies:
@@ -240,10 +240,10 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-10.2.0.tgz#26e0749153cd52e3135410e4262c455a570121e0"
   integrity sha512-p2yJ8QhJPrNAoeGJ2abX22rNMDyQAmGsMV0GUCpGfmrJ4wDLPW+hy7tbL44qGn2B4KY5lvj30yIxjxL8HtBCVw==
 
-"@angular/material@^10.2.5":
-  version "10.2.5"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-10.2.5.tgz#bdfc0bfdbadbca47db2dfd0170b8a31a3484ffd7"
-  integrity sha512-gYFqpXdLLuRYb9N1jVj9Gig/AlqsEfT/m+RtzHm4mawmHqeQbEV+0C0Qvc6fKRb1060Nkzfz8TDNGu5B+Xzq5A==
+"@angular/material@^10.2.6":
+  version "10.2.6"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-10.2.6.tgz#7dab3f9c199319ae8912ad8e37836d94bb2694e0"
+  integrity sha512-xF+UoinJYrMuvyTRcFeg8DNDvykeIRbEpCwY4hYX4So7t6yr89W5D2htkbzilRkum3ZhhkGqjjCaI/B1B9J1Vg==
   dependencies:
     tslib "^2.0.0"
 
@@ -8672,7 +8672,14 @@ yn@3.1.1:
   resolved "https://registry.yarnpkg.com/yn/-/yn-3.1.1.tgz#1e87401a09d767c1d5eab26a6e4c185182d2eb50"
   integrity sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 
-zone.js@0.10.3, zone.js@~0.10.3:
+zone.js@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.11.2.tgz#bde87c9523f46a71b04f0f02b87af3edbb99b534"
+  integrity sha512-JUpNKmWIovqRZlqkX6pFdBVlOU42n5Mt1n2yEaJdy+msBant/l2L1hTG6BFxCzM+KV3SX4XQOcwbhnwsPAeUTA==
+  dependencies:
+    tslib "^2.0.0"
+
+zone.js@~0.10.3:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.3.tgz#3e5e4da03c607c9dcd92e37dd35687a14a140c16"
   integrity sha512-LXVLVEq0NNOqK/fLJo3d0kfzd4sxwn2/h67/02pjCjfKDxgx1i9QqpvtHD8CrBnSSwMw5+dy11O7FRX5mkO7Cg==

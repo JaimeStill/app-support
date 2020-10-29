@@ -1,0 +1,26 @@
+ContextDetails
+
+User: 
+Local IP: ::1
+Local Port: 5000
+Remote IP: ::1
+Remote Port: 60346
+Content Type: 
+URL: http://localhost:5000/api/organization/queryOrganizations?page=1&pageSize=20&sort=name%20asc
+
+Headers
+Connection : keep-alive
+Accept : application/json, text/plain, */*
+Accept-Encoding : gzip, deflate, br
+Accept-Language : en-US,en;q=0.9
+Host : localhost:5000
+Referer : http://localhost:3000/
+User-Agent : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36
+DNT : 1
+Origin : http://localhost:3000
+Sec-Fetch-Site : same-site
+Sec-Fetch-Mode : cors
+Sec-Fetch-Dest : empty
+
+Exception Details
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)

@@ -1,1 +1,42 @@
-<p class="mat-title">Planes</p>
+<mat-toolbar class="app-toolbar">
+  <button mat-stroked-button
+          color="primary"
+          (click)="addPlane()">
+    Add Plane
+  </button>
+</mat-toolbar>
+<section class="container">
+  <p class="mat-title">Planes</p>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="planeSrc.queryResult$ | async as query else loading">
+    <section fxLayout="row"
+             fxLayoutAlign="center stretch"
+             fxLayoutGap="8px"
+             class="container">
+      <searchbar label="Search Planes"
+                 fxFlex
+                 [minimum]="1"
+                 (search)="planeSrc.onSearch($event)"
+                 (clear)="planeSrc.clearSearch()"></searchbar>
+      <mat-paginator [length]="query?.totalCount"
+                     [pageSize]="query?.pageSize"
+                     [pageSizeOptions]="planeSrc.pageSizeOptions"
+                     [pageIndex]="query?.page - 1"
+                     (page)="planeSrc.onPage($event)"></mat-paginator>
+    </section>
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start stretch"
+             *ngIf="query?.data.length > 0"
+             class="container">
+      <plane-card *ngFor="let p of query.data"
+                  [plane]="p"
+                  (edit)="editPlane($event)"
+                  (remove)="removePlane($event)"></plane-card>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(query?.data.length > 0)">No Planes Available</p>
+  </ng-container>
+</section>

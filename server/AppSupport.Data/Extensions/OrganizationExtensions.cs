@@ -30,6 +30,10 @@ namespace AppSupport.Data.Extensions
             return await container.Query((orgs, s) => orgs.Search(s));
         }
 
+        public static async Task<List<Organization>> GetOrganizations(this AppDbContext db) =>
+            await db.Organizations
+                .OrderBy(x => x.Name)
+                .ToListAsync();
         public static async Task<Organization> GetOrganization(this AppDbContext db, int id) =>
             await db.Organizations
                 .FindAsync(id);

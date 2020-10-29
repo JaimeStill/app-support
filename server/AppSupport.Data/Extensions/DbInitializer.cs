@@ -16,13 +16,34 @@ namespace AppSupport.Data.Extensions
 
             if (!await db.Organizations.AnyAsync())
             {
-                Console.WriteLine("Seeding organizations...");
+                Console.WriteLine("Seeding organizations and planes...");
 
                 var organizations = new List<Organization>
                 {
-                    new Organization { Name = "Microsoft" },
-                    new Organization { Name = "Apple" },
-                    new Organization { Name = "Google" }
+                    new Organization
+                    {
+                        Name = "Microsoft",
+                        Planes = new List<Plane>
+                        {
+                            new Plane { Name = "Gulfstream V", Capacity = 16 }
+                        }
+                    },
+                    new Organization
+                    {
+                        Name = "Apple",
+                        Planes = new List<Plane>
+                        {
+                            new Plane { Name = "Cessna Citation CJ4", Capacity = 24 }
+                        }
+                    },
+                    new Organization
+                    {
+                        Name = "Google",
+                        Planes = new List<Plane>
+                        {
+                            new Plane { Name = "Cessna 172 Skyhawk", Capacity = 6 }
+                        }
+                    }
                 };
 
                 await db.Organizations.AddRangeAsync(organizations);
@@ -31,7 +52,7 @@ namespace AppSupport.Data.Extensions
 
             if (!await db.Branches.AnyAsync())
             {
-                Console.WriteLine("Seeding branches...");
+                Console.WriteLine("Seeding branches and ranks...");
 
                 var branches = new List<Branch>
                 {

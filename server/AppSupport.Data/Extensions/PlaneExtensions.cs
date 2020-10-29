@@ -16,8 +16,17 @@ namespace AppSupport.Data.Extensions
         static IQueryable<Plane> SetIncludes(this DbSet<Plane> planes) =>
             planes.Include(x => x.Organization);
 
-        static IQueryable<Plane> Search(this IQueryable<Plane> planes, string search) =>
-            planes.Where(x => x.Name.ToLower().Contains(search.ToLower()));
+        static IQueryable<Plane> Search(this IQueryable<Plane> planes, string search)
+        {
+            search = search.ToLower();
+
+            return planes.Where(x =>
+                x.Name.ToLower().Contains(search) ||
+                x.Organization.Name.ToLower().Contains(search)
+            );
+        }
+
+        static void ClearNavProps(this Plane plane) => plane.Organization = null;
 
         public static async Task<QueryResult<Plane>> QueryPlanes(
             this AppDbContext db,
@@ -51,6 +60,7 @@ namespace AppSupport.Data.Extensions
         {
             if (await plane.Validate(db))
             {
+                plane.ClearNavProps();
                 db.Planes.Update(plane);
                 await db.SaveChangesAsync();
             }

@@ -29,6 +29,9 @@ namespace AppSupport.Web.Controllers
             [FromQuery]string sort
         ) => Ok(await db.QueryOrganizations(page, pageSize, search, sort));
 
+        [HttpGet("[action]")]
+        public async Task<List<Organization>> GetOrganizations() => await db.GetOrganizations();
+
         [HttpGet("[action]/{id}")]
         public async Task<Organization> GetOrganization([FromRoute]int id) => await db.GetOrganization(id);
 
