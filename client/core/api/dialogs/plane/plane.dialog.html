@@ -13,7 +13,7 @@
              fxLayoutAlign="start stretch"
              class="container">
       <mat-form-field>
-        <mat-label>organization</mat-label>
+        <mat-label>Organization</mat-label>
         <mat-select [(ngModel)]="plane.organizationId">
           <mat-option *ngFor="let o of organizations"
                       [value]="o.id">{{o?.name}}</mat-option>
@@ -21,16 +21,22 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Plane Name</mat-label>
-        <input matInput [(ngModel)]="plane.name" />
+        <input matInput
+               [(ngModel)]="plane.name" />
       </mat-form-field>
-      <mat-slider [value]="plane.capacity"
-                  [min]="min"
-                  [max]="max"
-                  [thumbLabel]="true"
-                  [step]="1"
-                  [tickInterval]="5"
-                  (input)="updateCapacity($event)">
-      </mat-slider>
+      <p><span class="mat-body-strong">Capacity: </span>{{plane?.capacity}}</p>
+      <section fxLayout="row"
+               fxLayoutAlign="space-between center">
+        <mat-slider fxFlex
+                    [value]="plane.capacity"
+                    [min]="min"
+                    [max]="max"
+                    [thumbLabel]="true"
+                    [step]="1"
+                    [tickInterval]="5"
+                    (input)="updateCapacity($event)">
+        </mat-slider>
+      </section>
     </section>
   </mat-dialog-content>
   <mat-dialog-actions>

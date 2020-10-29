@@ -1,9 +1,9 @@
-<section fxLayout="row"
+<!-- <section fxLayout="row"
          fxLayoutAlign="center stretch"
          class="background card elevated"
          [style.width.px]="size">
   <section fxLayout="column"
-           fxLayoutAlign="start stretch"
+           fxLayoutAlign="space-between stretch"
            fxFlex
            class="container">
     <section fxLayout="row"
@@ -12,7 +12,7 @@
          fxFlex>{{plane?.name}}</p>
       <p>Capacity: {{plane?.capacity}}</p>
     </section>
-    <p>{{plane?.organization?.name}}</p>
+    <p [style.margin.px]="0">{{plane?.organization?.name}}</p>
    </section>
    <section fxLayout="column"
             fxLayoutAlign="space-between center"
@@ -29,4 +29,32 @@
       <mat-icon>delete</mat-icon>
     </button>
    </section>
+</section> -->
+<section fxLayout="row"
+         fxLayoutAlign="start center"
+         class="background card elevated"
+         [style.width.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="container"
+           fxFlex>
+    <span class="mat-body-strong">{{plane?.name}}</span>
+    <span>Capacity: {{plane?.capacity}}</span>
+    <span>{{plane?.organization.name}}</span>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="background stacked container">
+    <button mat-icon-button
+            color="warn"
+            matTOoltip="Remove"
+            (click)="remove.emit(plane)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button
+            matTooltip="Edit"
+            (click)="edit.emit(plane)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </section>
 </section>
