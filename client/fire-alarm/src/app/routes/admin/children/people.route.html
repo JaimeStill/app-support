@@ -1,0 +1,43 @@
+<mat-toolbar class="app-toolbar">
+    <button mat-stroked-button
+            color="primary"
+            (click)="addPerson()">
+      Add Person
+    </button>
+  </mat-toolbar>
+  <section class="container">
+    <p class="mat-title">People</p>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="personSrc.queryResult$ | async as query else loading">
+      <section fxLayout="row"
+               fxLayoutAlign="center stretch"
+               fxLayoutGap="8px"
+               class="container">
+        <searchbar label="Search People"
+                   fxFlex
+                   [minimum]="1"
+                   (search)="personSrc.onSearch($event)"
+                   (clear)="personSrc.clearSearch()"></searchbar>
+        <mat-paginator [length]="query?.totalCount"
+                       [pageSize]="query?.pageSize"
+                       [pageSizeOptions]="personSrc.pageSizeOptions"
+                       [pageIndex]="query?.page - 1"
+                       (page)="personSrc.onPage($event)"></mat-paginator>
+      </section>
+      <section fxLayout="row | wrap"
+               fxLayoutAlign="start stretch"
+               *ngIf="query?.data.length > 0"
+               class="container">
+        <person-card *ngFor="let p of query.data"
+                    [person]="p"
+                    (edit)="editPerson($event)"
+                    (remove)="removePerson($event)"></person-card>
+      </section>
+      <p class="mat-subheading-2"
+         *ngIf="!(query?.data.length > 0)">No People Available</p>
+    </ng-container>
+  </section>
+  

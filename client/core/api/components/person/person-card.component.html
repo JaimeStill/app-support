@@ -1,0 +1,26 @@
+<section class="background card elevated" 
+    fxLayout="row" 
+    fxLayoutAlign="start stretch"
+    [style.width.px]="size">
+    <section class="container" 
+        fxLayout="column" 
+        fxLayoutAlign="start stretch" 
+        fxFlex>
+        <p class="mat-body-strong" 
+            fxFlex>{{person?.lastName}}, {{person?.firstName}} {{person?.middleName}}</p>
+        <p>{{person?.nickname}}</p>
+    </section>
+    <section fxLayout="column" 
+    fxLayoutAlign="space-between center" 
+    class="background stacked container">
+    <button mat-icon-button matTooltip="Edit" 
+        (click)="edit.emit(person)">
+        <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" 
+        matTooltip="Remove" 
+            (click)="remove.emit(person)">
+        <mat-icon>delete</mat-icon>
+    </button>
+    </section>
+</section>

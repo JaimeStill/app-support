@@ -14,6 +14,10 @@ export class RankService {
   private rank = new BehaviorSubject<Rank>(null);
   rank$ = this.rank.asObservable();
 
+  private ranks = new BehaviorSubject<Rank[]>(null);
+  ranks$ = this.ranks.asObservable();
+
+
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
@@ -33,6 +37,12 @@ export class RankService {
         }
       );
   })
+
+  getRanks = () => this.http.get<Rank[]>(`${this.config.api}rank/getRanks`)
+    .subscribe(
+      data => this.ranks.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
+    );
 
   addRank = (rank: Rank): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}rank/addRank`, rank)

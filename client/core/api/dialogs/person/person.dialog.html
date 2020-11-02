@@ -1,0 +1,31 @@
+<div class="mat-typography">
+    <h2 mat-dialog-title>
+        <span *ngIf="person?.id > 0">Update Person</span>
+        <span *ngIf="!(person?.id > 0)">Add Person</span>
+    </h2>
+    <mat-dialog-content>
+        <ng-template #loading>
+            <mat-progress-bar mode="indeterminate"
+                              color="accent"></mat-progress-bar>
+        </ng-template>
+        <section *ngIf="organizationSvc.organizations$ | async as organizations else loading"
+                   fxLayout="column"
+                   fxLayoutAlign="start stretch"
+                   class="container">
+            <mat-form-field>
+                <mat-label>Organization</mat-label>
+                <mat-select [(ngModel)]="person.organizationId">
+                    <mat-option *ngFor="let o of organizations"
+                            [value]="o.id">{{o?.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button
+            (click)="savePerson()">Save</button>
+        <button mat-button
+            color="warn"
+            mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</div>
