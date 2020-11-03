@@ -15,16 +15,23 @@ import {
   PersonRoutes
 } from './person';
 
+import {
+  TemplateRouteComponents,
+  TemplateRoutes
+} from './template';
+
 export const RouteComponents = [
   ...AdminComponents,
   ...HomeComponents,
-  ...PersonRouteComponents
+  ...PersonRouteComponents,
+  ...TemplateRouteComponents
 ];
 
 export const Routes: Route[] = [
   ...AdminRoutes,
   ...HomeRoutes,
   ...PersonRoutes,
+  ...TemplateRoutes,
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

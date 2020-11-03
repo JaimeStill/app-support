@@ -1,0 +1,16 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="templateSvc.template$ | async as template else loading">
+  <mat-toolbar class="app-toolbar">
+    <span class="header">{{template?.title}}</span>
+    <button mat-stroked-button
+            (click)="editTemplate(template)">Edit Template</button>
+    <button mat-stroked-button
+            (click)="managePlanes(template)">Manage Planes</button>
+    <button mat-stroked-button
+            class="color success"
+            (click)="testPeopleDialog(template)">Test People Dialog</button>
+  </mat-toolbar>
+</ng-container>

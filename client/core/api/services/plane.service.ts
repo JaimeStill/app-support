@@ -11,7 +11,10 @@ import { Plane } from '../models';
 
 @Injectable()
 export class PlaneService {
+  private planes = new BehaviorSubject<Plane[]>(null);
   private plane = new BehaviorSubject<Plane>(null);
+
+  planes$ = this.planes.asObservable();
   plane$ = this.plane.asObservable();
 
   constructor(
@@ -19,6 +22,20 @@ export class PlaneService {
     private snacker: SnackerService,
     @Optional() private config: ServerConfig
   ) { }
+
+  getTemplatePlanes = (id: number): Promise<Plane[]> => new Promise((resolve) => {
+    this.http.get<Plane[]>(`${this.config.api}plane/getTemplatePlanes/${id}`)
+      .subscribe(
+        data => {
+          this.planes.next(data);
+          resolve(data);
+        },
+        err => {
+          this.snacker.sendErrorMessage(err.error);
+          resolve(null);
+        }
+      );
+  })
 
   getPlane = (id: number): Promise<Plane> => new Promise((resolve) => {
     this.http.get<Plane>(`${this.config.api}plane/getPlane/${id}`)

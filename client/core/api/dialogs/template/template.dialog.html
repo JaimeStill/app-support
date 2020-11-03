@@ -1,0 +1,53 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>
+    <span *ngIf="template?.id > 0">Update Template</span>
+    <span *ngIf="!(template?.id > 0)">Add Template</span>
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="templateForm"
+          (ngSubmit)="saveTemplate()">
+      <ng-template #loading>
+        <mat-progress-bar mode="indeterminate"
+                          color="accent"></mat-progress-bar>
+      </ng-template>
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch"
+               class="container"
+               *ngIf="organizationSvc.organizations$ | async as organizations else loading">
+        <mat-form-field>
+          <mat-label>Organization</mat-label>
+          <mat-select formControlName="organizationId">
+            <mat-option *ngFor="let o of organizations"
+                        [value]="o.id">{{o.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="templateForm?.controls?.organizationId?.errors?.required">Organization is a required
+            selection</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput
+                 formControlName="title">
+          <mat-error *ngIf="templateForm?.controls?.title?.errors?.required">Title is a required field</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput
+                    mat-autosize
+                    formControlName="description"
+                    [matAutosizeMinRows]="4"
+                    [matAutosizeMaxRows]="6"></textarea>
+          <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+      </section>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            class="color success"
+            [disabled]="templateForm.invalid"
+            (click)="saveTemplate()">Save</button>
+    <button mat-button
+            color="warn"
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

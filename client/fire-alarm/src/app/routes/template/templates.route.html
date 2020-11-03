@@ -1,0 +1,55 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="orgSvc.organizations$ | async as orgs else loading">
+  <ng-container *ngIf="org else loading">
+    <mat-toolbar class="app-toolbar">
+      <span class="header">Templates</span>
+      <button mat-stroked-button
+              (click)="addTemplate()">Add Template</button>
+      <span fxFlex></span>
+      <mat-form-field>
+        <mat-label>Organization</mat-label>
+        <mat-select [value]="org"
+                    (selectionChange)="selectOrg($event)">
+          <mat-option *ngFor="let o of orgs"
+                      [value]="o">{{o.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-toolbar>
+    <ng-template #loadingTemplates>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <section fxLayout="column"
+             fxLayoutAlign="start stretch"
+             class="container"
+             *ngIf="templateSrc.queryResult$ | async as qr else loadingTemplates">
+      <section fxLayout="row"
+               fxLayoutAlign="start center">
+        <searchbar label="Search Templates"
+                   fxFlex
+                   [minimum]="1"
+                   (search)="templateSrc.onSearch($event)"
+                   (clear)="templateSrc.clearSearch()"></searchbar>
+        <mat-paginator [length]="qr?.totalCount"
+                       [pageSize]="qr?.pageSize"
+                       [pageSizeOptions]="templateSrc.pageSizeOptions"
+                       [pageIndex]="qr?.page - 1"
+                       (page)="templateSrc.onPage($event)"></mat-paginator>
+      </section>
+      <section fxLayout="row | wrap"
+               fxLayoutAlign="start start"
+               class="background stacked"
+               *ngIf="qr?.data?.length > 0">
+        <template-card *ngFor="let template of qr?.data"
+                       [template]="template"
+                       (edit)="editTemplate($event)"
+                       (remove)="removeTemplate($event)"></template-card>
+      </section>
+      <p class="mat-subheading-2"
+         *ngIf="!(qr?.data?.length > 0)">No Templates Available</p>
+    </section>
+  </ng-container>
+</ng-container>

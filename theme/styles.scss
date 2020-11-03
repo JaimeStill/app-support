@@ -36,6 +36,7 @@
     color: $warn-contrast;
   }
 
+  .background.default,
   .background.card {
     background-color: $background-card;
   }
@@ -136,6 +137,14 @@ html, body, app-root, .app-frame {
   padding: 8px;
 }
 
+mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
+  font-size: 12px;
+
+  label.mat-form-field-label {
+      font-weight: bold;
+  }
+}
+
 mat-toolbar.mat-toolbar.app-toolbar {
   padding: 0 8px;
 
@@ -150,6 +159,10 @@ mat-toolbar.mat-toolbar.app-toolbar {
 
   button.mat-stroked-button:first-child {
     margin-left: 8px;
+  }
+
+  span.header {
+    margin-right: 24px;
   }
 }
 

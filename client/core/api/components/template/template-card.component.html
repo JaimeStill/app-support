@@ -1,0 +1,36 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="background card elevated"
+         [style.width.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="start center"
+           class="background stacked container">
+    <strong fxFlex>{{template?.title}}</strong>
+    <button mat-icon-button
+            color="warn"
+            (click)="remove.emit(template)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button
+            (click)="edit.emit(template)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </section>
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           class="container">
+    <p>{{template?.description}}</p>
+    <mat-divider></mat-divider>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="planeSvc.planes$ | async as planes else loading">
+      <ng-container *ngIf="planes.length > 0">
+        <p *ngFor="let p of planes">{{p.name}}</p>
+      </ng-container>
+      <p class="color warn"
+         *ngIf="!(planes.length > 0)">No Planes Available</p>
+    </ng-container>
+  </section>
+</section>

@@ -30,6 +30,9 @@ namespace AppSupport.Web.Controllers
         ) => Ok(await db.QueryPlanes(page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
+        public async Task<List<Plane>> GetTemplatePlanes([FromRoute]int id) => await db.GetTemplatePlanes(id);
+
+        [HttpGet("[action]/{id}")]
         public async Task<Plane> GetPlane([FromRoute]int id) => await db.GetPlane(id);
 
         [HttpPost("[action]")]

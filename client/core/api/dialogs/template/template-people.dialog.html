@@ -1,0 +1,65 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Template People</h2>
+  <mat-dialog-content>
+    <section fxLayout="row"
+             fxLayoutAlign="start stretch">
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch"
+               fxFlex>
+        <mat-toolbar>Available People</mat-toolbar>
+        <ng-template #loading>
+          <mat-progress-bar mode="indeterminate"
+                            color="accent"></mat-progress-bar>
+        </ng-template>
+        <section *ngIf="tpSrc.queryResult$ | async as qr else loading"
+                 class="container"
+                 fxLayout="column"
+                 fxLayoutAlign="start stretch">
+          <searchbar label="Search"
+                     hint="Use the pipe ('|') character to search multiple values. i.e. - A | B"
+                     fxFlex
+                     [minimum]="1"
+                     (search)="tpSrc.onSearch($event)"
+                     (clear)="tpSrc.clearSearch()"></searchbar>
+          <section fxLayout="column"
+                   fxLayoutAlign="start center"
+                   class="container">
+            <manifest-person *ngFor="let p of qr?.data"
+                             actionTip="Add"
+                             [blackout]="checkBlackout(p)"
+                             [person]="p"
+                             (action)="addPerson($event)"></manifest-person>
+          </section>
+          <mat-paginator class="background default"
+                         [length]="qr?.totalCount"
+                         [pageSize]="qr?.pageSize"
+                         [pageSizeOptions]="tpSrc.pageSizeOptions"
+                         [pageIndex]="qr?.page - 1"
+                         (page)="tpSrc.onPage($event)"></mat-paginator>
+        </section>
+      </section>
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch"
+               fxFlex>
+        <mat-toolbar>Selected People</mat-toolbar>
+        <section *ngIf="selected?.length > 0"
+                 class="container"
+                 fxLayout="column"
+                 fxLayoutAlign="start center">
+          <manifest-person *ngFor="let p of selected"
+                           actionIcon="keyboard_arrow_left"
+                           actionColor="warn"
+                           actionTip="Remove"
+                           [person]="p"
+                           (action)="removePerson($event)"></manifest-person>
+        </section>
+        <p class="mat-subheading-2"
+           *ngIf="!(selected?.length > 0)">No People Selected</p>
+      </section>
+    </section>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

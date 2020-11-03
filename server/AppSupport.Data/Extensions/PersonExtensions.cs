@@ -31,13 +31,13 @@ namespace AppSupport.Data.Extensions
 
     public static class PersonExtensions
     {
-        static IQueryable<Person> SetIncludes(this DbSet<Person> people) =>
+        public static IQueryable<Person> SetIncludes(this DbSet<Person> people) =>
             people
                 .Include(x => x.Organization)
                 .Include(x => x.Rank)
                     .ThenInclude(x => x.Branch);
 
-        static IQueryable<Person> SetupSearch(this IQueryable<Person> people, string search)
+        public static IQueryable<Person> SetupSearch(this IQueryable<Person> people, string search)
         {
             if (search.Contains('|'))
             {

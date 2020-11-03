@@ -43,6 +43,13 @@ namespace AppSupport.Data.Extensions
             return await container.Query((planes, s) => planes.Search(s));
         }
 
+        public static async Task<List<Plane>> GetTemplatePlanes(this AppDbContext db, int templateId) =>
+            await db.TemplatePlanes
+                .Where(x => x.TemplateId == templateId)
+                .Select(x => x.Plane)
+                .OrderBy(x => x.Name)
+                .ToListAsync();
+
         public static async Task<Plane> GetPlane(this AppDbContext db, int id) =>
             await db.Planes
                 .FindAsync(id);
