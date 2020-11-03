@@ -2,13 +2,18 @@ import { BranchCardComponent } from './branch';
 import { OrganizationCardComponent } from './organization';
 import { PlaneCardComponent } from './plane';
 import { RankCardComponent } from './rank';
-import { PersonCardComponent} from './person';
+
+import {
+  PeopleTableComponent,
+  PersonCardComponent
+} from './person';
 
 export const ApiComponents = [
   BranchCardComponent,
   OrganizationCardComponent,
   PlaneCardComponent,
   RankCardComponent,
+  PeopleTableComponent,
   PersonCardComponent
 ]
 

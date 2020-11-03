@@ -1,31 +1,100 @@
 <div class="mat-typography">
-    <h2 mat-dialog-title>
-        <span *ngIf="person?.id > 0">Update Person</span>
-        <span *ngIf="!(person?.id > 0)">Add Person</span>
-    </h2>
-    <mat-dialog-content>
-        <ng-template #loading>
-            <mat-progress-bar mode="indeterminate"
-                              color="accent"></mat-progress-bar>
-        </ng-template>
-        <section *ngIf="organizationSvc.organizations$ | async as organizations else loading"
-                   fxLayout="column"
-                   fxLayoutAlign="start stretch"
-                   class="container">
-            <mat-form-field>
-                <mat-label>Organization</mat-label>
-                <mat-select [(ngModel)]="person.organizationId">
-                    <mat-option *ngFor="let o of organizations"
-                            [value]="o.id">{{o?.name}}</mat-option>
+  <h2 mat-dialog-title>
+    <span *ngIf="person?.id > 0">Update Person</span>
+    <span *ngIf="!(person?.id > 0)">Add Person</span>
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="personForm"
+          (ngSubmit)="savePerson()">
+      <ng-template #loading>
+        <mat-progress-bar mode="indeterminate"
+                          color="accent"></mat-progress-bar>
+      </ng-template>
+      <section *ngIf="organizationSvc.organizations$ | async as organizations else loading"
+               fxLayout="column"
+               fxLayoutAlign="start stretch"
+               class="container">
+        <ng-container *ngIf="branchSvc.branches$ | async as branches else loading">
+          <mat-form-field>
+            <mat-label>Organization</mat-label>
+            <mat-select formControlName="organizationId">
+              <mat-option *ngFor="let o of organizations"
+                          [value]="o.id">{{o?.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Branch</mat-label>
+            <mat-select [value]="branchId" (selectionChange)="selectBranch($event)">
+              <mat-option *ngFor="let b of branches"
+                          [value]="b.id">{{b.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ng-container *ngIf="branchId > 0">
+            <ng-template #loadingRanks>
+              <mat-progress-bar mode="indeterminate"
+                                color="accent"></mat-progress-bar>
+            </ng-template>
+            <ng-container *ngIf="rankSvc.ranks$ | async as ranks else loadingRanks">
+              <mat-form-field>
+                <mat-label>Rank</mat-label>
+                <mat-select formControlName="rankId">
+                  <mat-option *ngFor="let r of ranks"
+                              [value]="r.id">{{r.label}} - {{r.name}} - {{r.grade}}</mat-option>
                 </mat-select>
-            </mat-form-field>
-        </section>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-button
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
+          <p *ngIf="!(branchId > 0)"
+             class="mat-subheading-2">Select a Branch</p>
+          <mat-form-field>
+            <mat-label>DoD ID</mat-label>
+            <input matInput
+                   formControlName="dodId" />
+            <mat-error *ngIf="personForm?.controls?.dodId?.errors?.required">DoD ID is a required field and consist of 10 numbers.</mat-error>
+            <mat-error *ngIf="personForm?.controls?.dodId?.errors?.pattern">DoD ID must be 10 numbers</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Middle Name</mat-label>
+            <input matInput formControlName="middleName">
+            <mat-hint>Optional</mat-hint>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Nickname</mat-label>
+            <input matInput formControlName="nickname">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Occupation</mat-label>
+            <input matInput formControlName="occupation">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>SSN</mat-label>
+            <input matInput formControlName="ssn">
+            <mat-error *ngIf="personForm?.controls?.ssn?.errors?.required">SSN is a required field</mat-error>
+            <mat-error *ngIf="personForm?.controls?.ssn?.errors?.pattern">SSN must be in format ###-##-####</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+        </ng-container>
+      </section>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            [disabled]="personForm.invalid"
+            class="color success"
             (click)="savePerson()">Save</button>
-        <button mat-button
+    <button mat-button
             color="warn"
             mat-dialog-close>Cancel</button>
-    </mat-dialog-actions>
+  </mat-dialog-actions>
 </div>

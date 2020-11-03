@@ -1,0 +1,66 @@
+ContextDetails
+
+User: 
+Local IP: ::1
+Local Port: 5000
+Remote IP: ::1
+Remote Port: 51801
+Content Type: 
+URL: http://localhost:5000/api/person/queryPeople?page=1&pageSize=50&sort=lastName%20asc&search=Dev|
+
+Headers
+Connection : keep-alive
+Accept : application/json, text/plain, */*
+Accept-Encoding : gzip, deflate, br
+Accept-Language : en-US,en;q=0.9
+Host : localhost:5000
+Referer : http://localhost:3000/
+User-Agent : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36
+DNT : 1
+Origin : http://localhost:3000
+Sec-Fetch-Site : same-site
+Sec-Fetch-Mode : cors
+Sec-Fetch-Dest : empty
+
+Exception Details
+The LINQ expression 'DbSet<Person>
+    .OrderBy(p => p.LastName)
+    .Cast()
+    .Join(
+        outer: DbSet<Organization>, 
+        inner: e => EF.Property<Nullable<int>>(e, "OrganizationId"), 
+        outerKeySelector: o => EF.Property<Nullable<int>>(o, "Id"), 
+        innerKeySelector: (o, i) => new TransparentIdentifier<Person, Organization>(
+            Outer = o, 
+            Inner = i
+        ))
+    .Join(
+        outer: DbSet<Rank>, 
+        inner: e => EF.Property<Nullable<int>>(e.Outer, "RankId"), 
+        outerKeySelector: r => EF.Property<Nullable<int>>(r, "Id"), 
+        innerKeySelector: (o, i) => new TransparentIdentifier<TransparentIdentifier<Person, Organization>, Rank>(
+            Outer = o, 
+            Inner = i
+        ))
+    .Join(
+        outer: DbSet<Branch>, 
+        inner: e => EF.Property<Nullable<int>>(e.Inner, "BranchId"), 
+        outerKeySelector: b => EF.Property<Nullable<int>>(b, "Id"), 
+        innerKeySelector: (o, i) => new TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<Person, Organization>, Rank>, Branch>(
+            Outer = o, 
+            Inner = i
+        ))
+    .Where(e => e.Outer.Outer.Outer.DodId.ToString()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.FirstName.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.LastName.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.MiddleName.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.Nickname.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.Occupation.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Inner.Name.ToLower()
+        .SplitContains(__values_0) || e.Outer.Inner.Grade.ToLower()
+        .SplitContains(__values_0) || e.Outer.Inner.Label.ToLower()
+        .SplitContains(__values_0) || e.Outer.Inner.Name.ToLower()
+        .SplitContains(__values_0) || e.Inner.Name.ToLower()
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.Ssn
+        .SplitContains(__values_0) || e.Outer.Outer.Outer.Title.ToLower()
+        .SplitContains(__values_0))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.

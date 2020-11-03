@@ -19,6 +19,7 @@ using AppSupport.Core.Upload;
 using AppSupport.Data;
 using AppSupport.Identity;
 using AppSupport.Identity.Mock;
+using System.Text.Json;
 
 namespace AppSupport.Web
 {
@@ -48,6 +49,7 @@ namespace AppSupport.Web
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
             services.AddDbContext<AppDbContext>(options =>

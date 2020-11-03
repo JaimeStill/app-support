@@ -4,5 +4,6 @@
     <mat-label>{{label}}</mat-label>
     <input #searchbar
            matInput>
+    <mat-hint *ngIf="hint">{{hint}}</mat-hint>
   </mat-form-field>
 </section>

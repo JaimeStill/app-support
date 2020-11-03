@@ -1,1 +1,8 @@
-<p class="mat-title">People</p>
+<mat-toolbar class="app-toolbar">
+  <span [style.margin-right.px]="24">People</span>
+  <button mat-stroked-button
+          (click)="addPerson()">Add Person</button>
+</mat-toolbar>
+<people-table [personSrc]="personSrc"
+              (edit)="editPerson($event)"
+              (remove)="removePerson($event)"></people-table>

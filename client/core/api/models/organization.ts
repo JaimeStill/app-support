@@ -1,3 +1,9 @@
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+
 import { Manifest } from './manifest';
 import { Person } from './person';
 import { Plane } from './plane';
@@ -12,3 +18,9 @@ export interface Organization {
   planes: Plane[];
   templates: Template[];
 }
+
+export const OrganizationForm = (org: Organization, fb: FormBuilder): FormGroup =>
+  fb.group({
+    id: [org.id],
+    name: [org.name, Validators.required]
+  });

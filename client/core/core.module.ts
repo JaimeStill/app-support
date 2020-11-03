@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import {
@@ -39,6 +39,7 @@ import { Pipes } from './pipes';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MaterialModule
   ],

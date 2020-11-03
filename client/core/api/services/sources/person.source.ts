@@ -16,16 +16,18 @@ import { Person } from '../../models';
 @Injectable()
 export class PersonSource extends QueryService<Person> implements DataSource<Person> {
   columns = [
+    'ssn',
+    'rank.label',
     'lastName',
     'firstName',
     'middleName',
+    'rank.branch.name',
+    'organization.name',
+    'title',
     'nickname',
     'occupation',
-    'ssn',
-    'title',
-    'rank.label',
-    'rank.branch.name',
-    'organization.name'
+    'dodId',
+    'actions'
   ];
 
   constructor(
@@ -40,6 +42,7 @@ export class PersonSource extends QueryService<Person> implements DataSource<Per
     };
 
     this.baseUrl = `${this.config.api}person/queryPeople`;
+    this.pageSize = 50;
   }
 
   trackPeople = (person: Person) => person.id;

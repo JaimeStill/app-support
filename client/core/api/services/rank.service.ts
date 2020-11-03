@@ -24,6 +24,12 @@ export class RankService {
     @Optional() private config: ServerConfig
   ) { }
 
+  getRanks = (branchId: number) => this.http.get<Rank[]>(`${this.config.api}rank/getRanks/${branchId}`)
+    .subscribe(
+      data => this.ranks.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
+    );
+
   getRank = (id: number): Promise<Rank> => new Promise((resolve) => {
     this.http.get<Rank>(`${this.config.api}rank/getRank/${id}`)
       .subscribe(
@@ -37,12 +43,6 @@ export class RankService {
         }
       );
   })
-
-  getRanks = () => this.http.get<Rank[]>(`${this.config.api}rank/getRanks`)
-    .subscribe(
-      data => this.ranks.next(data),
-      err => this.snacker.sendErrorMessage(err.error)
-    );
 
   addRank = (rank: Rank): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}rank/addRank`, rank)

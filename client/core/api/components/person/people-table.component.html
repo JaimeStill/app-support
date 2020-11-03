@@ -1,0 +1,138 @@
+<ng-template #loading>
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch">
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </section>
+</ng-template>
+<ng-container *ngIf="personSrc.queryResult$ | async as data else loading">
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           class="container">
+    <section fxLayout="row"
+             fxLayoutAlign="start center">
+      <searchbar label="Search"
+                 hint="Use the pipe ('|') character to search multiple values. i.e. - A | B"
+                 fxFlex
+                 [minimum]="1"
+                 (search)="personSrc.onSearch($event)"
+                 (clear)="personSrc.clearSearch()"></searchbar>
+      <mat-paginator [length]="data?.totalCount"
+                     [pageSize]="data?.pageSize"
+                     [pageSizeOptions]="personSrc.pageSizeOptions"
+                     [pageIndex]="data?.page - 1"
+                     (page)="personSrc.onPage($event)"></mat-paginator>
+    </section>
+    <table mat-table
+           [dataSource]="personSrc"
+           [trackBy]="personSrc.trackPeople"
+           matSort
+           [matSortActive]="personSrc.sort?.propertyName"
+           [matSortDirection]="personSrc.sort?.isDescending ? 'desc' : 'asc'"
+           (matSortChange)="personSrc.onSort($event)"
+           [style.width.%]="100">
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Last Name </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.lastName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> First Name </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.firstName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="middleName">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Middle Name </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.middleName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="dodId">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> DoD ID</th>
+        <td mat-cell
+            *matCellDef="let person">{{person.dodId}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nickname">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Nickname </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.nickname}}</td>
+      </ng-container>
+      <ng-container matColumnDef="occupation">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Occupation </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.occupation}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ssn">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> SSN </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.ssn}}</td>
+      </ng-container>
+      <ng-container matColumnDef="title">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Title </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.title}}</td>
+      </ng-container>
+      <ng-container matColumnDef="rank.label">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Rank </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.rank?.label}}</td>
+      </ng-container>
+      <ng-container matColumnDef="rank.branch.name">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Branch </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.rank?.branch?.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="organization.name">
+        <th mat-header-cell
+            mat-sort-header
+            *matHeaderCellDef> Organization </th>
+        <td mat-cell
+            *matCellDef="let person">{{person.organization?.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell
+            *matHeaderCellDef> Actions </th>
+        <td mat-cell
+            *matCellDef="let person">
+          <section fxLayout="row"
+                   fxLayoutAlign="space-between center">
+            <button mat-icon-button
+                    color="warn"
+                    matTooltip="Remove"
+                    (click)="remove.emit(person)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button
+                    matTooltip="Edit"
+                    (click)="edit.emit(person)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </section>
+        </td>
+      </ng-container>
+      <tr mat-header-row
+          *matHeaderRowDef="personSrc.columns"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: personSrc.columns;"></tr>
+    </table>
+  </section>
+</ng-container>

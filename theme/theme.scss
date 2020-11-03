@@ -9,16 +9,44 @@
 $light-primary: mat-palette($mat-blue, 800);
 $light-accent: mat-palette($mat-amber, 500);
 $light-warn: mat-palette($mat-red, 500);
+$light-success: mat-color(mat-palette($mat-green, A700));
+$light-info: mat-color(mat-palette($mat-light-blue, A700));
 
 $dark-primary: mat-palette($mat-blue, A200);
 $dark-accent: mat-palette($mat-amber, A200);
 $dark-warn: mat-palette($mat-red, A200);
+$dark-success: mat-color(mat-palette($mat-green, A200));
+$dark-info: mat-color(mat-palette($mat-light-blue, A200));
 
 .app-light {
   $default-theme: mat-light-theme($light-primary, $light-accent);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
+
+  .color.success {
+    color: $light-success;
+  }
+
+  .color.info {
+    color: $light-info;
+  }
+
+  .background.success {
+    color: $light-success;
+  }
+
+  .background.info {
+    color: $light-info;
+  }
+
+  .card-outline-success {
+    border: 1px solid $light-success;
+  }
+
+  .card-outline-info {
+    border: 1px solid $light-info;
+  }
 }
 
 .app-dark {
@@ -26,4 +54,28 @@ $dark-warn: mat-palette($mat-red, A200);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
+
+  .color.success {
+    color: $dark-success;
+  }
+
+  .color.info {
+    color: $dark-info;
+  }
+
+  .background.success {
+    color: $dark-success;
+  }
+
+  .background.info {
+    color: $dark-info;
+  }
+
+  .card-outline-success {
+    border: 1px solid $dark-success;
+  }
+
+  .card-outline-info {
+    border: 1px solid $dark-info;
+  }
 }

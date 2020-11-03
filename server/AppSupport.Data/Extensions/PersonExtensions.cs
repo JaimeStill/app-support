@@ -11,6 +11,24 @@ using AppSupport.Data.Entities;
 
 namespace AppSupport.Data.Extensions
 {
+    class SplitEqualityComparer : IEqualityComparer<string>
+    {
+        public bool Equals(string s1, string s2)
+        {
+            var values = s1.Split('|');
+
+            foreach (var v in values)
+            {
+                if (s2.ToLower().Contains(v.ToLower()))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public int GetHashCode(string s) => s.GetHashCode();
+    }
+
     public static class PersonExtensions
     {
         static IQueryable<Person> SetIncludes(this DbSet<Person> people) =>
@@ -19,8 +37,45 @@ namespace AppSupport.Data.Extensions
                 .Include(x => x.Rank)
                     .ThenInclude(x => x.Branch);
 
-        static IQueryable<Person> Search(this IQueryable<Person> people, string search) =>
-            people.Where(x => x.FirstName.ToLower().Contains(search.ToLower()));
+        static IQueryable<Person> SetupSearch(this IQueryable<Person> people, string search)
+        {
+            if (search.Contains('|'))
+            {
+                var searches = search.Split('|');
+
+                foreach (var s in searches)
+                {
+                    people = people.Search(s.Trim());
+                }
+
+                return people;
+            }
+            else
+            {
+                return people.Search(search);
+            }
+        }
+
+        static IQueryable<Person> Search(this IQueryable<Person> people, string search)
+        {
+            search = search.ToLower();
+
+            return people.Where(x =>
+                x.DodId.ToString().Contains(search) ||
+                x.FirstName.ToLower().Contains(search) ||
+                x.LastName.ToLower().Contains(search) ||
+                x.MiddleName.ToLower().Contains(search) ||
+                x.Nickname.ToLower().Contains(search) ||
+                x.Occupation.ToLower().Contains(search) ||
+                x.Organization.Name.ToLower().Contains(search) ||
+                x.Rank.Grade.ToLower().Contains(search) ||
+                x.Rank.Label.ToLower().Contains(search) ||
+                x.Rank.Name.ToLower().Contains(search) ||
+                x.Rank.Branch.Name.ToLower().Contains(search) ||
+                x.Ssn.Contains(search) ||
+                x.Title.ToLower().Contains(search)
+            );
+        }
 
         public static async Task<QueryResult<Person>> QueryPeople(
             this AppDbContext db,
@@ -34,7 +89,7 @@ namespace AppSupport.Data.Extensions
                 page, pageSize, search, sort
             );
 
-            return await container.Query((people, s) => people.Search(s));
+            return await container.Query((people, s) => people.SetupSearch(s));
         }
 
         public static async Task<Person> GetPerson(this AppDbContext db, int id) =>

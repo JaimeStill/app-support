@@ -43,6 +43,12 @@ namespace AppSupport.Data.Extensions
             return await container.Query((ranks, s) => ranks.Search(s));
         }
 
+        public static async Task<List<Rank>> GetRanks(this AppDbContext db, int branchId) =>
+            await db.Ranks
+                .Where(x => x.BranchId == branchId)
+                .OrderBy(x => x.Order)
+                .ToListAsync();
+
         public static async Task<Rank> GetRank(this AppDbContext db, int id) =>
             await db.Ranks
                 .FindAsync(id);

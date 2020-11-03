@@ -19,6 +19,7 @@ export class SearchbarComponent implements OnDestroy {
   sub: Subscription;
 
   @Input() label = 'Search';
+  @Input() hint: string;
   @Input() minimum = 2;
   @Output() search = new EventEmitter<string>();
   @Output() clear = new EventEmitter();

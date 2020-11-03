@@ -31,6 +31,9 @@ namespace AppSupport.Web.Controllers
         ) => Ok(await db.QueryRanks(branchId, page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
+        public async Task<List<Rank>> GetRanks([FromRoute]int id) => await db.GetRanks(id);
+
+        [HttpGet("[action]/{id}")]
         public async Task<Rank> GetRank([FromRoute]int id) => await db.GetRank(id);
 
         [HttpPost("[action]")]
