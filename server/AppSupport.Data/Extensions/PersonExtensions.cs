@@ -11,24 +11,6 @@ using AppSupport.Data.Entities;
 
 namespace AppSupport.Data.Extensions
 {
-    class SplitEqualityComparer : IEqualityComparer<string>
-    {
-        public bool Equals(string s1, string s2)
-        {
-            var values = s1.Split('|');
-
-            foreach (var v in values)
-            {
-                if (s2.ToLower().Contains(v.ToLower()))
-                    return true;
-            }
-
-            return false;
-        }
-
-        public int GetHashCode(string s) => s.GetHashCode();
-    }
-
     public static class PersonExtensions
     {
         public static IQueryable<Person> SetIncludes(this DbSet<Person> people) =>

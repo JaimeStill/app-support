@@ -11,7 +11,7 @@ import {
 
 import {
   Person,
-  Template
+  PlaneModel
 } from '../../models';
 
 import {
@@ -32,24 +32,31 @@ export class TemplatePeopleDialog implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<TemplatePeopleDialog>,
-    @Inject(MAT_DIALOG_DATA) private template: Template,
+    @Inject(MAT_DIALOG_DATA) public plane: PlaneModel,
     public tpSrc: TemplatePersonSource,
     public templateSvc: TemplateService
   ) { }
 
   ngOnInit() {
-    if (this.template?.id > 0)
-      this.tpSrc.setBaseUrl(this.template?.id);
+    if (this.plane?.parentId > 0)
+      this.tpSrc.setBaseUrl(this.plane.parentId);
     else
       this.dialogRef.close();
   }
 
   checkBlackout = (p: Person) => this.selected.find(person => person.id === p.id);
 
+  checkCapacity = () => this.selected.length + this.plane.reserved >= this.plane.capacity;
+
   addPerson = (p: Person) => this.selected.indexOf(p) === -1 && this.selected.push(p);
 
   removePerson = (p: Person) => {
     const index = this.selected.indexOf(p);
     index > -1 && this.selected.splice(index, 1);
+  }
+
+  savePeople = async () => {
+    const res = await this.templateSvc.addTemplatePlanePeople(this.plane.altId, this.selected);
+    res && this.dialogRef.close(true);
   }
 }

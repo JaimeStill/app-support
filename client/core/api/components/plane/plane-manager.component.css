@@ -1,0 +1,7 @@
+section.background.card {
+  overflow: hidden;
+}
+
+section.container {
+  overflow: auto;
+}

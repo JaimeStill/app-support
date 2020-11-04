@@ -9,8 +9,25 @@
             (click)="editTemplate(template)">Edit Template</button>
     <button mat-stroked-button
             (click)="managePlanes(template)">Manage Planes</button>
-    <button mat-stroked-button
-            class="color success"
-            (click)="testPeopleDialog(template)">Test People Dialog</button>
   </mat-toolbar>
+  <ng-template #loadingPlanes>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="templateSvc.templatePlanes$ | async as planes else loading">
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start start"
+             class="background stacked container"
+             *ngIf="planes?.length > 0">
+      <plane-manager *ngFor="let p of planes"
+                     [plane]="p"
+                     (add)="addPeople($event)"
+                     (remove)="removePlane($event)">
+        <template-people [templatePlaneId]="p.altId"
+                         (action)="removePerson($event, template)"></template-people>
+      </plane-manager>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(planes?.length > 0)">No Planes Available</p>
+  </ng-container>
 </ng-container>

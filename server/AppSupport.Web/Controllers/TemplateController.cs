@@ -7,6 +7,7 @@ using AppSupport.Core.ApiQuery;
 using AppSupport.Data;
 using AppSupport.Data.Entities;
 using AppSupport.Data.Extensions;
+using AppSupport.Data.Models;
 
 namespace AppSupport.Web.Controllers
 {
@@ -20,6 +21,8 @@ namespace AppSupport.Web.Controllers
             this.db = db;
         }
 
+        #region Template
+
         [HttpGet("[action]/{id}")]
         [ProducesResponseType(typeof(QueryResult<Template>), 200)]
         public async Task<IActionResult> QueryTemplates(
@@ -29,16 +32,6 @@ namespace AppSupport.Web.Controllers
             [FromQuery]string search,
             [FromQuery]string sort
         ) => Ok(await db.QueryTemplates(id, page, pageSize, search, sort));
-
-        [HttpGet("[action]/{id}")]
-        [ProducesResponseType(typeof(QueryResult<Person>), 200)]
-        public async Task<IActionResult> QueryAvailableTemplatePeople(
-            [FromRoute]int id,
-            [FromQuery]string page,
-            [FromQuery]string pageSize,
-            [FromQuery]string search,
-            [FromQuery]string sort
-        ) => Ok(await db.QueryAvailableTemplatePeople(id, page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
         public async Task<Template> GetTemplate([FromRoute]int id) => await db.GetTemplate(id);
@@ -51,5 +44,50 @@ namespace AppSupport.Web.Controllers
 
         [HttpPost("[action]")]
         public async Task RemoveTemplate([FromBody]Template template) => await db.RemoveTemplate(template);
+
+        #endregion
+
+        #region Template Planes
+
+        [HttpGet("[action]/{templateId}/{orgId}")]
+        public async Task<List<Plane>> GetAvailableTemplatePlanes([FromRoute]int templateId, [FromRoute]int orgId) =>
+            await db.GetAvailableTemplatePlanes(templateId, orgId);
+
+        [HttpGet("[action]/{id}")]
+        public async Task<List<PlaneModel>> GetTemplatePlanes([FromRoute]int id) => await db.GetTemplatePlanes(id);
+
+        [HttpPost("[action]/{id}")]
+        public async Task AddTemplatePlanes([FromRoute]int id, [FromBody]List<Plane> planes) => await db.AddTemplatePlanes(id, planes);
+
+        [HttpPost("[action]")]
+        public async Task RemoveTemplatePlane([FromBody]TemplatePlane templatePlane) => await db.RemoveTemplatePlane(templatePlane);
+
+        #endregion
+
+        #region Template Plane People
+
+        [HttpGet("[action]/{id}")]
+        [ProducesResponseType(typeof(QueryResult<Person>), 200)]
+        public async Task<IActionResult> QueryAvailableTemplatePeople(
+            [FromRoute]int id,
+            [FromQuery]string page,
+            [FromQuery]string pageSize,
+            [FromQuery]string search,
+            [FromQuery]string sort
+        ) => Ok(await db.QueryAvailableTemplatePeople(id, page, pageSize, search, sort));
+
+        [HttpGet("[action]/{id}")]
+        public async Task<List<PersonModel>> GetTemplatePeople([FromRoute]int id) => await db.GetTemplatePeople(id);
+
+        [HttpGet("[action]/{id}/{search}")]
+        public async Task<List<PersonModel>> SearchTemplatePeople([FromRoute]int id, [FromRoute]string search) => await db.GetTemplatePeople(id, search);
+
+        [HttpPost("[action]/{id}")]
+        public async Task AddTemplatePlanePeople([FromRoute]int id, [FromBody]List<Person> people) => await db.AddTemplatePlanePeople(id, people);
+
+        [HttpPost("[action]")]
+        public async Task RemoveTemplatePlanePerson([FromBody]TemplatePlanePerson templatePlanePerson) => await db.RemoveTemplatePlanePerson(templatePlanePerson);
+
+        #endregion
     }
 }

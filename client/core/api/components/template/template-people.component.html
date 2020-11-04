@@ -1,0 +1,25 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="templateSvc.people$ | async as people else loading">
+  <ng-container *ngIf="people.length > 0">
+    <searchbar label="Search People"
+               [minimum]="1"
+               (search)="templateSvc.searchTemplatePeople(templatePlaneId, $event)"
+               (clear)="templateSvc.getTemplatePeople(templatePlaneId)"></searchbar>
+    <section class="content"
+             fxLayout="column"
+             fxLayoutAlign="start center">
+      <person-card *ngFor="let p of people"
+                   [size]="size"
+                   [person]="p"
+                   [actionTip]="actionTip"
+                   [actionColor]="actionColor"
+                   [actionIcon]="actionIcon"
+                   (action)="action.emit($event)"></person-card>
+    </section>
+  </ng-container>
+  <p class="mat-subheading-2"
+     *ngIf="!(people.length > 0)">No People Assigned</p>
+</ng-container>

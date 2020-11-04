@@ -1,0 +1,36 @@
+ContextDetails
+
+User: 
+Local IP: ::1
+Local Port: 5000
+Remote IP: ::1
+Remote Port: 50449
+Content Type: 
+URL: http://localhost:5000/api/template/getTemplatePeople/2
+
+Headers
+Connection : keep-alive
+Accept : application/json, text/plain, */*
+Accept-Encoding : gzip, deflate, br
+Accept-Language : en-US,en;q=0.9
+Host : localhost:5000
+Referer : http://localhost:3000/
+User-Agent : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36
+DNT : 1
+Origin : http://localhost:3000
+Sec-Fetch-Site : same-site
+Sec-Fetch-Mode : cors
+Sec-Fetch-Dest : empty
+
+Exception Details
+The LINQ expression 'DbSet<TemplatePlanePerson>
+    .Join(
+        outer: DbSet<Person>, 
+        inner: t => EF.Property<Nullable<int>>(t, "PersonId"), 
+        outerKeySelector: p => EF.Property<Nullable<int>>(p, "Id"), 
+        innerKeySelector: (o, i) => new TransparentIdentifier<TemplatePlanePerson, Person>(
+            Outer = o, 
+            Inner = i
+        ))
+    .Where(t => t.Outer.TemplatePlaneId == __templatePlaneId_0 && t.Inner
+        .Compare(__search_1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to either AsEnumerable(), AsAsyncEnumerable(), ToList(), or ToListAsync(). See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.

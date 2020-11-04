@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 
 import { Template } from '../../models';
-import { PlaneService } from '../../services';
+import { TemplateService } from '../../services';
 
 @Component({
   selector: 'template-card',
   templateUrl: 'template-card.component.html',
-  providers: [PlaneService]
+  providers: [TemplateService]
 })
 export class TemplateCardComponent implements OnInit {
   @Input() size = 380;
@@ -21,12 +21,12 @@ export class TemplateCardComponent implements OnInit {
   @Output() remove = new EventEmitter<Template>();
 
   constructor(
-    public planeSvc: PlaneService
+    public templateSvc: TemplateService
   ) { }
 
   ngOnInit() {
     if (this.template?.id > 0) {
-      this.planeSvc.getTemplatePlanes(this.template.id);
+      this.templateSvc.getTemplatePlanes(this.template.id);
     }
   }
 }

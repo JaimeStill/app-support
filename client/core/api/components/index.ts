@@ -2,24 +2,38 @@ import { BranchCardComponent } from './branch';
 import { OrganizationCardComponent } from './organization';
 
 import {
-  ManifestPersonComponent,
+  PersonCardComponent,
   PeopleTableComponent,
-  PersonCardComponent
+  PersonAdminCardComponent
 } from './person';
 
-import { PlaneCardComponent } from './plane';
+import {
+  PlaneAdminCardComponent,
+  PlaneCardComponent,
+  PlaneDisplayComponent,
+  PlaneManagerComponent
+} from './plane';
+
 import { RankCardComponent } from './rank';
-import { TemplateCardComponent } from './template';
+
+import {
+  TemplateCardComponent,
+  TemplatePeopleComponent
+} from './template';
 
 export const ApiComponents = [
   BranchCardComponent,
-  ManifestPersonComponent,
+  PersonCardComponent,
   OrganizationCardComponent,
   PeopleTableComponent,
-  PersonCardComponent,
+  PersonAdminCardComponent,
+  PlaneAdminCardComponent,
   PlaneCardComponent,
+  PlaneDisplayComponent,
+  PlaneManagerComponent,
   RankCardComponent,
-  TemplateCardComponent
+  TemplateCardComponent,
+  TemplatePeopleComponent
 ]
 
 export * from './branch';

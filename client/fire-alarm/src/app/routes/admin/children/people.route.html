@@ -31,13 +31,12 @@
                fxLayoutAlign="start stretch"
                *ngIf="query?.data.length > 0"
                class="container">
-        <person-card *ngFor="let p of query.data"
+        <person-admin-card *ngFor="let p of query.data"
                     [person]="p"
                     (edit)="editPerson($event)"
-                    (remove)="removePerson($event)"></person-card>
+                    (remove)="removePerson($event)"></person-admin-card>
       </section>
       <p class="mat-subheading-2"
          *ngIf="!(query?.data.length > 0)">No People Available</p>
     </ng-container>
   </section>
-  

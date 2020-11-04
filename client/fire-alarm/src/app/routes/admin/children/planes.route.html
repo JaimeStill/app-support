@@ -31,10 +31,10 @@
              fxLayoutAlign="start stretch"
              *ngIf="query?.data.length > 0"
              class="container">
-      <plane-card *ngFor="let p of query.data"
+      <plane-admin-card *ngFor="let p of query.data"
                   [plane]="p"
                   (edit)="editPlane($event)"
-                  (remove)="removePlane($event)"></plane-card>
+                  (remove)="removePlane($event)"></plane-admin-card>
     </section>
     <p class="mat-subheading-2"
        *ngIf="!(query?.data.length > 0)">No Planes Available</p>

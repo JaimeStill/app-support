@@ -1,0 +1,28 @@
+<section fxLayout="row"
+         fxLayoutAlign="start center"
+         class="background card elevated"
+         [style.width.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="container"
+           fxFlex>
+    <span class="mat-body-strong">{{plane?.name}}</span>
+    <span>Capacity: {{plane?.capacity}}</span>
+    <span>{{plane?.organization.name}}</span>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="background stacked container">
+    <button mat-icon-button
+            color="warn"
+            matTOoltip="Remove"
+            (click)="remove.emit(plane)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button
+            matTooltip="Edit"
+            (click)="edit.emit(plane)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </section>
+</section>

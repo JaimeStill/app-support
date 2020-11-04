@@ -9,9 +9,16 @@ import {
 } from '@angular/router';
 
 import {
+  ConfirmDialog,
+  PersonModel,
+  Plane,
+  PlaneModel,
   Template,
+  TemplatePlane,
+  TemplatePlanePerson,
   TemplateDialog,
   TemplatePeopleDialog,
+  TemplatePlaneDialog,
   TemplateService
 } from 'core';
 
@@ -35,6 +42,7 @@ export class TemplateRoute implements OnInit {
   private loadTemplate = async (id: number) => {
     const res = await this.templateSvc.getTemplate(id);
     if (!res) this.navigate();
+    this.templateSvc.getTemplatePlanes(id);
   }
 
   ngOnInit() {
@@ -57,11 +65,49 @@ export class TemplateRoute implements OnInit {
   .afterClosed()
   .subscribe(res => res && this.templateSvc.getTemplate(template.id));
 
-  managePlanes = (template: Template) => { }
-
-  testPeopleDialog = (template: Template) => this.dialog.open(TemplatePeopleDialog, {
+  managePlanes = (template: Template) => this.dialog.open(TemplatePlaneDialog, {
     data: template,
     disableClose: true,
     width: '1200px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.templateSvc.getTemplatePlanes(template.id));
+
+  addPeople = (p: PlaneModel) => this.dialog.open(TemplatePeopleDialog, {
+    data: p,
+    disableClose: true,
+    width: '1200px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.templateSvc.getTemplatePlanes(p.parentId));
+
+  removePlane = (p: PlaneModel) => this.dialog.open(ConfirmDialog, {
+    data: {
+      title: `Remove ${p.name}`,
+      content: `Are you sure you want to remove ${p.name} (and all of its passengers) from the template?`
+    },
+    disableClose: true
+  })
+  .afterClosed()
+  .subscribe(async result => {
+    if (result) {
+      const res = await this.templateSvc.removeTemplatePlane(p);
+      res && this.templateSvc.getTemplatePlanes(p.parentId);
+    }
+  })
+
+  removePerson = (p: PersonModel, t: Template) => this.dialog.open(ConfirmDialog, {
+    data: {
+      title: `Remove ${p.lastName}, ${p.firstName}`,
+      content: `Are you sure you want to remove ${p.lastName}, ${p.firstName} from the plane?`
+    },
+    disableClose: true
+  })
+  .afterClosed()
+  .subscribe(async result => {
+    if (result) {
+     const res = await this.templateSvc.removeTemplatePlanePerson(p);
+     res && this.templateSvc.getTemplatePlanes(t.id);
+    }
   });
 }

@@ -6,7 +6,8 @@ import { RankDialog } from './rank';
 
 import {
   TemplateDialog,
-  TemplatePeopleDialog
+  TemplatePeopleDialog,
+  TemplatePlaneDialog
 } from './template';
 
 export const ApiDialogs = [
@@ -16,7 +17,8 @@ export const ApiDialogs = [
   PlaneDialog,
   RankDialog,
   TemplateDialog,
-  TemplatePeopleDialog
+  TemplatePeopleDialog,
+  TemplatePlaneDialog
 ]
 
 export * from './branch';

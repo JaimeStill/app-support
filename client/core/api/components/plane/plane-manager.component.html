@@ -1,0 +1,23 @@
+<section class="background card"
+         [ngClass]="plane?.reserved < plane?.capacity ? 'card-outline' : 'card-outline-warn'"
+         [style.width.px]="width">
+  <mat-toolbar>
+    <span fxFlex>{{plane?.name}}</span>
+    <span [style.margin-right.px]="16">{{plane?.reserved}} / {{plane?.capacity}}</span>
+    <button mat-stroked-button
+            color="warn"
+            [style.margin-right.px]="8"
+            (click)="remove.emit(plane)">
+      Remove Plane
+    </button>
+    <button mat-stroked-button
+            color="primary"
+            [style.margin-left.px]="8"
+            (click)="add.emit(plane)">
+      Add People
+    </button>
+  </mat-toolbar>
+  <section class="container" [style.max-height.px]="height">
+    <ng-content></ng-content>
+  </section>
+</section>

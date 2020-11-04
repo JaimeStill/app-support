@@ -1,26 +1,19 @@
-<section class="background card elevated" 
-    fxLayout="row" 
-    fxLayoutAlign="start stretch"
-    [style.width.px]="size">
-    <section class="container" 
-        fxLayout="column" 
-        fxLayoutAlign="start stretch" 
-        fxFlex>
-        <p class="mat-body-strong" 
-            fxFlex>{{person?.lastName}}, {{person?.firstName}} {{person?.middleName}}</p>
-        <p>{{person?.nickname}}</p>
-    </section>
-    <section fxLayout="column" 
-    fxLayoutAlign="space-between center" 
-    class="background stacked container">
-    <button mat-icon-button matTooltip="Edit" 
-        (click)="edit.emit(person)">
-        <mat-icon>edit</mat-icon>
+<section gdAreas="rank name ssn action"
+         gdAlignColumns="start center"
+         gdColumns="56px auto 48px 56px"
+         class="background card elevated"
+         [ngStyle]="{'text-decoration': blackout ? 'line-through' : 'none'}"
+         [style.width.px]="size">
+  <span gdArea="rank" [style.margin-left.px]="8">{{person?.rank?.label}}</span>
+  <span gdArea="name">{{person?.lastName}}, {{person?.firstName}}</span>
+  <span gdArea="ssn">{{person?.ssn?.slice(-4)}}</span>
+  <section gdArea="action" class="background stacked container">
+    <button mat-icon-button
+            [disabled]="blackout || capacity"
+            [color]="actionColor"
+            [matTooltip]="actionTip"
+            (click)="action.emit(person)">
+      <mat-icon>{{actionIcon}}</mat-icon>
     </button>
-    <button mat-icon-button color="warn" 
-        matTooltip="Remove" 
-            (click)="remove.emit(person)">
-        <mat-icon>delete</mat-icon>
-    </button>
-    </section>
+  </section>
 </section>

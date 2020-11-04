@@ -20,14 +20,14 @@
            fxLayoutAlign="start stretch"
            class="container">
     <p>{{template?.description}}</p>
-    <mat-divider></mat-divider>
     <ng-template #loading>
       <mat-progress-bar mode="indeterminate"
                         color="accent"></mat-progress-bar>
     </ng-template>
-    <ng-container *ngIf="planeSvc.planes$ | async as planes else loading">
+    <ng-container *ngIf="templateSvc.templatePlanes$ | async as planes else loading">
       <ng-container *ngIf="planes.length > 0">
-        <p *ngFor="let p of planes">{{p.name}}</p>
+        <plane-display *ngFor="let p of planes"
+                       [plane]="p"></plane-display>
       </ng-container>
       <p class="color warn"
          *ngIf="!(planes.length > 0)">No Planes Available</p>
