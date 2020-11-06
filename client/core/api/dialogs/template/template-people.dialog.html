@@ -32,7 +32,7 @@
                       [disabled]="checkBlackout(p) || checkCapacity()"
                       matTooltip="Add"
                       (click)="addPerson(p)">
-                <mat-icon>keyboard_arrow_right</mat-icon>
+                <mat-icon>switch_left</mat-icon>
               </button>
             </person-card>
           </section>
@@ -57,10 +57,9 @@
           <person-card *ngFor="let p of selected"
                        [person]="p">
             <button mat-icon-button
-                    color="warn"
                     matTooltip="Remove"
                     (click)="removePerson(p)">
-              <mat-icon>keyboard_arrow_left</mat-icon>
+              <mat-icon>switch_right</mat-icon>
             </button>
           </person-card>
         </section>
@@ -70,10 +69,10 @@
     </section>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button
+    <button mat-stroked-button
             class="color success"
             (click)="savePeople()">Save</button>
-    <button mat-button
+    <button mat-stroked-button
             mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </div>

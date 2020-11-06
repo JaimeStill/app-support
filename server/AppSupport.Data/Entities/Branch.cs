@@ -7,6 +7,6 @@ namespace AppSupport.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Rank> Ranks { get; set; }
+        public IEnumerable<Rank> Ranks { get; set; }
     }
 }

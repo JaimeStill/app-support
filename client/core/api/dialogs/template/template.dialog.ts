@@ -56,6 +56,6 @@ export class TemplateDialog implements OnInit {
       ? await this.templateSvc.updateTemplate(this.templateForm.value)
       : await this.templateSvc.addTemplate(this.templateForm.value);
 
-    res && this.dialogRef.close(true);
+    res && this.dialogRef.close(res);
   }
 }

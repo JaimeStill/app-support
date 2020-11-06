@@ -11,6 +11,6 @@ namespace AppSupport.Data.Entities
         public Manifest Manifest { get; set; }
         public Plane Plane { get; set; }
 
-        public virtual ICollection<ManifestPerson> ManifestPeople { get; set; }
+        public IEnumerable<ManifestPerson> ManifestPeople { get; set; }
     }
 }

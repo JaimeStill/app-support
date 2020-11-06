@@ -12,7 +12,7 @@ namespace AppSupport.Data.Entities
 
         public Organization Organization { get; set; }
 
-        public virtual ICollection<ManifestPlane> PlaneManifests { get; set; }
-        public virtual ICollection<TemplatePlane> PlaneTemplates { get; set; }
+        public IEnumerable<ManifestPlane> PlaneManifests { get; set; }
+        public IEnumerable<TemplatePlane> PlaneTemplates { get; set; }
     }
 }

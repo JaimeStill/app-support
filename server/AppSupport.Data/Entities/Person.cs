@@ -22,9 +22,9 @@ namespace AppSupport.Data.Entities
         public Organization Organization { get; set; }
         public Rank Rank { get; set; }
 
-        public virtual ICollection<Person> Associates { get; set; }
-        public virtual ICollection<ManifestPerson> ManifestPlanes { get; set; }
-        public virtual ICollection<TemplatePerson> TemplatePlanes { get; set; }
-        public virtual ICollection<ManifestPerson> Trips { get; set; }
+        public IEnumerable<Person> Associates { get; set; }
+        public IEnumerable<ManifestPerson> ManifestPlanes { get; set; }
+        public IEnumerable<TemplatePerson> TemplatePlanes { get; set; }
+        public IEnumerable<ManifestPerson> Trips { get; set; }
     }
 }

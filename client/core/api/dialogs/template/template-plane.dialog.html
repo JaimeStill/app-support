@@ -19,6 +19,7 @@
           <ng-container *ngIf="planes?.length > 0">
             <plane-card *ngFor="let p of planes"
                         actionTip="Add"
+                        actionIcon="switch_left"
                         [blackout]="checkBlackout(p)"
                         [plane]="p"
                         (action)="addPlane($event)"></plane-card>
@@ -37,8 +38,7 @@
                  fxLayout="column"
                  fxLayoutAlign="start center">
           <plane-card *ngFor="let p of selected"
-                      actionIcon="keyboard_arrow_left"
-                      actionColor="warn"
+                      actionIcon="switch_right"
                       actionTip="Remove"
                       [plane]="p"
                       (action)="removePlane($event)"></plane-card>
@@ -49,11 +49,11 @@
     </section>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button
+    <button mat-stroked-button
             class="color success"
             [disabled]="saving"
             (click)="savePlanes()">Save</button>
-    <button mat-button
+    <button mat-stroked-button
             mat-dialog-close
             [disabled]="saving">Cancel</button>
   </mat-dialog-actions>

@@ -8,10 +8,10 @@ namespace AppSupport.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<Manifest> Manifests { get; set; }
-        public virtual ICollection<ManifestPerson> ManifestPeople { get; set; }
-        public virtual ICollection<Person> People { get; set; }
-        public virtual ICollection<Plane> Planes { get; set; }
-        public virtual ICollection<Template> Templates { get; set; }
+        public IEnumerable<Manifest> Manifests { get; set; }
+        public IEnumerable<ManifestPerson> ManifestPeople { get; set; }
+        public IEnumerable<Person> People { get; set; }
+        public IEnumerable<Plane> Planes { get; set; }
+        public IEnumerable<Template> Templates { get; set; }
     }
 }

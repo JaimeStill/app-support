@@ -8,12 +8,20 @@
     <strong fxFlex>{{template?.title}}</strong>
     <button mat-icon-button
             color="warn"
+            matTooltip="Remove"
             (click)="remove.emit(template)">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-icon-button
+            matTooltip="Edit"
             (click)="edit.emit(template)">
       <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button
+            color="primary"
+            matTooltip="Generate Manifest"
+            (click)="generate.emit(template)">
+      <mat-icon>nat</mat-icon>
     </button>
   </section>
   <section fxLayout="column"

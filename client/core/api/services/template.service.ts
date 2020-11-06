@@ -26,11 +26,13 @@ import {
 export class TemplateService {
   private people = new BehaviorSubject<PersonModel[]>(null);
   private planes = new BehaviorSubject<Plane[]>(null);
+  private templates = new BehaviorSubject<Template[]>(null);
   private template = new BehaviorSubject<Template>(null);
   private templatePlanes = new BehaviorSubject<PlaneModel[]>(null);
 
   people$ = this.people.asObservable();
   planes$ = this.planes.asObservable();
+  templates$ = this.templates.asObservable();
   template$ = this.template.asObservable();
   templatePlanes$ = this.templatePlanes.asObservable();
 
@@ -40,6 +42,14 @@ export class TemplateService {
     private trigger: TriggerService,
     @Optional() private config: ServerConfig
   ) { }
+
+  getTemplates = (id: number) => {
+    this.http.get<Template[]>(`${this.config.api}template/getTemplates/${id}`)
+      .subscribe(
+        data => this.templates.next(data),
+        err => this.snacker.sendErrorMessage(err.error)
+      );
+  }
 
   getTemplate = (id: number): Promise<Template> => new Promise((resolve) => {
     this.http.get<Template>(`${this.config.api}template/getTemplate/${id}`)
@@ -55,16 +65,13 @@ export class TemplateService {
       );
   })
 
-  addTemplate = (template: Template): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}template/addTemplate`, template)
+  addTemplate = (template: Template): Promise<number> => new Promise((resolve) => {
+    this.http.post<number>(`${this.config.api}template/addTemplate`, template)
       .subscribe(
-        () => {
-          this.snacker.sendSuccessMessage(`${template.title} successfully created`);
-          resolve(true);
-        },
+        data => resolve(data),
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(null);
         }
       );
   })

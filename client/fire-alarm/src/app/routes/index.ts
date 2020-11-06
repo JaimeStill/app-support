@@ -11,6 +11,11 @@ import {
 } from './home';
 
 import {
+  ManifestRouteComponents,
+  ManifestRoutes
+} from './manifest';
+
+import {
   PersonRouteComponents,
   PersonRoutes
 } from './person';
@@ -23,6 +28,7 @@ import {
 export const RouteComponents = [
   ...AdminComponents,
   ...HomeComponents,
+  ...ManifestRouteComponents,
   ...PersonRouteComponents,
   ...TemplateRouteComponents
 ];
@@ -30,6 +36,7 @@ export const RouteComponents = [
 export const Routes: Route[] = [
   ...AdminRoutes,
   ...HomeRoutes,
+  ...ManifestRoutes,
   ...PersonRoutes,
   ...TemplateRoutes,
   { path: '', redirectTo: 'home', pathMatch: 'full' },

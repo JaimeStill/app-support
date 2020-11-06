@@ -1,0 +1,28 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Select Template</h2>
+  <mat-dialog-content fxLayout="column"
+                      fxLayoutAlign="start stretch"
+                      class="container">
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="templateSvc.templates$ | async as templates else loading">
+      <mat-form-field>
+        <mat-label>Template</mat-label>
+        <mat-select (selectionChange)="selectTemplate($event)">
+          <mat-option *ngFor="let t of templates"
+                      [value]="t">{{t.title}} - {{t.description | truncate}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button
+            class="color success"
+            [disabled]="!(template)"
+            (click)="save()">Save</button>
+    <button mat-stroked-button
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

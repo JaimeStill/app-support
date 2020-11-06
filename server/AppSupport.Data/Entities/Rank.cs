@@ -13,7 +13,7 @@ namespace AppSupport.Data.Entities
 
         public Branch Branch { get; set; }
 
-        public virtual ICollection<ManifestPerson> ManifestPeople { get; set; }
-        public virtual ICollection<Person> People { get; set; }
+        public IEnumerable<ManifestPerson> ManifestPeople { get; set; }
+        public IEnumerable<Person> People { get; set; }
     }
 }

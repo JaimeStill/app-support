@@ -69,7 +69,8 @@ export class TemplateRoute implements OnInit {
   managePlanes = (template: Template) => this.dialog.open(TemplatePlaneDialog, {
     data: template,
     disableClose: true,
-    width: '1200px'
+    width: '1200px',
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(res => res && this.templateSvc.getTemplatePlanes(template.id));
@@ -77,7 +78,8 @@ export class TemplateRoute implements OnInit {
   addPeople = (p: PlaneModel) => this.dialog.open(TemplatePeopleDialog, {
     data: p,
     disableClose: true,
-    width: '1200px'
+    width: '1200px',
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(res => res && this.templateSvc.getTemplatePlanes(p.parentId));
@@ -87,7 +89,8 @@ export class TemplateRoute implements OnInit {
       title: `Remove ${p.name}`,
       content: `Are you sure you want to remove ${p.name} (and all of its passengers) from the template?`
     },
-    disableClose: true
+    disableClose: true,
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {
@@ -102,7 +105,8 @@ export class TemplateRoute implements OnInit {
       title: `Remove ${p.lastName}, ${p.firstName}`,
       content: `Are you sure you want to remove ${p.lastName}, ${p.firstName} from the plane?`
     },
-    disableClose: true
+    disableClose: true,
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {
@@ -115,6 +119,7 @@ export class TemplateRoute implements OnInit {
   transferPerson = (p: PersonModel, t: Template) => this.dialog.open(TemplateTransferDialog, {
     data: { person: p, templateId: t.id } as { person: PersonModel, templateId: number },
     disableClose: true,
+    autoFocus: false,
     width: '800px'
   })
   .afterClosed()

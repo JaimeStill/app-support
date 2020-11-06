@@ -12,9 +12,10 @@ namespace AppSupport.Data.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateExpected { get; set; }
         public DateTime? DateExecuted { get; set; }
+        public bool IsClosed { get; set; }
 
         public Organization Organization { get; set; }
 
-        public virtual ICollection<ManifestPlane> ManifestPlanes { get; set; }
+        public IEnumerable<ManifestPlane> ManifestPlanes { get; set; }
     }
 }

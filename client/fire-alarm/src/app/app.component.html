@@ -1,40 +1,56 @@
 <section class="mat-typography mat-app-background app-frame"
          [ngClass]="themer.isLight ? 'app-light' : 'app-dark'">
   <ng-container *ngIf="banner.config$ | async as config else loading">
-    <banner [label]="config.label"
-            [background]="config.background"
-            [color]="config.color"></banner>
-    <mat-toolbar class="app-toolbar"
-                 color="primary">
-      <span fxFlex>Fire Alarm</span>
-      <button mat-icon-button
-              matTooltip="Templates"
-              routerLink="templates"
-              routerLinkActive="active">
-        <mat-icon>wysiwyg</mat-icon>
-      </button>
-      <button mat-icon-button
-              matTooltip="People"
-              routerLink="people"
-              routerLinkActive="active">
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <button mat-icon-button
-              matTooltip="Settings"
-              routerLink="admin"
-              routerLinkActive="active">
-        <mat-icon>settings</mat-icon>
-      </button>
-      <button mat-icon-button
-              (click)="themer.toggleTheme()">
-        <mat-icon [color]="themer.isLight ? 'accent' : 'default'">
-          {{themer.isLight ? 'brightness_5' : 'brightness_3'}}
-        </mat-icon>
-      </button>
-    </mat-toolbar>
-    <section class="app-container">
-      <router-outlet></router-outlet>
-    </section>
+    <ng-container *ngIf="orgSvc.organizations$ | async as orgs else loading">
+      <banner [label]="config.label"
+              [background]="config.background"
+              [color]="config.color"></banner>
+      <mat-toolbar class="app-toolbar"
+                   color="primary">
+        <button mat-icon-button
+                color="accent"
+                routerLink="home"
+                routerLinkActive="active">
+          <mat-icon class="material-icons-outlined">whatshot</mat-icon>
+        </button>
+        <span fxFlex>Fire Alarm</span>
+        <mat-form-field [style.margin-right.px]="16">
+          <mat-label>Organization</mat-label>
+          <mat-select [value]="org"
+                      (selectionChange)="selectOrg($event)">
+            <mat-option *ngFor="let o of orgs"
+                        [value]="o">{{o.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-icon-button
+                matTooltip="Templates"
+                routerLink="templates"
+                routerLinkActive="active">
+          <mat-icon>wysiwyg</mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="People"
+                routerLink="people"
+                routerLinkActive="active">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <button mat-icon-button
+                matTooltip="Security"
+                routerLink="admin"
+                routerLinkActive="active">
+          <mat-icon>security</mat-icon>
+        </button>
+        <button mat-icon-button
+                (click)="themer.toggleTheme()">
+          <mat-icon [color]="themer.isLight ? 'accent' : 'default'">
+            {{themer.isLight ? 'brightness_5' : 'brightness_3'}}
+          </mat-icon>
+        </button>
+      </mat-toolbar>
+      <section class="app-container">
+        <router-outlet></router-outlet>
+      </section>
+    </ng-container>
   </ng-container>
   <ng-template #loading>
     <mat-progress-bar mode="indeterminate"

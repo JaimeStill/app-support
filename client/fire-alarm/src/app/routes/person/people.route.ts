@@ -46,7 +46,8 @@ export class PeopleRoute {
       title: `Remove ${person.firstName} ${person.lastName}`,
       content: `Are you sure you want to remove ${person.firstName} ${person.lastName}?`
     },
-    disableClose: true
+    disableClose: true,
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {

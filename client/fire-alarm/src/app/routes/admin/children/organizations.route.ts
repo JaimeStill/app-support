@@ -39,7 +39,8 @@ export class OrganizationsRoute {
   .subscribe(res => res && this.orgSrc.forceRefresh());
 
   removeOrganization = (o: Organization) => this.dialog.open(ConfirmDialog, {
-    disableClose: true
+    disableClose: true,
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {

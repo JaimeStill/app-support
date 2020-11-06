@@ -9,6 +9,7 @@ export interface Manifest{
   dateCreated: Date;
   dateExpected: Date;
   dateExecuted: Date;
+  isClosed: boolean;
 
   organization: Organization;
 

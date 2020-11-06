@@ -34,10 +34,13 @@ namespace AppSupport.Web.Controllers
         ) => Ok(await db.QueryTemplates(id, page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
+        public async Task<List<Template>> GetTemplates([FromRoute]int id) => await db.GetTemplates(id);
+
+        [HttpGet("[action]/{id}")]
         public async Task<Template> GetTemplate([FromRoute]int id) => await db.GetTemplate(id);
 
         [HttpPost("[action]")]
-        public async Task AddTemplate([FromBody]Template template) => await db.AddTemplate(template);
+        public async Task<int> AddTemplate([FromBody]Template template) => await db.AddTemplate(template);
 
         [HttpPost("[action]")]
         public async Task UpdateTemplate([FromBody]Template template) => await db.UpdateTemplate(template);

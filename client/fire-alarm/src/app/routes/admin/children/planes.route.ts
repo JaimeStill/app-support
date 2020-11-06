@@ -38,7 +38,8 @@ export class PlanesRoute {
     .subscribe(res => res && this.planeSrc.forceRefresh());
 
     removePlane = (p: Plane) => this.dialog.open(ConfirmDialog, {
-      disableClose: true
+      disableClose: true,
+      autoFocus: false
     })
     .afterClosed()
     .subscribe(async result => {

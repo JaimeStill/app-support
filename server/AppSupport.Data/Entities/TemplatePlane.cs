@@ -11,6 +11,6 @@ namespace AppSupport.Data.Entities
         public Plane Plane { get; set; }
         public Template Template { get; set; }
 
-        public virtual ICollection<TemplatePerson> TemplatePeople { get; set; }
+        public IEnumerable<TemplatePerson> TemplatePeople { get; set; }
     }
 }

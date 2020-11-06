@@ -19,6 +19,7 @@ export class TemplateCardComponent implements OnInit {
   @Input() template: Template;
   @Output() edit = new EventEmitter<Template>();
   @Output() remove = new EventEmitter<Template>();
+  @Output() generate = new EventEmitter<Template>();
 
   constructor(
     public templateSvc: TemplateService

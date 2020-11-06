@@ -8,6 +8,7 @@ import {
   TemplateDialog,
   TemplatePeopleDialog,
   TemplatePlaneDialog,
+  TemplateSelectDialog,
   TemplateTransferDialog
 } from './template';
 
@@ -20,6 +21,7 @@ export const ApiDialogs = [
   TemplateDialog,
   TemplatePeopleDialog,
   TemplatePlaneDialog,
+  TemplateSelectDialog,
   TemplateTransferDialog
 ]
 

@@ -72,7 +72,8 @@ export class RanksBranchesRoute {
     data: {
       title: 'Remove Branch?',
       content: `Are you sure you want to remove ${b.name}?`
-    }
+    },
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {
@@ -93,7 +94,8 @@ export class RanksBranchesRoute {
     data: {
       title: 'Remove Rank?',
       content: `Are you sure you want to remove ${r.label} - ${r.name}?`
-    }
+    },
+    autoFocus: false
   })
   .afterClosed()
   .subscribe(async result => {

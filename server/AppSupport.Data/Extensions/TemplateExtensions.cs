@@ -61,17 +61,28 @@ namespace AppSupport.Data.Extensions
                 .Select(x => x.PersonId)
                 .ToListAsync();
 
+        public static async Task<List<Template>> GetTemplates(this AppDbContext db, int orgId) =>
+            await db.Templates
+                .Where(x => x.OrganizationId == orgId)
+                .OrderBy(x => x.Title)
+                .ToListAsync();
+
         public static async Task<Template> GetTemplate(this AppDbContext db, int id) =>
             await db.Templates
                 .FindAsync(id);
 
-        public static async Task AddTemplate(this AppDbContext db, Template template)
+        public static async Task<int> AddTemplate(this AppDbContext db, Template template)
         {
             if (await template.Validate(db))
             {
                 await db.Templates.AddAsync(template);
                 await db.SaveChangesAsync();
+
+                return template.Id;
             }
+
+            // THIS WILL NEVER BE REACHED IF VALIDATE RETURN FALSE
+            return 0;
         }
 
         public static async Task UpdateTemplate(this AppDbContext db, Template template)
@@ -141,7 +152,7 @@ namespace AppSupport.Data.Extensions
                     AltId = x.Id,
                     ParentId = x.TemplateId,
                     Capacity = x.Plane.Capacity,
-                    Reserved = x.TemplatePeople.Count,
+                    Reserved = x.TemplatePeople.Count(),
                     Name = x.Plane.Name
                 })
                 .OrderBy(x => x.Name)
@@ -151,7 +162,7 @@ namespace AppSupport.Data.Extensions
             await db.TemplatePlanes
                 .Where(x =>
                     x.TemplateId == templateId &&
-                    x.TemplatePeople.Count < x.Plane.Capacity
+                    x.TemplatePeople.Count() < x.Plane.Capacity
                 )
                 .Select(x => new PlaneModel
                 {
@@ -159,7 +170,7 @@ namespace AppSupport.Data.Extensions
                     AltId = x.Id,
                     ParentId = x.TemplateId,
                     Capacity = x.Plane.Capacity,
-                    Reserved = x.TemplatePeople.Count,
+                    Reserved = x.TemplatePeople.Count(),
                     Name = x.Plane.Name
                 })
                 .OrderBy(x => x.Name)
