@@ -56,7 +56,7 @@ export class TemplatePeopleDialog implements OnInit {
   }
 
   savePeople = async () => {
-    const res = await this.templateSvc.addTemplatePlanePeople(this.plane.altId, this.selected);
+    const res = await this.templateSvc.addTemplatePeople(this.plane.altId, this.selected);
     res && this.dialogRef.close(true);
   }
 }

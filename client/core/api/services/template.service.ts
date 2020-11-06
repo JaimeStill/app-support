@@ -19,7 +19,7 @@ import {
   PlaneModel,
   Template,
   TemplatePlane,
-  TemplatePlanePerson
+  TemplatePerson
 } from '../models';
 
 @Injectable()
@@ -111,16 +111,30 @@ export class TemplateService {
       );
   })
 
-  getTemplatePlanes = (id: number): Promise<PlaneModel[]> => new Promise((resolve) => {
+  getTemplatePlanes = (id: number): Promise<boolean> => new Promise((resolve) => {
     this.http.get<PlaneModel[]>(`${this.config.api}template/getTemplatePlanes/${id}`)
       .subscribe(
         data => {
           this.templatePlanes.next(data);
-          resolve(data);
+          resolve(true);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(null);
+          resolve(false);
+        }
+      );
+  })
+
+  getTemplatePlanesWithSpace = (id: number): Promise<boolean> => new Promise((resolve) => {
+    this.http.get<PlaneModel[]>(`${this.config.api}template/getTemplatePlanesWithSpace/${id}`)
+      .subscribe(
+        data => {
+          this.templatePlanes.next(data);
+          resolve(true);
+        },
+        err => {
+          this.snacker.sendErrorMessage(err.error);
+          resolve(false);
         }
       );
   })
@@ -165,8 +179,8 @@ export class TemplateService {
         err => this.snacker.sendErrorMessage(err.error)
       );
 
-  addTemplatePlanePeople = (templatePlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}template/addTemplatePlanePeople/${templatePlaneId}`, people)
+  addTemplatePeople = (templatePlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
+    this.http.post(`${this.config.api}template/addTemplatePeople/${templatePlaneId}`, people)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Template plane people successfully updated`);
@@ -180,8 +194,24 @@ export class TemplateService {
       );
   })
 
-  removeTemplatePlanePerson = (p: PersonModel): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}template/removeTemplatePlanePerson`, { id: p.altId, templatePlaneId: p.parentId, personId: p.id } as TemplatePlanePerson)
+  updateTemplatePerson = (person: PersonModel, plane: PlaneModel): Promise<boolean> => new Promise((resolve) => {
+    this.http.post(`${this.config.api}template/updateTemplatePerson`, { id: person.altId, templatePlaneId: plane.altId, personId: person.id } as TemplatePerson)
+      .subscribe(
+        () => {
+          this.snacker.sendSuccessMessage(`${person.lastName}, ${person.firstName} move to ${plane.name}`);
+          this.trigger.setTemplatePeople(plane.altId);
+          this.trigger.setTemplatePeople(person.parentId);
+          resolve(true);
+        },
+        err => {
+          this.snacker.sendErrorMessage(err.error);
+          resolve(false);
+        }
+      )
+  })
+
+  removeTemplatePerson = (p: PersonModel): Promise<boolean> => new Promise((resolve) => {
+    this.http.post(`${this.config.api}template/removeTemplatePerson`, { id: p.altId, templatePlaneId: p.parentId, personId: p.id } as TemplatePerson)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.lastName}, ${p.firstName} removed from template plane`);

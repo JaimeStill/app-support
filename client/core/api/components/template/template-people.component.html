@@ -13,11 +13,20 @@
              fxLayoutAlign="start center">
       <person-card *ngFor="let p of people"
                    [size]="size"
-                   [person]="p"
-                   [actionTip]="actionTip"
-                   [actionColor]="actionColor"
-                   [actionIcon]="actionIcon"
-                   (action)="action.emit($event)"></person-card>
+                   [person]="p">
+        <button mat-icon-button
+                color="warn"
+                matTooltip="Remove"
+                (click)="remove.emit(p)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button
+                color="primary"
+                matTooltip="Change Plane"
+                (click)="transfer.emit(p)">
+          <mat-icon>multiple_stop</mat-icon>
+        </button>
+      </person-card>
     </section>
   </ng-container>
   <p class="mat-subheading-2"

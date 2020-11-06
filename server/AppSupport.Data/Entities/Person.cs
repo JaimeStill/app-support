@@ -6,6 +6,7 @@ namespace AppSupport.Data.Entities
     public class Person
     {
         public int Id { get; set; }
+        public int? ExecutiveId { get; set; }
         public int OrganizationId { get; set; }
         public int RankId { get; set; }
         public int DodId { get; set; }
@@ -17,10 +18,13 @@ namespace AppSupport.Data.Entities
         public string Ssn { get; set; }
         public string Title { get; set; }
 
+        public Person Executive { get; set; }
         public Organization Organization { get; set; }
         public Rank Rank { get; set; }
 
-        public virtual ICollection<ManifestPlanePerson> PersonManifestPlanes { get; set; }
-        public virtual ICollection<TemplatePlanePerson> PersonTemplatePlanes { get; set; }
+        public virtual ICollection<Person> Associates { get; set; }
+        public virtual ICollection<ManifestPerson> ManifestPlanes { get; set; }
+        public virtual ICollection<TemplatePerson> TemplatePlanes { get; set; }
+        public virtual ICollection<ManifestPerson> Trips { get; set; }
     }
 }

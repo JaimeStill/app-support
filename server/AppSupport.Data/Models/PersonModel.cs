@@ -7,6 +7,7 @@ namespace AppSupport.Data.Models
         public int Id { get; set; }
         public int AltId { get; set; }
         public int ParentId { get; set; }
+        public int? ExecutiveId { get; set; }
         public int OrganizationId { get; set; }
         public int RankId { get; set; }
         public int DodId { get; set; }

@@ -5,6 +5,7 @@ import {
 } from '@angular/forms';
 
 import { Branch } from './branch';
+import { ManifestPerson } from './manifest-person';
 import { Person } from './person';
 
 export interface Rank {
@@ -17,6 +18,7 @@ export interface Rank {
 
   branch: Branch;
 
+  manifestPeople: ManifestPerson[];
   people: Person[];
 }
 

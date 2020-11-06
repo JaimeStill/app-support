@@ -15,10 +15,11 @@ import {
   PlaneModel,
   Template,
   TemplatePlane,
-  TemplatePlanePerson,
+  TemplatePerson,
   TemplateDialog,
   TemplatePeopleDialog,
   TemplatePlaneDialog,
+  TemplateTransferDialog,
   TemplateService
 } from 'core';
 
@@ -106,8 +107,16 @@ export class TemplateRoute implements OnInit {
   .afterClosed()
   .subscribe(async result => {
     if (result) {
-     const res = await this.templateSvc.removeTemplatePlanePerson(p);
+     const res = await this.templateSvc.removeTemplatePerson(p);
      res && this.templateSvc.getTemplatePlanes(t.id);
     }
   });
+
+  transferPerson = (p: PersonModel, t: Template) => this.dialog.open(TemplateTransferDialog, {
+    data: { person: p, templateId: t.id } as { person: PersonModel, templateId: number },
+    disableClose: true,
+    width: '800px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.templateSvc.getTemplatePlanes(t.id));
 }

@@ -1,6 +1,6 @@
 <section gdAreas="rank name ssn action"
          gdAlignColumns="start center"
-         gdColumns="56px auto 48px 56px"
+         gdColumns="56px auto 48px fit-content(50%)"
          class="background card elevated"
          [ngStyle]="{'text-decoration': blackout ? 'line-through' : 'none'}"
          [style.width.px]="size">
@@ -8,12 +8,6 @@
   <span gdArea="name">{{person?.lastName}}, {{person?.firstName}}</span>
   <span gdArea="ssn">{{person?.ssn?.slice(-4)}}</span>
   <section gdArea="action" class="background stacked container">
-    <button mat-icon-button
-            [disabled]="blackout || capacity"
-            [color]="actionColor"
-            [matTooltip]="actionTip"
-            (click)="action.emit(person)">
-      <mat-icon>{{actionIcon}}</mat-icon>
-    </button>
+    <ng-content></ng-content>
   </section>
 </section>

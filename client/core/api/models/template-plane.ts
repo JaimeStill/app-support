@@ -1,6 +1,6 @@
 import { Plane } from './plane';
 import { Template } from './template';
-import { TemplatePlanePerson } from './template-plane-person';
+import { TemplatePerson } from './template-person';
 
 export interface TemplatePlane {
   id: number;
@@ -10,5 +10,5 @@ export interface TemplatePlane {
   plane: Plane;
   template: Template;
 
-  templatePlanePeople: TemplatePlanePerson[];
+  templatePeople: TemplatePerson[];
 }

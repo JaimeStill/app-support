@@ -56,6 +56,9 @@ namespace AppSupport.Web.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<List<PlaneModel>> GetTemplatePlanes([FromRoute]int id) => await db.GetTemplatePlanes(id);
 
+        [HttpGet("[action]/{id}")]
+        public async Task<List<PlaneModel>> GetTemplatePlanesWithSpace([FromRoute]int id) => await db.GetTemplatePlanesWithSpace(id);
+
         [HttpPost("[action]/{id}")]
         public async Task AddTemplatePlanes([FromRoute]int id, [FromBody]List<Plane> planes) => await db.AddTemplatePlanes(id, planes);
 
@@ -83,10 +86,13 @@ namespace AppSupport.Web.Controllers
         public async Task<List<PersonModel>> SearchTemplatePeople([FromRoute]int id, [FromRoute]string search) => await db.GetTemplatePeople(id, search);
 
         [HttpPost("[action]/{id}")]
-        public async Task AddTemplatePlanePeople([FromRoute]int id, [FromBody]List<Person> people) => await db.AddTemplatePlanePeople(id, people);
+        public async Task AddTemplatePeople([FromRoute]int id, [FromBody]List<Person> people) => await db.AddTemplatePeople(id, people);
 
         [HttpPost("[action]")]
-        public async Task RemoveTemplatePlanePerson([FromBody]TemplatePlanePerson templatePlanePerson) => await db.RemoveTemplatePlanePerson(templatePlanePerson);
+        public async Task UpdateTemplatePerson([FromBody]TemplatePerson templatePerson) => await db.UpdateTemplatePerson(templatePerson);
+
+        [HttpPost("[action]")]
+        public async Task RemoveTemplatePerson([FromBody]TemplatePerson templatePerson) => await db.RemoveTemplatePerson(templatePerson);
 
         #endregion
     }

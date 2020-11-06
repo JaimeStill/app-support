@@ -30,6 +30,9 @@ namespace AppSupport.Web.Controllers
         ) => Ok(await db.QueryPeople(page, pageSize, search, sort));
 
         [HttpGet("[action]/{id}")]
+        public async Task<List<Person>> GetAssociates([FromRoute]int id) => await db.GetAssociates(id);
+
+        [HttpGet("[action]/{id}")]
         public async Task<Person> GetPerson([FromRoute]int id) => await db.GetPerson(id);
 
         [HttpPost("[action]")]

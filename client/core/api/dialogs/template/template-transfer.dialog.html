@@ -1,0 +1,26 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Transfer {{data?.person?.lastName}}, {{data?.person?.firstName}}</h2>
+  <mat-dialog-content>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="templateSvc.templatePlanes$ | async as planes else loading">
+      <section *ngIf="planes.length > 0"
+               fxLayout="column"
+               fxLayoutAlign="start center"
+               class="container">
+        <plane-card *ngFor="let p of planes"
+                    [plane]="p"
+                    (action)="selectPlane($event)"></plane-card>
+      </section>
+      <p class="mat-subheading-2"
+         *ngIf="!(planes.length > 0)">No Planes Available</p>
+    </ng-container>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button
+            mat-dialog-close
+            [disabled]="saving">Cancel</button>
+  </mat-dialog-actions>
+</div>

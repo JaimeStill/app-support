@@ -3,8 +3,7 @@ import { OrganizationCardComponent } from './organization';
 
 import {
   PersonCardComponent,
-  PeopleTableComponent,
-  PersonAdminCardComponent
+  PeopleTableComponent
 } from './person';
 
 import {
@@ -26,7 +25,6 @@ export const ApiComponents = [
   PersonCardComponent,
   OrganizationCardComponent,
   PeopleTableComponent,
-  PersonAdminCardComponent,
   PlaneAdminCardComponent,
   PlaneCardComponent,
   PlaneDisplayComponent,

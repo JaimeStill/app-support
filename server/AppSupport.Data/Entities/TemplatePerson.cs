@@ -1,6 +1,6 @@
 namespace AppSupport.Data.Entities
 {
-    public class TemplatePlanePerson
+    public class TemplatePerson
     {
         public int Id { get; set; }
         public int PersonId { get; set; }

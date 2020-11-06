@@ -26,11 +26,15 @@
                    class="container"
                    *ngIf="qr?.data?.length > 0">
             <person-card *ngFor="let p of qr?.data"
-                         actionTip="Add"
                          [blackout]="checkBlackout(p)"
-                         [capacity]="checkCapacity()"
-                         [person]="p"
-                         (action)="addPerson($event)"></person-card>
+                         [person]="p">
+              <button mat-icon-button
+                      [disabled]="checkBlackout(p) || checkCapacity()"
+                      matTooltip="Add"
+                      (click)="addPerson(p)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </person-card>
           </section>
           <p class="mat-subheading-2"
              *ngIf="!(qr?.data?.length > 0)">No People Available</p>
@@ -51,11 +55,14 @@
                  fxLayout="column"
                  fxLayoutAlign="start center">
           <person-card *ngFor="let p of selected"
-                       actionIcon="keyboard_arrow_left"
-                       actionColor="warn"
-                       actionTip="Remove"
-                       [person]="p"
-                       (action)="removePerson($event)"></person-card>
+                       [person]="p">
+            <button mat-icon-button
+                    color="warn"
+                    matTooltip="Remove"
+                    (click)="removePerson(p)">
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          </person-card>
         </section>
         <p class="mat-subheading-2"
            *ngIf="!(selected?.length > 0)">No People Selected</p>

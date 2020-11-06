@@ -33,7 +33,8 @@ namespace AppSupport.Data.Extensions
                         Name = "Apple",
                         Planes = new List<Plane>
                         {
-                            new Plane { Name = "Cessna Citation CJ4", Capacity = 24 }
+                            new Plane { Name = "Cessna Citation CJ4", Capacity = 24 },
+                            new Plane { Name = "Diamond DA40NG", Capacity = 6 }
                         }
                     },
                     new Organization

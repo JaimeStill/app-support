@@ -11,21 +11,52 @@ namespace AppSupport.Data
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Manifest> Manifests { get; set; }
         public DbSet<ManifestPlane> ManifestPlanes { get; set; }
-        public DbSet<ManifestPlanePerson> ManifestPlanePeople { get; set; }
+        public DbSet<ManifestPerson> ManifestPeople { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<Plane> Planes { get; set; }
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<TemplatePlane> TemplatePlanes { get; set; }
-        public DbSet<TemplatePlanePerson> TemplatePlanePeople { get; set; }
+        public DbSet<TemplatePerson> TemplatePeople { get; set; }
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Entity<Person>()
-                .HasMany(x => x.PersonManifestPlanes)
+                .HasOne(x => x.Executive)
+                .WithMany(x => x.Associates)
+                .HasForeignKey(x => x.ExecutiveId)
+                .IsRequired(false);
+
+            modelBuilder
+                .Entity<ManifestPerson>()
+                .HasOne(x => x.Traveler)
+                .WithMany(x => x.Trips)
+                .HasForeignKey(x => x.TravelerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder
+                .Entity<ManifestPerson>()
+                .HasOne(x => x.Organization)
+                .WithMany(x => x.ManifestPeople)
+                .HasForeignKey(x => x.OrganizationId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder
+                .Entity<ManifestPerson>()
+                .HasOne(x => x.Rank)
+                .WithMany(x => x.ManifestPeople)
+                .HasForeignKey(x => x.RankId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder
+                .Entity<Person>()
+                .HasMany(x => x.ManifestPlanes)
                 .WithOne(x => x.Person)
                 .HasForeignKey(x => x.PersonId)
                 .IsRequired()
@@ -33,7 +64,7 @@ namespace AppSupport.Data
 
             modelBuilder
                 .Entity<Person>()
-                .HasMany(x => x.PersonTemplatePlanes)
+                .HasMany(x => x.TemplatePlanes)
                 .WithOne(x => x.Person)
                 .HasForeignKey(x => x.PersonId)
                 .IsRequired()

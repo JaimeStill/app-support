@@ -22,10 +22,8 @@ export class TemplatePeopleComponent implements OnInit, OnDestroy {
 
   @Input() size = 420;
   @Input() templatePlaneId: number;
-  @Input() actionTip = 'Remove';
-  @Input() actionColor = 'warn';
-  @Input() actionIcon = 'delete';
-  @Output() action = new EventEmitter<PersonModel>();
+  @Output() remove = new EventEmitter<PersonModel>();
+  @Output() transfer = new EventEmitter<PersonModel>();
 
   constructor(
     public trigger: TriggerService,

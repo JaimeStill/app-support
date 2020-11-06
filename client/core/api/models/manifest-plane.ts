@@ -1,5 +1,5 @@
 import { Manifest } from './manifest';
-import { ManifestPlanePerson } from './manifest-plane-person';
+import { ManifestPerson } from './manifest-person';
 import { Plane } from './plane';
 
 export interface ManifestPlane {
@@ -10,5 +10,5 @@ export interface ManifestPlane {
   manifest: Manifest;
   plane: Plane;
 
-  manifestPlanePeople: ManifestPlanePerson[];
+  manifestPeople: ManifestPerson[];
 }

@@ -67,12 +67,19 @@ namespace AppSupport.Data.Extensions
             string sort
         ) {
             var container = new QueryContainer<Person>(
-                db.People.SetIncludes(),
+                db.People.SetIncludes().Where(x => !x.ExecutiveId.HasValue),
                 page, pageSize, search, sort
             );
 
             return await container.Query((people, s) => people.SetupSearch(s));
         }
+
+        public static async Task<List<Person>> GetAssociates(this AppDbContext db, int id) =>
+            await db.People
+                .SetIncludes()
+                .Where(x => x.ExecutiveId == id)
+                .OrderBy(x => x.LastName)
+                .ToListAsync();
 
         public static async Task<Person> GetPerson(this AppDbContext db, int id) =>
             await db.People

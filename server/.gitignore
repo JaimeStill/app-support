@@ -1,2 +1,4 @@
 bin
 obj
+
+AppSupport.Web/wwwroot/logs/*.txt

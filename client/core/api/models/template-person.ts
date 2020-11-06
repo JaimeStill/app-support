@@ -1,7 +1,7 @@
 import { Person } from './person';
 import { TemplatePlane } from './template-plane';
 
-export interface TemplatePlanePerson {
+export interface TemplatePerson {
   id: number;
   personId: number;
   templatePlaneId: number;

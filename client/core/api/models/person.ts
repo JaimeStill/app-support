@@ -4,13 +4,14 @@ import {
   Validators
 } from '@angular/forms';
 
-import { ManifestPlanePerson } from './manifest-plane-person';
+import { ManifestPerson } from './manifest-person';
 import { Organization } from './organization';
 import { Rank } from './rank';
-import { TemplatePlanePerson } from './template-plane-person';
+import { TemplatePerson } from './template-person';
 
 export interface Person {
   id: number;
+  executiveId?: number;
   organizationId: number;
   rankId: number;
   dodId: number;
@@ -22,16 +23,20 @@ export interface Person {
   ssn: string;
   title: string;
 
+  executive: Person;
   organization: Organization;
   rank: Rank;
 
-  personManifestPlanes: ManifestPlanePerson[];
-  personTemplatePlanes: TemplatePlanePerson[];
+  associates: Person[];
+  personManifestPlanes: ManifestPerson[];
+  personTemplatePlanes: TemplatePerson[];
+  trips: ManifestPerson[];
 }
 
 export const PersonForm = (person: Person, fb: FormBuilder, ssnPattern: RegExp): FormGroup =>
   fb.group({
     id: [person.id],
+    executiveId: [person.executiveId],
     organizationId: [person.organizationId, Validators.required],
     rankId: [person.rankId, Validators.required],
     dodId: [person.dodId, [
