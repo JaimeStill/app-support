@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { SnackerService } from './snacker.service';
 import { ServerConfig } from '../config';
 import { BannerConfig } from '../models';
-import { Server } from 'http';
 
 @Injectable({
   providedIn: 'root'

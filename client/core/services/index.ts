@@ -1,4 +1,6 @@
 export * from './abstract';
+export * from './api';
+export * from './sources';
 
 export * from './banner.service';
 export * from './core.service';
