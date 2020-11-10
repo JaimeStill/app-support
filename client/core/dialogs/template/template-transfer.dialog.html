@@ -10,9 +10,11 @@
                fxLayout="column"
                fxLayoutAlign="start center"
                class="container">
-        <plane-card *ngFor="let p of planes"
-                    [plane]="p"
-                    (action)="selectPlane($event)"></plane-card>
+        <section *ngFor="let p of planes">
+          <plane-card *ngIf="!(p?.altId == data?.person?.parentId)"
+                      [plane]="p"
+                      (action)="selectPlane($event)"></plane-card>
+        </section>
       </section>
       <p class="mat-subheading-2"
          *ngIf="!(planes.length > 0)">No Planes Available</p>
