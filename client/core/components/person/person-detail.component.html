@@ -1,0 +1,10 @@
+<section gdAreas="rank name ssn"
+         gdAlignColumns="start center"
+         gdColumns="56px auto 48px"
+         class="background card card-outline-divider container"
+         [style.width.px]="size">
+  <span gdArea="rank"
+        [style.margin-left.px]="8">{{person?.rank?.label}}</span>
+  <span gdArea="name">{{person?.lastName}}, {{person?.firstName}}</span>
+  <span gdArea="ssn">{{person?.ssn?.slice(-4)}}</span>
+</section>

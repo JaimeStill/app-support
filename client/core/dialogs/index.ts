@@ -2,6 +2,7 @@ import { BranchDialog } from './branch';
 import { ConfirmDialog } from './confirm/confirm.dialog';
 
 import {
+  ManifestDialog,
   ManifestPeopleDialog,
   ManifestPlaneDialog,
   ManifestTransferDialog
@@ -23,6 +24,7 @@ import {
 export const Dialogs = [
   BranchDialog,
   ConfirmDialog,
+  ManifestDialog,
   ManifestPeopleDialog,
   ManifestPlaneDialog,
   ManifestTransferDialog,

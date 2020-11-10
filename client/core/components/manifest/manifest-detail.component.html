@@ -1,0 +1,33 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch">
+  <mat-toolbar>{{manifest?.title}}</mat-toolbar>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="container">
+    <p>
+      <strong>Created:</strong> {{manifest?.dateCreated | date:'dd MMM yyyy'}}
+    </p>
+    <p *ngIf="manifest?.dateExecuted">
+      <strong>Executed:</strong> {{manifest?.dateExecuted | date:'dd MMM yyyy'}}
+    </p>
+    <p *ngIf="!(manifest?.dateExecuted)">
+      <strong>Expected:</strong> {{manifest?.dateExpected | date:'dd MMM yyyy'}}
+    </p>
+  </section>
+  <p [style.padding.px]="8">{{manifest?.description}}</p>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="manifestSvc.manifestPlanes$ | async as planes else loading">
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start start"
+             class="container"
+             *ngIf="planes.length > 0">
+      <plane-detail *ngFor="let plane of planes"
+                    [plane]="plane"></plane-detail>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(planes.length > 0)">No Planes Assigned</p>
+  </ng-container>
+</section>

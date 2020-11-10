@@ -10,7 +10,7 @@
         <mat-progress-bar mode="indeterminate"
                           color="accent"></mat-progress-bar>
       </ng-template>
-      <section *ngIf="organizationSvc.organizations$ | async as organizations else loading"
+      <section *ngIf="orgSvc.organizations$ | async as organizations else loading"
                fxLayout="column"
                fxLayoutAlign="start stretch"
                class="container">

@@ -6,6 +6,7 @@ import {
 
 import {
   ConfirmDialog,
+  ManifestDialog,
   ManifestService,
   ManifestSource,
   Manifest,
@@ -22,7 +23,7 @@ import { Router } from '@angular/router';
   providers: [ManifestService, ManifestSource]
 })
 export class ManifestsOpenRoute implements OnInit, OnDestroy {
-  sub: Subscription;
+  private sub: Subscription;
 
   constructor(
     private dialog: MatDialog,
@@ -45,7 +46,13 @@ export class ManifestsOpenRoute implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  addManifest = () => { }
+  addManifest = () => this.dialog.open(ManifestDialog, {
+    data: { } as Manifest,
+    disableClose: true,
+    width: '800px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.router.navigate(['manifest', res]));
 
   editManifest = (manifest: Manifest) => this.router.navigate(['manifest', manifest?.id]);
 

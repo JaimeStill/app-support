@@ -117,6 +117,7 @@ namespace AppSupport.Data.Extensions
         {
             if (await manifest.Validate(db))
             {
+                manifest.DateCreated = DateTime.Now;
                 await db.Manifests.AddAsync(manifest);
                 await db.SaveChangesAsync();
 

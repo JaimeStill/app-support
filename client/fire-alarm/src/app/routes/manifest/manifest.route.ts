@@ -13,6 +13,7 @@ import {
   PersonModel,
   PlaneModel,
   Manifest,
+  ManifestDialog,
   ManifestService,
   ManifestPeopleDialog,
   ManifestPlaneDialog,
@@ -54,7 +55,13 @@ export class ManifestRoute implements OnInit {
     })
   }
 
-  editManifest = (manifest: Manifest) => { }
+  editManifest = (manifest: Manifest) => this.dialog.open(ManifestDialog, {
+    data: manifest,
+    disableClose: true,
+    width: '800px'
+  })
+  .afterClosed()
+  .subscribe(res => res && this.loadManifest(manifest.id));
 
   managePlanes = (manifest: Manifest) => this.dialog.open(ManifestPlaneDialog, {
     data: manifest,

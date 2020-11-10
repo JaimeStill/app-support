@@ -1,0 +1,7 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="manifestSvc.manifest$ | async as manifest else loading">
+  <manifest-detail [manifest]="manifest"></manifest-detail>
+</ng-container>

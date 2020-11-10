@@ -30,13 +30,13 @@ export class PlaneDialog implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<PlaneDialog>,
-    public organizationSvc: OrganizationService,
+    public orgSvc: OrganizationService,
     public planeSvc: PlaneService,
     @Inject(MAT_DIALOG_DATA) public plane: Plane
   )  { }
 
   ngOnInit() {
-    this.organizationSvc.getOrganizations();
+    this.orgSvc.getOrganizations();
   }
 
   savePlane = async () => {

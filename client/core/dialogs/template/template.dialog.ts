@@ -38,14 +38,14 @@ export class TemplateDialog implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<TemplateDialog>,
     private fb: FormBuilder,
-    public organizationSvc: OrganizationService,
+    public orgSvc: OrganizationService,
     public templateSvc: TemplateService,
     @Inject(MAT_DIALOG_DATA) public template: Template
   ) { }
 
   ngOnInit() {
     this.initializeFormGroup();
-    this.organizationSvc.getOrganizations();
+    this.orgSvc.getOrganizations();
   }
 
   initializeFormGroup = () =>

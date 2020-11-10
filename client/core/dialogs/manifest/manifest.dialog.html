@@ -1,11 +1,11 @@
 <div class="mat-typography">
   <h2 mat-dialog-title>
-    <span *ngIf="template?.id > 0">Update Template</span>
-    <span *ngIf="!(template?.id > 0)">Add Template</span>
+    <span *ngIf="manifest?.id > 0">Update Manifest</span>
+    <span *ngIf="!(manifest?.id > 0)">Add Manifest</span>
   </h2>
   <mat-dialog-content>
-    <form [formGroup]="templateForm"
-          (ngSubmit)="saveTemplate()">
+    <form [formGroup]="manifestForm"
+          (ngSubmit)="saveManifest()">
       <ng-template #loading>
         <mat-progress-bar mode="indeterminate"
                           color="accent"></mat-progress-bar>
@@ -20,7 +20,7 @@
             <mat-option *ngFor="let o of organizations"
                         [value]="o.id">{{o.name}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="templateForm?.controls?.organizationId?.errors?.required">Organization is a required
+          <mat-error *ngIf="manifestForm?.controls?.organizationId?.errors?.required">Organization is a required
             selection</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -38,16 +38,36 @@
                     [matAutosizeMaxRows]="6"></textarea>
           <mat-hint>Optional</mat-hint>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date Expected</mat-label>
+          <input matInput
+                 [matDatepicker]="expectedPicker"
+                 formControlName="dateExpected">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="expectedPicker"></mat-datepicker-toggle>
+          <mat-datepicker #expectedPicker></mat-datepicker>
+          <mat-error *ngIf="templateForm?.controls?.dateExpected?.errors?.required">Date Expected is a required field
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date Executed</mat-label>
+          <input matInput
+                 [matDatepicker]="executedPicker"
+                 formControlName="dateExecuted">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="executedPicker"></mat-datepicker-toggle>
+          <mat-datepicker #executedPicker></mat-datepicker>
+          <mat-hint>Optional</mat-hint>
+        </mat-form-field>
       </section>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-stroked-button
             class="color success"
-            [disabled]="templateForm.invalid"
-            (click)="saveTemplate()">Save</button>
+            [disabled]="manifestForm.invalid"
+            (click)="saveManifest()">Save</button>
     <button mat-stroked-button
-            color="warn"
             mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </div>

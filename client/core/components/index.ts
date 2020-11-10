@@ -3,6 +3,7 @@ import { BranchCardComponent } from './branch';
 
 import {
   ManifestCardComponent,
+  ManifestDetailComponent,
   ManifestPeopleComponent
 } from './manifest';
 
@@ -10,12 +11,14 @@ import { OrganizationCardComponent } from './organization';
 
 import {
   PersonCardComponent,
+  PersonDetailComponent,
   PeopleTableComponent
 } from './person';
 
 import {
   PlaneAdminCardComponent,
   PlaneCardComponent,
+  PlaneDetailComponent,
   PlaneDisplayComponent,
   PlaneManagerComponent
 } from './plane';
@@ -32,12 +35,15 @@ export const Components = [
   BannerComponent,
   BranchCardComponent,
   ManifestCardComponent,
+  ManifestDetailComponent,
   ManifestPeopleComponent,
   OrganizationCardComponent,
   PersonCardComponent,
+  PersonDetailComponent,
   PeopleTableComponent,
   PlaneAdminCardComponent,
   PlaneCardComponent,
+  PlaneDetailComponent,
   PlaneDisplayComponent,
   PlaneManagerComponent,
   RankCardComponent,

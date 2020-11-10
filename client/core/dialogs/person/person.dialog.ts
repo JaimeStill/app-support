@@ -50,7 +50,7 @@ export class PersonDialog implements OnInit {
     private dialogRef: MatDialogRef<PersonDialog>,
     private fb: FormBuilder,
     public branchSvc: BranchService,
-    public organizationSvc: OrganizationService,
+    public orgSvc: OrganizationService,
     public personSvc: PersonService,
     public rankSvc: RankService,
     @Inject(MAT_DIALOG_DATA) public person: Person
@@ -63,7 +63,7 @@ export class PersonDialog implements OnInit {
     }
 
     this.initializeFormGroup();
-    this.organizationSvc.getOrganizations();
+    this.orgSvc.getOrganizations();
     this.branchSvc.getBranches();
   }
 
