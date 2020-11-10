@@ -5,7 +5,8 @@
              fxLayoutAlign="start stretch">
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
-               fxFlex>
+               fxFlex
+               class="container">
         <mat-toolbar>Available People</mat-toolbar>
         <ng-template #loading>
           <mat-progress-bar mode="indeterminate"
@@ -48,7 +49,8 @@
       </section>
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
-               fxFlex>
+               fxFlex
+               class="container">
         <mat-toolbar>Selected People</mat-toolbar>
         <section *ngIf="selected?.length > 0"
                  class="container"
