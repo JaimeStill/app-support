@@ -1,3 +1,34 @@
-<mat-toolbar class="app-toolbar">
-  Manifest
-</mat-toolbar>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="manifestSvc.manifest$ | async as manifest else loading">
+  <mat-toolbar class="app-toolbar">
+    <span class="header">{{manifest?.title}}</span>
+    <button mat-stroked-button
+            (click)="editManifest(manifest)">Edit Manifest</button>
+    <button mat-stroked-button
+            (click)="managePlanes(manifest)">Manage Planes</button>
+  </mat-toolbar>
+  <ng-template #loadingPlanes>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="manifestSvc.manifestPlanes$ | async as planes else loading">
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start start"
+             class="background stacked container"
+             *ngIf="planes?.length > 0">
+      <plane-manager *ngFor="let p of planes"
+                     [plane]="p"
+                     (add)="addPeople($event)"
+                     (remove)="removePlane($event)">
+        <manifest-people [manifestPlaneId]="p.altId"
+                         (remove)="removePerson($event, manifest)"
+                         (transfer)="transferPerson($event, manifest)"></manifest-people>
+      </plane-manager>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(planes?.length > 0)">No Planes Available</p>
+  </ng-container>
+</ng-container>

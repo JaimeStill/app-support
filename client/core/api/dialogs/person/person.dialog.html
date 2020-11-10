@@ -90,11 +90,12 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-stroked-button
-            [disabled]="personForm.invalid"
+            [disabled]="personForm.invalid || saving"
             class="color success"
             (click)="savePerson()">Save</button>
     <button mat-stroked-button
             color="warn"
+            [disabled]="saving"
             mat-dialog-close>Cancel</button>
   </mat-dialog-actions>
 </div>

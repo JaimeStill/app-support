@@ -1,4 +1,10 @@
 import { BranchCardComponent } from './branch';
+
+import {
+  ManifestCardComponent,
+  ManifestPeopleComponent
+} from './manifest';
+
 import { OrganizationCardComponent } from './organization';
 
 import {
@@ -22,8 +28,10 @@ import {
 
 export const ApiComponents = [
   BranchCardComponent,
-  PersonCardComponent,
+  ManifestCardComponent,
+  ManifestPeopleComponent,
   OrganizationCardComponent,
+  PersonCardComponent,
   PeopleTableComponent,
   PlaneAdminCardComponent,
   PlaneCardComponent,
@@ -35,6 +43,7 @@ export const ApiComponents = [
 ]
 
 export * from './branch';
+export * from './manifest';
 export * from './organization';
 export * from './person';
 export * from './plane';

@@ -10,6 +10,7 @@ namespace AppSupport.Data.Models
         public int? ExecutiveId { get; set; }
         public int OrganizationId { get; set; }
         public int RankId { get; set; }
+        public int TravelerId { get; set; }
         public int DodId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

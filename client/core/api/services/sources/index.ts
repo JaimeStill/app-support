@@ -1,5 +1,6 @@
 export * from './branch.source';
 export * from './manifest.source';
+export * from './manifest-person.source';
 export * from './organization.source';
 export * from './person.source';
 export * from './plane.source';

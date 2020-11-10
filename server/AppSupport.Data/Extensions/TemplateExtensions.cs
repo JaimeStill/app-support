@@ -55,12 +55,6 @@ namespace AppSupport.Data.Extensions
             return await container.Query((templates, s) => templates.Search(s));
         }
 
-        static async Task<List<int>> GetTemplatePeopleIds(this AppDbContext db, int templateId) =>
-            await db.TemplatePeople
-                .Where(x => x.TemplatePlane.TemplateId == templateId)
-                .Select(x => x.PersonId)
-                .ToListAsync();
-
         public static async Task<List<Template>> GetTemplates(this AppDbContext db, int orgId) =>
             await db.Templates
                 .Where(x => x.OrganizationId == orgId)
@@ -96,7 +90,7 @@ namespace AppSupport.Data.Extensions
 
         public static async Task RemoveTemplate(this AppDbContext db, Template template)
         {
-            db.RemoveTemplatePlanePeople(template.Id);
+            db.RemoveTemplatePeople(template.Id);
             db.RemoveTemplatePlanes(template.Id);
             db.Templates.Remove(template);
             await db.SaveChangesAsync();
@@ -190,18 +184,13 @@ namespace AppSupport.Data.Extensions
 
         public static async Task RemoveTemplatePlane(this AppDbContext db, TemplatePlane templatePlane)
         {
-            db.RemoveTemplatePlanePeople(templatePlane.TemplateId);
+            db.RemoveTemplatePlanePeople(templatePlane.Id);
             db.TemplatePlanes.Remove(templatePlane);
             await db.SaveChangesAsync();
         }
 
         static void RemoveTemplatePlanes(this AppDbContext db, int templateId)
         {
-            var templatePeople = db.TemplatePeople
-                .Where(x => x.TemplatePlane.TemplateId == templateId);
-
-            db.TemplatePeople.RemoveRange(templatePeople);
-
             var templatePlanes = db.TemplatePlanes
                 .Where(x => x.TemplateId == templateId);
 
@@ -211,6 +200,12 @@ namespace AppSupport.Data.Extensions
         #endregion
 
         #region Template Plane People
+
+        static async Task<List<int>> GetTemplatePeopleIds(this AppDbContext db, int templateId) =>
+            await db.TemplatePeople
+                .Where(x => x.TemplatePlane.TemplateId == templateId)
+                .Select(x => x.PersonId)
+                .ToListAsync();
 
         public static async Task<QueryResult<Person>> QueryAvailableTemplatePeople(
             this AppDbContext db,
@@ -307,10 +302,18 @@ namespace AppSupport.Data.Extensions
             await db.SaveChangesAsync();
         }
 
-        static void RemoveTemplatePlanePeople(this AppDbContext db, int templateId)
+        static void RemoveTemplatePeople(this AppDbContext db, int templateId)
         {
             var templatePeople = db.TemplatePeople
                 .Where(x => x.TemplatePlane.TemplateId == templateId);
+
+            db.TemplatePeople.RemoveRange(templatePeople);
+        }
+
+        static void RemoveTemplatePlanePeople(this AppDbContext db, int templatePlaneId)
+        {
+            var templatePeople = db.TemplatePeople
+                .Where(x => x.TemplatePlaneId == templatePlaneId);
 
             db.TemplatePeople.RemoveRange(templatePeople);
         }

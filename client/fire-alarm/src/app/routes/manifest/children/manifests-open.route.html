@@ -1,0 +1,40 @@
+<mat-toolbar class="app-toolbar">
+  <span class="header">Manifests</span>
+  <button mat-stroked-button
+          (click)="addManifest()">Add Manifest</button>
+</mat-toolbar>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="container"
+         *ngIf="manifestSrc.queryResult$ | async as qr else loading">
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <searchbar label="Search"
+               fxFlex
+               [minimum]="1"
+               (search)="manifestSrc.onSearch($event)"
+               (clear)="templateSrc.clearSearch()"></searchbar>
+    <mat-paginator [length]="qr?.totalCount"
+                   [pageSize]="qr?.pageSize"
+                   [pageSizeOptions]="manifestSrc.pageSizeOptions"
+                   [pageIndex]="qr?.page - 1"
+                   (page)="manifestSrc.onPage($event)"></mat-paginator>
+  </section>
+  <section fxLayout="row | wrap"
+           fxLayoutAlign="start start"
+           class="background stacked"
+           *ngIf="qr?.data?.length > 0">
+    <manifest-card *ngFor="let manifest of qr.data"
+                   [manifest]="manifest"
+                   (edit)="editManifest($event)"
+                   (view)="viewManifest($event)"
+                   (remove)="removeManifest($event)"
+                   (toggle)="toggleManifest($event)"></manifest-card>
+  </section>
+  <p class="mat-subheading-2"
+     *ngIf="!(qr?.data?.length > 0)">No Open Manifests</p>
+</section>

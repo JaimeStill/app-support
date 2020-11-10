@@ -1,4 +1,11 @@
 import { BranchDialog } from './branch';
+
+import {
+  ManifestPeopleDialog,
+  ManifestPlaneDialog,
+  ManifestTransferDialog
+} from './manifest';
+
 import { OrganizationDialog } from './organization';
 import { PersonDialog } from './person';
 import { PlaneDialog } from './plane';
@@ -14,6 +21,9 @@ import {
 
 export const ApiDialogs = [
   BranchDialog,
+  ManifestPeopleDialog,
+  ManifestPlaneDialog,
+  ManifestTransferDialog,
   OrganizationDialog,
   PersonDialog,
   PlaneDialog,
@@ -26,6 +36,7 @@ export const ApiDialogs = [
 ]
 
 export * from './branch';
+export * from './manifest';
 export * from './organization';
 export * from './person';
 export * from './plane';

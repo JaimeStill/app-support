@@ -32,9 +32,9 @@ export class ManifestSource extends QueryService<Manifest> implements DataSource
       isDescending: false,
       propertyName: 'title'
     };
-
-    this.baseUrl = `${this.config.api}manifest/queryManifests`;
   }
+
+  setBaseUrl = (url: string) => this.baseUrl = `${this.config.api}manifest/${url}`;
 
   trackManifests = (manifest: Manifest) => manifest.id;
 }

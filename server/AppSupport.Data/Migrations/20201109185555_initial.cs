@@ -249,6 +249,9 @@ namespace AppSupport.Data.Migrations
                     PersonId = table.Column<int>(nullable: false),
                     RankId = table.Column<int>(nullable: false),
                     TravelerId = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    MiddleName = table.Column<string>(nullable: true),
                     Nickname = table.Column<string>(nullable: true),
                     Occupation = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)

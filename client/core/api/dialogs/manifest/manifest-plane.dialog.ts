@@ -10,30 +10,30 @@ import {
 } from '@angular/core';
 
 import {
-  Template,
+  Manifest,
   Plane
 } from '../../models';
 
-import { TemplateService } from '../../services';
+import { ManifestService } from '../../services';
 
 @Component({
-  selector: 'template-plane-dialog',
-  templateUrl: 'template-plane.dialog.html',
-  providers: [ TemplateService ]
+  selector: 'manifest-plane-dialog',
+  templateUrl: 'manifest-plane.dialog.html',
+  providers: [ManifestService]
 })
-export class TemplatePlaneDialog implements OnInit {
+export class ManifestPlaneDialog {
   saving = false;
   selected = new Array<Plane>();
 
   constructor(
-    private dialogRef: MatDialogRef<TemplatePlaneDialog>,
-    @Inject(MAT_DIALOG_DATA) private template: Template,
-    public templateSvc: TemplateService
+    private dialogRef: MatDialogRef<ManifestPlaneDialog>,
+    @Inject(MAT_DIALOG_DATA) private manifest: Manifest,
+    public manifestSvc: ManifestService
   ) { }
 
   ngOnInit() {
-    if (this.template?.id > 0)
-      this.templateSvc.getAvailableTemplatePlanes(this.template.id, this.template.organizationId);
+    if (this.manifest?.id > 0)
+      this.manifestSvc.getAvailableManifestPlanes(this.manifest.id, this.manifest.organizationId);
     else
       this.dialogRef.close();
   }
@@ -49,7 +49,7 @@ export class TemplatePlaneDialog implements OnInit {
 
   savePlanes = async () => {
     this.saving = true;
-    const res = await this.templateSvc.addTemplatePlanes(this.template.id, this.selected);
+    const res = await this.manifestSvc.addManifestPlanes(this.manifest.id, this.selected);
     this.saving = false;
     res && this.dialogRef.close(true);
   }

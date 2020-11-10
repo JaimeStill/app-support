@@ -10,7 +10,9 @@ export interface ManifestPerson {
   personId: number;
   rankId: number;
   travelerId: number;
-  branch: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
   nickname: string;
   occupation: string;
   title: string;

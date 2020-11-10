@@ -14,7 +14,7 @@ import { ServerConfig } from '../../../config';
 import { Person } from '../../models';
 
 @Injectable()
-export class TemplatePersonSource extends QueryService<Person> implements DataSource<Person> {
+export class ManifestPersonSource extends QueryService<Person> implements DataSource<Person> {
   columns = [];
 
   constructor(
@@ -29,7 +29,7 @@ export class TemplatePersonSource extends QueryService<Person> implements DataSo
     };
   }
 
-  setBaseUrl = (templateId: number) => this.baseUrl = `${this.config.api}template/queryAvailableTemplatePeople/${templateId}`;
+  setBaseUrl = (manifestId: number) => this.baseUrl = `${this.config.api}manifest/queryAvailableManifestPeople/${manifestId}`;
 
   trackPeople = (person: Person) => person.id;
 }

@@ -40,7 +40,12 @@ export class TemplatesRoute implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.sub = this.orgSvc.currentOrg$.subscribe(org => org?.id > 0 && this.templateSrc.setBaseUrl(org.id));
+    this.sub = this.orgSvc
+      .currentOrg$
+      .subscribe(org =>
+        org?.id > 0 &&
+        this.templateSrc.setBaseUrl(org.id)
+      );
   }
 
   ngOnDestroy() {

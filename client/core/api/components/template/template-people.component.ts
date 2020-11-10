@@ -31,7 +31,7 @@ export class TemplatePeopleComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.sub = this.trigger.templatePeople$.subscribe(id => {
+    this.sub = this.trigger.templatePeople.subscribe(id => {
       if (id && id === this.templatePlaneId)
         this.templateSvc.getTemplatePeople(this.templatePlaneId);
     });

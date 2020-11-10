@@ -11,11 +11,8 @@ import {
 import {
   ConfirmDialog,
   PersonModel,
-  Plane,
   PlaneModel,
   Template,
-  TemplatePlane,
-  TemplatePerson,
   TemplateDialog,
   TemplatePeopleDialog,
   TemplatePlaneDialog,

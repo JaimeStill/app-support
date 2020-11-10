@@ -1,0 +1,32 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="manifestSvc.people$ | async as people else loading">
+  <ng-container *ngIf="people.length > 0">
+    <searchbar label="Search People"
+               [minimum]="1"
+               (search)="manifestSvc.searchManifestPeople(manifestPlaneId, $event)"
+               (clear)="manifestSvc.getManifestPeople(manifestPlaneId)"></searchbar>
+    <section class="content"
+             fxLayout="column"
+             fxLayoutAlign="start center">
+      <person-card *ngFor="let p of people"
+                   [size]="size"
+                   [person]="p">
+        <button mat-icon-button
+                color="warn"
+                matTooltip="Remove"
+                (click)="remove.emit(p)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button
+                color="primary"
+                matTooltip="Change Plane"
+                (click)="transfer.emit(p)">
+          <mat-icon>multiple_stop</mat-icon>
+        </button>
+      </person-card>
+    </section>
+  </ng-container>
+  <p class="mat-subheading-2" *ngIf="!(people.length > 0)">No People Assigned</p>
+</ng-container>

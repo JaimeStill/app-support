@@ -1,0 +1,55 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="background card elevated"
+         [style.width.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="start center"
+           class="background stacked container">
+    <strong fxFlex>{{manifest?.title}}</strong>
+    <button mat-icon-button
+            color="warn"
+            matTooltip="Remove"
+            (click)="remove.emit(manifest)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-icon-button
+            [matTooltip]="manifest.isClosed ? 'Open' : 'Close'"
+            (click)="toggle.emit(manifest)">
+      <mat-icon *ngIf="manifest.isClosed">lock</mat-icon>
+      <mat-icon *ngIf="!(manifest.isClosed)">lock_open</mat-icon>
+    </button>
+    <button mat-icon-button
+            matTooltip="Edit"
+            (click)="edit.emit(manifest)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button
+            color="primary"
+            matTooltip="View"
+            (click)="view.emit(manifest)">
+      <mat-icon>forward</mat-icon>
+    </button>
+  </section>
+  <section fxLayout="column"
+           fxLayoutAlign="start stretch"
+           class="container">
+    <section fxLayout="row" fxLayoutAlign="space-between center">
+      <p>Created: {{manifest?.dateCreated | date:'dd MMM yyyy'}}</p>
+      <p *ngIf="manifest?.dateExecuted">Executed: {{manifest?.dateExecuted | date:'dd MMM yyyy'}}</p>
+      <p *ngIf="!(manifest?.dateExecuted)">Expected: {{manifest?.dateExpected | date: 'dd MMM yyyy'}}</p>
+    </section>
+    <p>{{manifest?.description}}</p>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate"
+                        color="accent"></mat-progress-bar>
+    </ng-template>
+    <ng-container *ngIf="manifestSvc.manifestPlanes$ | async as planes else loading">
+      <ng-container *ngIf="planes.length > 0">
+        <plane-display *ngFor="let p of planes"
+                       [plane]="p"></plane-display>
+      </ng-container>
+      <p class="color warn"
+         *ngIf="!(planes.length > 0)">No Planes Available</p>
+    </ng-container>
+  </section>
+</section>

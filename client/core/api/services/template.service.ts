@@ -43,6 +43,8 @@ export class TemplateService {
     @Optional() private config: ServerConfig
   ) { }
 
+  //#region Template
+
   getTemplates = (id: number) => {
     this.http.get<Template[]>(`${this.config.api}template/getTemplates/${id}`)
       .subscribe(
@@ -103,6 +105,10 @@ export class TemplateService {
         }
       );
   })
+
+  //#endregion
+
+  //#region TemplatePlane
 
   getAvailableTemplatePlanes = (templateId: number, orgId: number): Promise<Plane[]> => new Promise((resolve) => {
     this.http.get<Plane[]>(`${this.config.api}template/getAvailableTemplatePlanes/${templateId}/${orgId}`)
@@ -174,6 +180,10 @@ export class TemplateService {
       );
   })
 
+  //#endregion
+
+  //#region TemplatePerson
+
   getTemplatePeople = (id: number) => this.http.get<PersonModel[]>(`${this.config.api}template/getTemplatePeople/${id}`)
     .subscribe(
       data => this.people.next(data),
@@ -191,7 +201,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Template plane people successfully updated`);
-          this.trigger.setTemplatePeople(templatePlaneId);
+          this.trigger.templatePeople.next(templatePlaneId);
           resolve(true);
         },
         err => {
@@ -206,8 +216,8 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${person.lastName}, ${person.firstName} move to ${plane.name}`);
-          this.trigger.setTemplatePeople(plane.altId);
-          this.trigger.setTemplatePeople(person.parentId);
+          this.trigger.templatePeople.next(plane.altId);
+          this.trigger.templatePeople.next(person.parentId);
           resolve(true);
         },
         err => {
@@ -222,7 +232,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.lastName}, ${p.firstName} removed from template plane`);
-          this.trigger.setTemplatePeople(p.parentId);
+          this.trigger.templatePeople.next(p.parentId);
           resolve(true);
         },
         err => {
@@ -231,4 +241,6 @@ export class TemplateService {
         }
       );
   })
+
+  //#endregion
 }

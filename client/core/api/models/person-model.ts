@@ -7,6 +7,7 @@ export interface PersonModel {
   parentId: number;
   organizationId: number;
   rankId: number;
+  travelerId: number;
   dodId: number;
   firstName: string;
   lastName: string;

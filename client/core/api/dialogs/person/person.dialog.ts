@@ -41,6 +41,7 @@ import { CoreService } from '../../../services';
   ]
 })
 export class PersonDialog implements OnInit {
+  saving = false;
   branchId: number;
   personForm: FormGroup;
 
@@ -75,10 +76,15 @@ export class PersonDialog implements OnInit {
   }
 
   savePerson = async () => {
-    const res = this.personForm?.value?.id > 0
-      ? await this.personSvc.updatePerson(this.personForm.value)
-      : await this.personSvc.addPerson(this.personForm.value);
+    if (!this.saving) {
+      this.saving = true;
 
-    res && this.dialogRef.close(true)
+      const res = this.personForm?.value?.id > 0
+        ? await this.personSvc.updatePerson(this.personForm.value)
+        : await this.personSvc.addPerson(this.personForm.value);
+
+      this.saving = false;
+      res && this.dialogRef.close(true)
+    }
   }
 }

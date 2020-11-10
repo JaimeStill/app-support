@@ -1,0 +1,60 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Manifest Planes</h2>
+  <mat-dialog-content>
+    <section fxLayout="row"
+             fxLayoutAlign="start stretch">
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch"
+               fxFlex
+               class="container">
+        <mat-toolbar>Available Planes</mat-toolbar>
+        <ng-template #loading>
+          <mat-progress-bar mode="indeterminate"
+                            color="accent"></mat-progress-bar>
+        </ng-template>
+        <section *ngIf="manifestSvc.planes$ | async as planes else loading"
+                 class="container"
+                 fxLayout="column"
+                 fxLayoutAlign="start center">
+          <ng-container *ngIf="planes?.length > 0">
+            <plane-card *ngFor="let p of planes"
+                        actionTip="Add"
+                        actionIcon="switch_left"
+                        [blackout]="checkBlackout(p)"
+                        [plane]="p"
+                        (action)="addPlane($event)"></plane-card>
+          </ng-container>
+          <p class="mat-subheading-2"
+             *ngIf="!(planes?.length > 0)">No Planes Available</p>
+        </section>
+      </section>
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch"
+               fxFlex
+               class="container">
+        <mat-toolbar>Selected Planes</mat-toolbar>
+        <section *ngIf="selected?.length > 0"
+                 class="container"
+                 fxLayout="column"
+                 fxLayoutAlign="start center">
+          <plane-card *ngFor="let p of selected"
+                      actionIcon="switch_right"
+                      actionTip="Remove"
+                      [plane]="p"
+                      (action)="removePlane($event)"></plane-card>
+        </section>
+        <p class="mat-subheading-2"
+           *ngIf="!(selected?.length > 0)">No Planes Selected</p>
+      </section>
+    </section>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button
+            class="color success"
+            [disabled]="saving"
+            (click)="savePlanes()">Save</button>
+    <button mat-button
+            mat-dialog-close
+            [disabled]="saving">Cancel</button>
+  </mat-dialog-actions>
+</div>
