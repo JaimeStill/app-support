@@ -27,7 +27,7 @@
           <mat-label>Title</mat-label>
           <input matInput
                  formControlName="title">
-          <mat-error *ngIf="templateForm?.controls?.title?.errors?.required">Title is a required field</mat-error>
+          <mat-error *ngIf="manifestForm?.controls?.title?.errors?.required">Title is a required field</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Description</mat-label>
@@ -46,7 +46,7 @@
           <mat-datepicker-toggle matSuffix
                                  [for]="expectedPicker"></mat-datepicker-toggle>
           <mat-datepicker #expectedPicker></mat-datepicker>
-          <mat-error *ngIf="templateForm?.controls?.dateExpected?.errors?.required">Date Expected is a required field
+          <mat-error *ngIf="manifestForm?.controls?.dateExpected?.errors?.required">Date Expected is a required field
           </mat-error>
         </mat-form-field>
         <mat-form-field>
