@@ -4,7 +4,7 @@
 </ng-template>
 <ng-container *ngIf="manifestSvc.manifest$ | async as manifest else loading">
   <mat-toolbar class="app-toolbar">
-    <span class="header">{{manifest?.title}}</span>
+    <span class="header"><strong>Manifest - </strong>{{manifest?.title}}</span>
     <button mat-stroked-button
             (click)="editManifest(manifest)">Edit Manifest</button>
     <button mat-stroked-button

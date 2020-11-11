@@ -18,6 +18,7 @@ namespace AppSupport.Data.Extensions
 
         static IQueryable<Manifest> SetIncludes(this DbSet<Manifest> manifests) =>
             manifests.Include(x => x.Organization);
+
         static IQueryable<Manifest> Search(this IQueryable<Manifest> manifests, string search)
         {
             search = search.ToLower();
@@ -79,6 +80,7 @@ namespace AppSupport.Data.Extensions
             {
                 DateCreated = DateTime.Now,
                 DateExpected = DateTime.Now,
+                DateUpdated = DateTime.Now,
                 Description = template.Description,
                 Title = template.Title,
                 OrganizationId = template.OrganizationId,
@@ -118,6 +120,7 @@ namespace AppSupport.Data.Extensions
             if (await manifest.Validate(db))
             {
                 manifest.DateCreated = DateTime.Now;
+                manifest.DateUpdated = DateTime.Now;
                 await db.Manifests.AddAsync(manifest);
                 await db.SaveChangesAsync();
 
@@ -131,6 +134,7 @@ namespace AppSupport.Data.Extensions
         {
             if (await manifest.Validate(db))
             {
+                manifest.DateUpdated = DateTime.Now;
                 db.Manifests.Update(manifest);
                 await db.SaveChangesAsync();
             }
@@ -233,6 +237,11 @@ namespace AppSupport.Data.Extensions
                 PlaneId = plane.Id
             });
 
+            var manifest = await db.Manifests
+                    .Where(x => x.Id == manifestId)
+                    .FirstOrDefaultAsync();
+                manifest.DateUpdated = DateTime.Now;
+                db.Manifests.Update(manifest);
             await db.ManifestPlanes.AddRangeAsync(manifestPlanes);
             await db.SaveChangesAsync();
         }
@@ -241,6 +250,14 @@ namespace AppSupport.Data.Extensions
         {
             db.RemoveManifestPlanePeople(manifestPlane.Id);
             db.ManifestPlanes.Remove(manifestPlane);
+
+            var manifest = await db.ManifestPlanes
+                    .Include(x => x.Manifest)
+                    .Where(x => x.Id == manifestPlane.Id)
+                    .Select(x => x.Manifest)
+                    .FirstOrDefaultAsync();
+                manifest.DateUpdated = DateTime.Now;
+                db.Manifests.Update(manifest);
             await db.SaveChangesAsync();
         }
 
@@ -350,6 +367,14 @@ namespace AppSupport.Data.Extensions
                     Title = person.Title
                 });
 
+                var manifest = await db.ManifestPlanes
+                    .Include(x => x.Manifest)
+                    .Where(x => x.Id == manifestPlaneId)
+                    .Select(x => x.Manifest)
+                    .FirstOrDefaultAsync();
+                manifest.DateUpdated = DateTime.Now;
+                db.Manifests.Update(manifest);
+
                 await db.ManifestPeople.AddRangeAsync(manifestPeople);
                 await db.SaveChangesAsync();
             }
@@ -359,6 +384,14 @@ namespace AppSupport.Data.Extensions
         {
             if (await manifestPerson.Validate(db))
             {
+                var manifest = await db.ManifestPeople
+                    .Include(x => x.ManifestPlane)
+                        .ThenInclude(x => x.Manifest)
+                    .Where(x => x.Id == manifestPerson.Id)
+                    .Select(x => x.ManifestPlane.Manifest)
+                    .FirstOrDefaultAsync();
+                manifest.DateUpdated = DateTime.Now;
+                db.Manifests.Update(manifest);
                 db.ManifestPeople.Update(manifestPerson);
                 await db.SaveChangesAsync();
             }
@@ -366,6 +399,14 @@ namespace AppSupport.Data.Extensions
 
         public static async Task RemoveManifestPerson(this AppDbContext db, ManifestPerson manifestPerson)
         {
+            var manifest = await db.ManifestPeople
+                    .Include(x => x.ManifestPlane)
+                        .ThenInclude(x => x.Manifest)
+                    .Where(x => x.Id == manifestPerson.Id)
+                    .Select(x => x.ManifestPlane.Manifest)
+                    .FirstOrDefaultAsync();
+            manifest.DateUpdated = DateTime.Now;
+            db.Manifests.Update(manifest);
             db.ManifestPeople.Remove(manifestPerson);
             await db.SaveChangesAsync();
         }
