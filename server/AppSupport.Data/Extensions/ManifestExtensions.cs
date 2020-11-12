@@ -177,7 +177,7 @@ namespace AppSupport.Data.Extensions
             return true;
         }
 
-        static async Task SetManifestUpdated(this AppDbContext db, int id)
+        static async Task ModifyManifest(this AppDbContext db, int id)
         {
             var manifest = await db.Manifests
                     .FindAsync(id);
@@ -246,7 +246,7 @@ namespace AppSupport.Data.Extensions
                 PlaneId = plane.Id
             });
 
-            await db.SetManifestUpdated(manifestId);
+            await db.ModifyManifest(manifestId);
             await db.ManifestPlanes.AddRangeAsync(manifestPlanes);
             await db.SaveChangesAsync();
         }
@@ -256,7 +256,7 @@ namespace AppSupport.Data.Extensions
             db.RemoveManifestPlanePeople(manifestPlane.Id);
             db.ManifestPlanes.Remove(manifestPlane);
 
-            await db.SetManifestUpdated(manifestPlane.ManifestId);
+            await db.ModifyManifest(manifestPlane.ManifestId);
             await db.SaveChangesAsync();
         }
 
@@ -372,7 +372,7 @@ namespace AppSupport.Data.Extensions
                 });
 
                 var manifestId = db.GetManifestIdFromPlaneId(manifestPlaneId);
-                await db.SetManifestUpdated(manifestId);
+                await db.ModifyManifest(manifestId);
                 await db.ManifestPeople.AddRangeAsync(manifestPeople);
                 await db.SaveChangesAsync();
             }
@@ -383,7 +383,7 @@ namespace AppSupport.Data.Extensions
             if (await manifestPerson.Validate(db))
             {
                 var manifestId = db.GetManifestIdFromPlaneId(manifestPerson.ManifestPlaneId);
-                await db.SetManifestUpdated(manifestId);
+                await db.ModifyManifest(manifestId);
                 db.ManifestPeople.Update(manifestPerson);
                 await db.SaveChangesAsync();
             }
@@ -392,7 +392,7 @@ namespace AppSupport.Data.Extensions
         public static async Task RemoveManifestPerson(this AppDbContext db, ManifestPerson manifestPerson)
         {
             var manifestId = db.GetManifestIdFromPlaneId(manifestPerson.ManifestPlaneId);
-            await db.SetManifestUpdated(manifestId);
+            await db.ModifyManifest(manifestId);
             db.ManifestPeople.Remove(manifestPerson);
             await db.SaveChangesAsync();
         }
