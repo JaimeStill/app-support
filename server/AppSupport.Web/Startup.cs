@@ -19,8 +19,7 @@ using AppSupport.Core.Upload;
 using AppSupport.Data;
 using AppSupport.Identity;
 using AppSupport.Identity.Mock;
-using System.Text.Json;
-using AppSupport.Core.Office;
+using AppSupport.Office;
 
 namespace AppSupport.Web
 {
@@ -29,7 +28,7 @@ namespace AppSupport.Web
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
         public LogProvider Logger { get; }
-        public OfficeProvider OfficeProvider { get; }
+        public OfficeConfig OfficeConfig { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
@@ -41,7 +40,7 @@ namespace AppSupport.Web
                     ?? $@"{Environment.WebRootPath}\logs"
             };
 
-            OfficeProvider = new OfficeProvider
+            OfficeConfig = new OfficeConfig
             {
                 Directory = Configuration.GetValue<string>("OfficeDirectory")
                     ?? $@"{Environment.WebRootPath}\office"
@@ -75,7 +74,7 @@ namespace AppSupport.Web
                 Color = Configuration.GetValue<string>("AppBannerColor")
             });
 
-            services.AddSingleton(OfficeProvider);
+            services.AddSingleton(OfficeConfig);
 
             if (Environment.IsDevelopment())
             {
@@ -132,7 +131,7 @@ namespace AppSupport.Web
 
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(OfficeProvider.Directory),
+                FileProvider = new PhysicalFileProvider(OfficeConfig.Directory),
                 RequestPath = "/office"
             });
 

@@ -1,15 +1,15 @@
 using AppSupport.Core.Extensions;
 
-namespace AppSupport.Core.Office
+namespace AppSupport.Office
 {
-    public class OfficeProvider
+    public class OfficeConfig
     {
         public string directory;
 
         public string Directory
         {
             get => directory;
-            set
+            init
             {
                 directory = value;
                 Directory.EnsureDirectoryExists();

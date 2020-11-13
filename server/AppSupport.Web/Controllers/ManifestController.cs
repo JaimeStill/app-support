@@ -1,17 +1,17 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
 using AppSupport.Core.ApiQuery;
+using AppSupport.Core.Extensions;
 using AppSupport.Data;
 using AppSupport.Data.Entities;
 using AppSupport.Data.Extensions;
 using AppSupport.Data.Models;
-using AppSupport.Core.Office;
+using AppSupport.Office;
 using AppSupport.Office.Extensions;
-using System.IO;
-using AppSupport.Core.Extensions;
 
 namespace AppSupport.Web.Controllers
 {
@@ -19,9 +19,9 @@ namespace AppSupport.Web.Controllers
     public class ManifestController : Controller
     {
         private AppDbContext db;
-        private OfficeProvider office;
+        private OfficeConfig office;
 
-        public ManifestController(AppDbContext db, OfficeProvider office)
+        public ManifestController(AppDbContext db, OfficeConfig office)
         {
             this.db = db;
             this.office = office;

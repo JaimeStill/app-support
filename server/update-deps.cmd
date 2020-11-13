@@ -21,6 +21,10 @@ call dotnet add package Microsoft.Extensions.Configuration.Binder
 call dotnet add package System.DirectoryServices
 call dotnet add package System.DirectoryServices.AccountManagement
 
+echo Updating AppSupport.Office dependencies...
+cd ..\AppSupport.Office
+call dotnet add package DocumentFormat.OpenXml
+
 echo Updating AppSupport.Web dependencies...
 cd ..\AppSupport.Web
 call dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson
