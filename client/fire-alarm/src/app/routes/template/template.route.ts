@@ -10,6 +10,7 @@ import {
 
 import {
   ConfirmDialog,
+  ManifestService,
   PersonModel,
   PlaneModel,
   Template,
@@ -25,14 +26,18 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'template-route',
   templateUrl: 'template.route.html',
-  providers: [TemplateService]
+  providers: [
+      ManifestService,
+      TemplateService,
+    ]
 })
 export class TemplateRoute implements OnInit {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
-    public templateSvc: TemplateService
+    public templateSvc: TemplateService,
+    public manifestSvc: ManifestService
   ) { }
 
   private navigate = () => this.router.navigate(['templates']);
@@ -62,6 +67,22 @@ export class TemplateRoute implements OnInit {
   })
   .afterClosed()
   .subscribe(res => res && this.templateSvc.getTemplate(template.id));
+
+  generateManifest = (template: Template) => this.dialog.open(ConfirmDialog, {
+      data: {
+        title: 'Generate Manifest',
+        content: `Generate a manifest based on the ${template.title} template?`
+      },
+      disableClose: true,
+      autoFocus: false
+  })
+    .afterClosed()
+    .subscribe(async result => {
+      if (result) {
+        const res = await this.manifestSvc.generateManifest(template.id);
+        res && this.router.navigate(['manifest', res]);
+      }
+    });
 
   managePlanes = (template: Template) => this.dialog.open(TemplatePlaneDialog, {
     data: template,
@@ -111,7 +132,7 @@ export class TemplateRoute implements OnInit {
      const res = await this.templateSvc.removeTemplatePerson(p);
      res && this.templateSvc.getTemplatePlanes(t.id);
     }
-  });
+  })
 
   transferPerson = (p: PersonModel, t: Template) => this.dialog.open(TemplateTransferDialog, {
     data: { person: p, templateId: t.id } as { person: PersonModel, templateId: number },

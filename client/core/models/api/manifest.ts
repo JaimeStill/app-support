@@ -15,6 +15,7 @@ export interface Manifest{
   dateCreated: Date;
   dateExpected: Date;
   dateExecuted: Date;
+  dateUpdated: Date;
   isClosed: boolean;
 
   organization: Organization;

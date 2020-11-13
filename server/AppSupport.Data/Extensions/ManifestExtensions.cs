@@ -18,6 +18,7 @@ namespace AppSupport.Data.Extensions
 
         static IQueryable<Manifest> SetIncludes(this DbSet<Manifest> manifests) =>
             manifests.Include(x => x.Organization);
+
         static IQueryable<Manifest> Search(this IQueryable<Manifest> manifests, string search)
         {
             search = search.ToLower();
@@ -79,6 +80,7 @@ namespace AppSupport.Data.Extensions
             {
                 DateCreated = DateTime.Now,
                 DateExpected = DateTime.Now,
+                DateUpdated = DateTime.Now,
                 Description = template.Description,
                 Title = template.Title,
                 OrganizationId = template.OrganizationId,
@@ -118,6 +120,7 @@ namespace AppSupport.Data.Extensions
             if (await manifest.Validate(db))
             {
                 manifest.DateCreated = DateTime.Now;
+                manifest.DateUpdated = DateTime.Now;
                 await db.Manifests.AddAsync(manifest);
                 await db.SaveChangesAsync();
 
@@ -131,6 +134,7 @@ namespace AppSupport.Data.Extensions
         {
             if (await manifest.Validate(db))
             {
+                manifest.DateUpdated = DateTime.Now;
                 db.Manifests.Update(manifest);
                 await db.SaveChangesAsync();
             }
@@ -139,6 +143,7 @@ namespace AppSupport.Data.Extensions
         public static async Task ToggleManifestClosed(this AppDbContext db, Manifest manifest)
         {
             db.Manifests.Attach(manifest);
+            manifest.DateUpdated = DateTime.Now;
             manifest.IsClosed = !manifest.IsClosed;
             await db.SaveChangesAsync();
         }
@@ -170,6 +175,14 @@ namespace AppSupport.Data.Extensions
             }
 
             return true;
+        }
+
+        static async Task ModifyManifest(this AppDbContext db, int id)
+        {
+            var manifest = await db.Manifests
+                    .FindAsync(id);
+            db.Manifests.Attach(manifest);
+            manifest.DateUpdated = DateTime.Now;
         }
 
         #endregion
@@ -233,6 +246,7 @@ namespace AppSupport.Data.Extensions
                 PlaneId = plane.Id
             });
 
+            await db.ModifyManifest(manifestId);
             await db.ManifestPlanes.AddRangeAsync(manifestPlanes);
             await db.SaveChangesAsync();
         }
@@ -241,6 +255,8 @@ namespace AppSupport.Data.Extensions
         {
             db.RemoveManifestPlanePeople(manifestPlane.Id);
             db.ManifestPlanes.Remove(manifestPlane);
+
+            await db.ModifyManifest(manifestPlane.ManifestId);
             await db.SaveChangesAsync();
         }
 
@@ -251,6 +267,11 @@ namespace AppSupport.Data.Extensions
 
             db.ManifestPlanes.RemoveRange(manifestPlanes);
         }
+
+        static int GetManifestIdFromPlaneId(this AppDbContext db, int id) =>
+            db.ManifestPlanes
+                .Find(id)
+                .ManifestId;
 
         #endregion
 
@@ -350,6 +371,8 @@ namespace AppSupport.Data.Extensions
                     Title = person.Title
                 });
 
+                var manifestId = db.GetManifestIdFromPlaneId(manifestPlaneId);
+                await db.ModifyManifest(manifestId);
                 await db.ManifestPeople.AddRangeAsync(manifestPeople);
                 await db.SaveChangesAsync();
             }
@@ -359,6 +382,8 @@ namespace AppSupport.Data.Extensions
         {
             if (await manifestPerson.Validate(db))
             {
+                var manifestId = db.GetManifestIdFromPlaneId(manifestPerson.ManifestPlaneId);
+                await db.ModifyManifest(manifestId);
                 db.ManifestPeople.Update(manifestPerson);
                 await db.SaveChangesAsync();
             }
@@ -366,6 +391,8 @@ namespace AppSupport.Data.Extensions
 
         public static async Task RemoveManifestPerson(this AppDbContext db, ManifestPerson manifestPerson)
         {
+            var manifestId = db.GetManifestIdFromPlaneId(manifestPerson.ManifestPlaneId);
+            await db.ModifyManifest(manifestId);
             db.ManifestPeople.Remove(manifestPerson);
             await db.SaveChangesAsync();
         }

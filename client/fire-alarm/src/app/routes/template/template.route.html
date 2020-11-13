@@ -4,11 +4,14 @@
 </ng-template>
 <ng-container *ngIf="templateSvc.template$ | async as template else loading">
   <mat-toolbar class="app-toolbar">
-    <span class="header">{{template?.title}}</span>
+    <span class="header"><strong>Template - </strong>{{template?.title}}</span>
     <button mat-stroked-button
             (click)="editTemplate(template)">Edit Template</button>
+    <span fxFlex><button mat-stroked-button
+            (click)="managePlanes(template)">Manage Planes</button></span>
     <button mat-stroked-button
-            (click)="managePlanes(template)">Manage Planes</button>
+            color = "primary"
+            (click)="generateManifest(template)">Generate Manifest</button>
   </mat-toolbar>
   <ng-template #loadingPlanes>
     <mat-progress-bar mode="indeterminate"

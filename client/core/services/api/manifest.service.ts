@@ -171,6 +171,20 @@ export class ManifestService {
       );
   })
 
+  getAvailablePlanesWithSpace = (id: number, planeId: number): Promise<boolean> => new Promise((resolve) => {
+    this.http.get<PlaneModel[]>(`${this.config.api}manifest/getManifestPlanesWithSpace/${id}`)
+      .subscribe(
+        data => {
+          this.manifestPlanes.next(data.filter(p => p.altId !== planeId));
+          resolve(true);
+        },
+        err => {
+          this.snacker.sendErrorMessage(err.error);
+          resolve(false);
+        }
+      );
+  })
+
   addManifestPlanes = (manifestId: number, planes: Plane[]): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}manifest/addManifestPlanes/${manifestId}`, planes)
       .subscribe(
