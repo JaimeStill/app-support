@@ -31,7 +31,7 @@ export class ManifestTransferDialog implements OnInit {
 
   ngOnInit() {
     if (this.data?.manifestId > 0) {
-      this.manifestSvc.getManifestPlanesWithSpace(this.data.manifestId);
+      this.manifestSvc.getAvailablePlanesWithSpace(this.data.manifestId, this.data.person.parentId);
     } else {
       this.dialogRef.close();
     }

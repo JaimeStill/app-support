@@ -12,6 +12,7 @@ namespace AppSupport.Data.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateExpected { get; set; }
         public DateTime? DateExecuted { get; set; }
+        public DateTime DateUpdated { get; set; }
         public bool IsClosed { get; set; }
 
         public Organization Organization { get; set; }

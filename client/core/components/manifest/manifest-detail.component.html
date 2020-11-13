@@ -4,6 +4,7 @@
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
            class="container">
+    <p><strong>Last Updated: </strong> {{manifest?.dateUpdated | date:'dd MMM yyyy HH:mm:ss'}}</p>
     <p>
       <strong>Created:</strong> {{manifest?.dateCreated | date:'dd MMM yyyy'}}
     </p>
