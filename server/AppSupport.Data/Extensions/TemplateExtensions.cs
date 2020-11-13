@@ -22,7 +22,8 @@ namespace AppSupport.Data.Extensions
                     .ThenInclude(x => x.TemplatePeople)
                         .ThenInclude(x => x.Person)
                 .Include(x => x.TemplatePlanes)
-                    .ThenInclude(x => x.Plane);
+                    .ThenInclude(x => x.Plane)
+                .AsSplitQuery();
 
         public static IQueryable<Template> Search(this IQueryable<Template> templates, string search) =>
             templates.Where(x =>
