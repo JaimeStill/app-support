@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AppSupport.Data.Models
 {
     public class PlaneModel
@@ -8,5 +10,7 @@ namespace AppSupport.Data.Models
         public int Capacity { get; set; }
         public int Reserved { get; set; }
         public string Name { get; set; }
+
+        public List<PersonModel> People { get; set; }
     }
 }

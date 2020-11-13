@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSupport.Web", "AppSupport.Web\AppSupport.Web.csproj", "{43F3774B-CF32-42C0-9264-8AC7977DB1EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dbseeder", "dbseeder\dbseeder.csproj", "{00799651-6DDD-4C93-BD56-D16CDA49BC02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSupport.Office", "AppSupport.Office\AppSupport.Office.csproj", "{694A73C0-353E-445C-927C-9A945A173C50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,5 +78,17 @@ Global
 		{00799651-6DDD-4C93-BD56-D16CDA49BC02}.Release|x64.Build.0 = Release|Any CPU
 		{00799651-6DDD-4C93-BD56-D16CDA49BC02}.Release|x86.ActiveCfg = Release|Any CPU
 		{00799651-6DDD-4C93-BD56-D16CDA49BC02}.Release|x86.Build.0 = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|x64.Build.0 = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Debug|x86.Build.0 = Debug|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|x64.ActiveCfg = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|x64.Build.0 = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|x86.ActiveCfg = Release|Any CPU
+		{694A73C0-353E-445C-927C-9A945A173C50}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

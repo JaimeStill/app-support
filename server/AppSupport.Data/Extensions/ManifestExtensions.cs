@@ -18,6 +18,23 @@ namespace AppSupport.Data.Extensions
 
         static IQueryable<Manifest> SetIncludes(this DbSet<Manifest> manifests) =>
             manifests.Include(x => x.Organization);
+
+        static IQueryable<Manifest> SetFullIncludes(this DbSet<Manifest> manifests) =>
+            manifests
+                .Include(x => x.Organization)
+                .Include(x => x.ManifestPlanes)
+                    .ThenInclude(x => x.ManifestPeople)
+                        .ThenInclude(x => x.Person)
+                            .ThenInclude(x => x.Organization)
+                .Include(x => x.ManifestPlanes)
+                    .ThenInclude(x => x.ManifestPeople)
+                        .ThenInclude(x => x.Person)
+                            .ThenInclude(x => x.Rank)
+                .Include(x => x.ManifestPlanes)
+                .Include(x => x.ManifestPlanes)
+                    .ThenInclude(x => x.Plane)
+                .AsSplitQuery();
+
         static IQueryable<Manifest> Search(this IQueryable<Manifest> manifests, string search)
         {
             search = search.ToLower();
@@ -69,6 +86,62 @@ namespace AppSupport.Data.Extensions
         public static async Task<Manifest> GetManifest(this AppDbContext db, int id) =>
             await db.Manifests
                 .FindAsync(id);
+
+        public static async Task<ManifestModel> GetManifestModel(this AppDbContext db, int id)
+        {
+            var manifest = await db.Manifests
+                .SetFullIncludes()
+                .OrderBy(x => x.Title)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var model = new ManifestModel
+            {
+                DateCreated = manifest.DateCreated,
+                DateExecuted = manifest.DateExecuted,
+                DateExpected = manifest.DateExpected,
+                Description = manifest.Description,
+                Id = manifest.Id,
+                IsClosed = manifest.IsClosed,
+                Organization = manifest.Organization,
+                OrganizationId = manifest.OrganizationId,
+                Title = manifest.Title,
+                Planes = manifest.ManifestPlanes
+                    .OrderBy(x => x.Plane.Name)
+                    .Select(x => new PlaneModel
+                    {
+                        AltId = x.Id,
+                        ParentId = x.ManifestId,
+                        Capacity = x.Plane.Capacity,
+                        Id = x.PlaneId,
+                        Name = x.Plane.Name,
+                        Reserved = x.ManifestPeople.Count(),
+                        People = x.ManifestPeople
+                            .OrderBy(x => x.Person.LastName)
+                            .Select(x => new PersonModel
+                            {
+                                AltId = x.Id,
+                                ParentId = x.ManifestPlaneId,
+                                DodId = x.Person.DodId,
+                                ExecutiveId = x.Person.ExecutiveId,
+                                FirstName = x.Person.FirstName,
+                                Id = x.PersonId,
+                                LastName = x.Person.LastName,
+                                MiddleName = x.Person.MiddleName,
+                                Nickname = x.Person.Nickname,
+                                Occupation = x.Person.Occupation,
+                                Organization = x.Person.Organization,
+                                OrganizationId = x.Person.OrganizationId,
+                                Rank = x.Person.Rank,
+                                RankId = x.Person.RankId,
+                                Ssn = x.Person.Ssn,
+                                Title = x.Person.Title,
+                                TravelerId = x.TravelerId
+                            }).ToList()
+                    }).ToList()
+            };
+
+            return model;
+        }
 
         public static async Task<int> GenerateManifest(this AppDbContext db, int templateId)
         {

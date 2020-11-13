@@ -2,3 +2,4 @@ bin
 obj
 
 AppSupport.Web/wwwroot/logs/*.txt
+AppSupport.Web/wwwroot/office/**/*.xlsx

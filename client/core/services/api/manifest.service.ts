@@ -65,6 +65,17 @@ export class ManifestService {
       )
   })
 
+  createManifestSpreadsheet = (id: number): Promise<string[]> => new Promise((resolve) => {
+    this.http.get<string[]>(`${this.config.api}manifest/createManifestSpreadsheet/${id}`)
+      .subscribe(
+        data => resolve(data),
+        err => {
+          this.snacker.sendErrorMessage(err.error);
+          resolve(null);
+        }
+      )
+  })
+
   addManifest = (manifest: Manifest): Promise<number> => new Promise((resolve) => {
     this.http.post<number>(`${this.config.api}manifest/addManifest`, manifest)
       .subscribe(

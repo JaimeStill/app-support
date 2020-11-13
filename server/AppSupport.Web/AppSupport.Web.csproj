@@ -18,6 +18,7 @@
     <ProjectReference Include="..\AppSupport.Data\AppSupport.Data.csproj" />
     <ProjectReference Include="..\AppSupport.Identity\AppSupport.Identity.csproj" />
     <ProjectReference Include="..\AppSupport.Identity.Mock\AppSupport.Identity.Mock.csproj" />
+    <ProjectReference Include="..\AppSupport.Office\AppSupport.Office.csproj" />
   </ItemGroup>
 
 

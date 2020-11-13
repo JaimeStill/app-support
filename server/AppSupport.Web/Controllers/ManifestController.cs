@@ -8,6 +8,10 @@ using AppSupport.Data;
 using AppSupport.Data.Entities;
 using AppSupport.Data.Extensions;
 using AppSupport.Data.Models;
+using AppSupport.Core.Office;
+using AppSupport.Office.Extensions;
+using System.IO;
+using AppSupport.Core.Extensions;
 
 namespace AppSupport.Web.Controllers
 {
@@ -15,10 +19,12 @@ namespace AppSupport.Web.Controllers
     public class ManifestController : Controller
     {
         private AppDbContext db;
+        private OfficeProvider office;
 
-        public ManifestController(AppDbContext db)
+        public ManifestController(AppDbContext db, OfficeProvider office)
         {
             this.db = db;
+            this.office = office;
         }
 
         #region Manifest
@@ -48,6 +54,19 @@ namespace AppSupport.Web.Controllers
 
         [HttpGet("[action]/{id}")]
         public async Task<int> GenerateManifest([FromRoute]int id) => await db.GenerateManifest(id);
+
+        [HttpGet("[action]/{id}")]
+        public async Task<string[]> CreateManifestSpreadsheet([FromRoute]int id)
+        {
+            var manifest = await db.GetManifestModel(id);
+            var path = Path.Join(office.Directory, id.ToString());
+            path.EnsureDirectoryExists();
+            var res = manifest.GenerateDocument(path);
+
+            return res
+                ? new string[] { "office", id.ToString(), $"{manifest.Title.UrlEncode()}.xlsx" }
+                : null;
+        }
 
         [HttpPost("[action]")]
         public async Task<int> AddManifest([FromBody]Manifest manifest) => await db.AddManifest(manifest);
