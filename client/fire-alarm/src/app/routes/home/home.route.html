@@ -24,7 +24,8 @@
   </section>
   <ng-container *ngIf="qr.data?.length > 0">
     <manifest-detail *ngFor="let manifest of qr.data"
-                     [manifest]="manifest"></manifest-detail>
+                     [manifest]="manifest"
+                     (generate)="generateSpreadsheet($event)"></manifest-detail>
   </ng-container>
   <p class="mat-subheading-2"
      *ngIf="!(qr.data?.length > 0)">No Open Manifests Available</p>

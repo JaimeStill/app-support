@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 import { ManifestService } from '../../services';
@@ -14,6 +16,7 @@ import { Manifest } from '../../models';
 })
 export class ManifestDetailComponent implements OnInit {
   @Input() manifest: Manifest;
+  @Output() generate = new EventEmitter<Manifest>();
 
   constructor(
     public manifestSvc: ManifestService

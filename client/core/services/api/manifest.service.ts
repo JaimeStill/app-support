@@ -68,7 +68,10 @@ export class ManifestService {
   createManifestSpreadsheet = (id: number): Promise<string[]> => new Promise((resolve) => {
     this.http.get<string[]>(`${this.config.api}manifest/createManifestSpreadsheet/${id}`)
       .subscribe(
-        data => resolve(data),
+        data => {
+          this.snacker.sendSuccessMessage(`${data.join('/')} successfully created`);
+          resolve(data);
+        },
         err => {
           this.snacker.sendErrorMessage(err.error);
           resolve(null);

@@ -1,6 +1,11 @@
 <section fxLayout="column"
          fxLayoutAlign="start stretch">
-  <mat-toolbar>{{manifest?.title}}</mat-toolbar>
+  <mat-toolbar class="app-toolbar">
+    <span class="header">{{manifest?.title}}</span>
+    <button mat-stroked-button
+            color="primary"
+            (click)="generate.emit(manifest)">Generate Spreadsheet</button>
+  </mat-toolbar>
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
            class="container">

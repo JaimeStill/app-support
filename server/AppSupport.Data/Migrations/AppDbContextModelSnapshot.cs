@@ -15,16 +15,16 @@ namespace AppSupport.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("AppSupport.Data.Entities.Branch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -39,7 +39,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -77,7 +77,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -132,7 +132,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("ManifestId")
                         .HasColumnType("int");
@@ -154,7 +154,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -169,7 +169,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("DodId")
                         .HasColumnType("int");
@@ -220,7 +220,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
@@ -243,7 +243,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("BranchId")
                         .HasColumnType("int");
@@ -272,7 +272,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -295,7 +295,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
@@ -317,7 +317,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("PlaneId")
                         .HasColumnType("int");
@@ -339,7 +339,7 @@ namespace AppSupport.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int?>("DefaultPageSize")
                         .HasColumnType("int");
@@ -383,6 +383,8 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.ManifestPerson", b =>
@@ -416,6 +418,16 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("TravelerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("ManifestPlane");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Person");
+
+                    b.Navigation("Rank");
+
+                    b.Navigation("Traveler");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.ManifestPlane", b =>
@@ -431,6 +443,10 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("PlaneId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Manifest");
+
+                    b.Navigation("Plane");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.Person", b =>
@@ -450,6 +466,12 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("RankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Executive");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Rank");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.Plane", b =>
@@ -459,6 +481,8 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.Rank", b =>
@@ -468,6 +492,8 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Branch");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.Template", b =>
@@ -477,6 +503,8 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.TemplatePerson", b =>
@@ -492,6 +520,10 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("TemplatePlaneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Person");
+
+                    b.Navigation("TemplatePlane");
                 });
 
             modelBuilder.Entity("AppSupport.Data.Entities.TemplatePlane", b =>
@@ -507,6 +539,73 @@ namespace AppSupport.Data.Migrations
                         .HasForeignKey("TemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Plane");
+
+                    b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Branch", b =>
+                {
+                    b.Navigation("Ranks");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Manifest", b =>
+                {
+                    b.Navigation("ManifestPlanes");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.ManifestPlane", b =>
+                {
+                    b.Navigation("ManifestPeople");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Organization", b =>
+                {
+                    b.Navigation("ManifestPeople");
+
+                    b.Navigation("Manifests");
+
+                    b.Navigation("People");
+
+                    b.Navigation("Planes");
+
+                    b.Navigation("Templates");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Person", b =>
+                {
+                    b.Navigation("Associates");
+
+                    b.Navigation("ManifestPlanes");
+
+                    b.Navigation("TemplatePlanes");
+
+                    b.Navigation("Trips");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Plane", b =>
+                {
+                    b.Navigation("PlaneManifests");
+
+                    b.Navigation("PlaneTemplates");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Rank", b =>
+                {
+                    b.Navigation("ManifestPeople");
+
+                    b.Navigation("People");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.Template", b =>
+                {
+                    b.Navigation("TemplatePlanes");
+                });
+
+            modelBuilder.Entity("AppSupport.Data.Entities.TemplatePlane", b =>
+                {
+                    b.Navigation("TemplatePeople");
                 });
 #pragma warning restore 612, 618
         }
