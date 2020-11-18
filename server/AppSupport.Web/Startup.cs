@@ -20,6 +20,7 @@ using AppSupport.Data;
 using AppSupport.Identity;
 using AppSupport.Identity.Mock;
 using AppSupport.Office;
+using AppSupport.Web.Hubs;
 
 namespace AppSupport.Web
 {
@@ -144,12 +145,14 @@ namespace AppSupport.Web
                 builder.WithOrigins(GetConfigArray("CorsOrigins"))
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials();
+                    .AllowCredentials()
+                    .WithExposedHeaders("Content-Disposition");
             });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SyncHub>("/sync");
             });
         }
 

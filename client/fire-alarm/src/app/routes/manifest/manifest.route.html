@@ -23,7 +23,7 @@
                      [plane]="p"
                      (add)="addPeople($event)"
                      (remove)="removePlane($event)">
-        <manifest-people [manifestPlaneId]="p.altId"
+        <manifest-people [plane]="p"
                          (remove)="removePerson($event, manifest)"
                          (transfer)="transferPerson($event, manifest)"></manifest-people>
       </plane-manager>

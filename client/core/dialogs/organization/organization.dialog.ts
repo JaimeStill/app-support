@@ -5,23 +5,49 @@ import {
 
 import {
   Component,
-  Inject
+  Inject,
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 
+import {
+  OrganizationService,
+  SyncSocket
+} from '../../services';
+
+import { Subscription } from 'rxjs';
 import { Organization } from '../../models';
-import { OrganizationService } from '../../services';
 
 @Component({
   selector: 'organization-dialog',
   templateUrl: 'organization.dialog.html',
-  providers: [OrganizationService]
+  providers: [
+    OrganizationService,
+    SyncSocket
+  ]
 })
-export class OrganizationDialog {
+export class OrganizationDialog implements OnInit, OnDestroy {
+  private sub: Subscription;
+  update: boolean = false;
+
   constructor(
     private dialogRef: MatDialogRef<OrganizationDialog>,
+    private sync: SyncSocket,
     public orgSvc: OrganizationService,
     @Inject(MAT_DIALOG_DATA) public organization: Organization
   ) { }
+
+  ngOnInit() {
+    this.sub = this.sync.organization$.subscribe(async id => {
+      if (id && id === this.organization?.id) {
+        this.update = true;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   saveOrganization = async () => {
     const res = this.organization.id > 0

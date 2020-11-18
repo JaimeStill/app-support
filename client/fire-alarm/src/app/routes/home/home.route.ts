@@ -52,4 +52,12 @@ export class HomeRoute implements OnInit, OnDestroy {
       window.open(path, '_blank');
     }
   }
+
+  generateStream = async (manifest: Manifest) => {
+    const res = await this.manifestSvc.createManifestStream(manifest.id);
+
+    if (res) {
+      console.log('generateStream - blob', res);
+    }
+  }
 }

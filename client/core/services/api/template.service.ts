@@ -17,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { ServerConfig } from '../../config';
 import { SnackerService } from '../snacker.service';
-import { TriggerService } from '../trigger.service';
+import { SyncSocket } from '../sockets';
 
 @Injectable()
 export class TemplateService {
@@ -36,7 +36,7 @@ export class TemplateService {
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
-    private trigger: TriggerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -67,7 +67,10 @@ export class TemplateService {
   addTemplate = (template: Template): Promise<number> => new Promise((resolve) => {
     this.http.post<number>(`${this.config.api}template/addTemplate`, template)
       .subscribe(
-        data => resolve(data),
+        data => {
+          this.sync.triggerTemplate(data);
+          resolve(data);
+        },
         err => {
           this.snacker.sendErrorMessage(err.error);
           resolve(null);
@@ -80,6 +83,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${template.title} successfully updated`);
+          this.sync.triggerTemplate(template.id);
           resolve(true);
         },
         err => {
@@ -94,6 +98,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${template.title} successfully removed`);
+          this.sync.triggerTemplate(template.id);
           resolve(true);
         },
         err => {
@@ -154,6 +159,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Template planes successfully updated`);
+          this.sync.triggerTemplate(templateId);
           resolve(true);
         },
         err => {
@@ -168,6 +174,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.name} removed from template`);
+          this.sync.triggerTemplate(p.parentId);
           resolve(true);
         },
         err => {
@@ -193,12 +200,12 @@ export class TemplateService {
         err => this.snacker.sendErrorMessage(err.error)
       );
 
-  addTemplatePeople = (templatePlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
+  addTemplatePeople = (templateId: number, templatePlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}template/addTemplatePeople/${templatePlaneId}`, people)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Template plane people successfully updated`);
-          this.trigger.templatePeople.next(templatePlaneId);
+          this.sync.triggerTemplate(templateId);
           resolve(true);
         },
         err => {
@@ -213,8 +220,7 @@ export class TemplateService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${person.lastName}, ${person.firstName} move to ${plane.name}`);
-          this.trigger.templatePeople.next(plane.altId);
-          this.trigger.templatePeople.next(person.parentId);
+          this.sync.triggerTemplate(plane.parentId);
           resolve(true);
         },
         err => {
@@ -224,12 +230,12 @@ export class TemplateService {
       )
   })
 
-  removeTemplatePerson = (p: PersonModel): Promise<boolean> => new Promise((resolve) => {
+  removeTemplatePerson = (templateId: number, p: PersonModel): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}template/removeTemplatePerson`, { id: p.altId, templatePlaneId: p.parentId, personId: p.id } as TemplatePerson)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.lastName}, ${p.firstName} removed from template plane`);
-          this.trigger.templatePeople.next(p.parentId);
+          this.sync.triggerTemplate(templateId);
           resolve(true);
         },
         err => {

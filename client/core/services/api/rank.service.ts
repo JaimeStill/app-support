@@ -5,9 +5,10 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from '../snacker.service';
-import { ServerConfig } from '../../config';
 import { Rank } from '../../models';
+import { ServerConfig } from '../../config';
+import { SnackerService } from '../snacker.service';
+import { SyncSocket } from '../sockets';
 
 @Injectable()
 export class RankService {
@@ -21,6 +22,7 @@ export class RankService {
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -44,16 +46,17 @@ export class RankService {
       );
   })
 
-  addRank = (rank: Rank): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}rank/addRank`, rank)
+  addRank = (rank: Rank): Promise<number> => new Promise((resolve) => {
+    this.http.post<number>(`${this.config.api}rank/addRank`, rank)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${rank.label} successfully created`);
-          resolve(true);
+          this.sync.triggerRank(data);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(0);
         }
       );
   })
@@ -63,6 +66,7 @@ export class RankService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${rank.label} successfully updated`);
+          this.sync.triggerRank(rank.id);
           resolve(true);
         },
         err => {
@@ -77,6 +81,7 @@ export class RankService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${rank.label} successfully removed`);
+          this.sync.triggerRank(rank.id);
           resolve(true);
         },
         err => {

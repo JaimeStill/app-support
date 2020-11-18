@@ -33,7 +33,7 @@ namespace AppSupport.Web.Controllers
         public async Task<Plane> GetPlane([FromRoute]int id) => await db.GetPlane(id);
 
         [HttpPost("[action]")]
-        public async Task AddPlane([FromBody]Plane plane) => await db.AddPlane(plane);
+        public async Task<int> AddPlane([FromBody]Plane plane) => await db.AddPlane(plane);
 
         [HttpPost("[action]")]
         public async Task UpdatePlane([FromBody]Plane plane) => await db.UpdatePlane(plane);

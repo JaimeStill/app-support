@@ -37,7 +37,7 @@ namespace AppSupport.Web.Controllers
         public async Task<Rank> GetRank([FromRoute]int id) => await db.GetRank(id);
 
         [HttpPost("[action]")]
-        public async Task AddRank([FromBody]Rank rank) => await db.AddRank(rank);
+        public async Task<int> AddRank([FromBody]Rank rank) => await db.AddRank(rank);
 
         [HttpPost("[action]")]
         public async Task UpdateRank([FromBody]Rank rank) => await db.UpdateRank(rank);

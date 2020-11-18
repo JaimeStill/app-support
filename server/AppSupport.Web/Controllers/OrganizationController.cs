@@ -36,7 +36,7 @@ namespace AppSupport.Web.Controllers
         public async Task<Organization> GetOrganization([FromRoute]int id) => await db.GetOrganization(id);
 
         [HttpPost("[action]")]
-        public async Task AddOrganization([FromBody]Organization org) => await db.AddOrganization(org);
+        public async Task<int> AddOrganization([FromBody]Organization org) => await db.AddOrganization(org);
 
         [HttpPost("[action]")]
         public async Task UpdateOrganization([FromBody]Organization org) => await db.UpdateOrganization(org);

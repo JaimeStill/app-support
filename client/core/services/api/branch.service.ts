@@ -5,9 +5,10 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from '../snacker.service';
-import { ServerConfig } from '../../config';
 import { Branch } from '../../models';
+import { ServerConfig } from '../../config';
+import { SnackerService } from '../snacker.service';
+import { SyncSocket } from '../sockets';
 
 @Injectable()
 export class BranchService {
@@ -20,6 +21,7 @@ export class BranchService {
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -43,16 +45,17 @@ export class BranchService {
       );
   })
 
-  addBranch = (branch: Branch): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}branch/addBranch`, branch)
+  addBranch = (branch: Branch): Promise<number> => new Promise((resolve) => {
+    this.http.post<number>(`${this.config.api}branch/addBranch`, branch)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${branch.name} successfully created`);
-          resolve(true);
+          this.sync.triggerBranch(data);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(0);
         }
       );
   })
@@ -62,6 +65,7 @@ export class BranchService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${branch.name} successfully updated`);
+          this.sync.triggerBranch(branch.id);
           resolve(true);
         },
         err => {
@@ -76,6 +80,7 @@ export class BranchService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${branch.name} successfully removed`);
+          this.sync.triggerBranch(branch.id);
           resolve(true);
         },
         err => {

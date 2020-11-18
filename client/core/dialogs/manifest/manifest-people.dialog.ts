@@ -56,7 +56,7 @@ export class ManifestPeopleDialog implements OnInit {
   }
 
   savePeople = async () => {
-    const res = await this.manifestSvc.addManifestPeople(this.plane.altId, this.selected);
+    const res = await this.manifestSvc.addManifestPeople(this.plane.parentId, this.plane.altId, this.selected);
     res && this.dialogRef.close(true);
   }
 }

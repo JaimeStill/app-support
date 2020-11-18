@@ -40,13 +40,17 @@ namespace AppSupport.Data.Extensions
             await db.Branches
                 .FindAsync(id);
 
-        public static async Task AddBranch(this AppDbContext db, Branch branch)
+        public static async Task<int> AddBranch(this AppDbContext db, Branch branch)
         {
             if (await branch.Validate(db))
             {
                 await db.Branches.AddAsync(branch);
                 await db.SaveChangesAsync();
+
+                return branch.Id;
             }
+
+            return 0;
         }
 
         public static async Task UpdateBranch(this AppDbContext db, Branch branch)

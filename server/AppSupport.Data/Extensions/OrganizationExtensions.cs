@@ -38,13 +38,17 @@ namespace AppSupport.Data.Extensions
             await db.Organizations
                 .FindAsync(id);
 
-        public static async Task AddOrganization(this AppDbContext db, Organization org)
+        public static async Task<int> AddOrganization(this AppDbContext db, Organization org)
         {
             if (await org.Validate(db))
             {
                 await db.Organizations.AddAsync(org);
                 await db.SaveChangesAsync();
+
+                return org.Id;
             }
+
+            return 0;
         }
 
         public static async Task UpdateOrganization(this AppDbContext db, Organization org)

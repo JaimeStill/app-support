@@ -32,18 +32,9 @@ export class SnackerService {
     this.sendMessage(message);
   }
 
-  sendErrorMessage = (message: string) => {
-    this.setClasses(['snacker-red']);
-    this.sendMessage(message);
-  }
+  sendErrorMessage = (message: string) => this.sendColorMessage(message, ['snacker-red']);
 
-  sendWarningMessage = (message: string) => {
-    this.setClasses(['snacker-orange']);
-    this.sendMessage(message);
-  }
+  sendWarningMessage = (message: string) => this.sendColorMessage(message, ['snacker-orange']);
 
-  sendSuccessMessage = (message: string) => {
-    this.setClasses(['snacker-green']);
-    this.sendMessage(message);
-  }
+  sendSuccessMessage = (message: string) => this.sendColorMessage(message, ['snacker-green']);
 }

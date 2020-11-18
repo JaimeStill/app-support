@@ -36,7 +36,7 @@ namespace AppSupport.Web.Controllers
         public async Task<Person> GetPerson([FromRoute]int id) => await db.GetPerson(id);
 
         [HttpPost("[action]")]
-        public async Task AddPerson([FromBody]Person person) => await db.AddPerson(person);
+        public async Task<int> AddPerson([FromBody]Person person) => await db.AddPerson(person);
 
         [HttpPost("[action]")]
         public async Task UpdatePerson([FromBody]Person person) => await db.UpdatePerson(person);

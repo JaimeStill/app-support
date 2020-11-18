@@ -108,7 +108,7 @@ export class ManifestRoute implements OnInit {
   .afterClosed()
   .subscribe(async result => {
     if (result) {
-      const res = await this.manifestSvc.removeManifestPerson(p);
+      const res = await this.manifestSvc.removeManifestPerson(m.id, p);
       res && this.manifestSvc.getManifestPlanes(m.id);
     }
   })

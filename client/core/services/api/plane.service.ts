@@ -5,9 +5,10 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from '../snacker.service';
-import { ServerConfig } from '../../config';
 import { Plane } from '../../models';
+import { ServerConfig } from '../../config';
+import { SnackerService } from '../snacker.service';
+import { SyncSocket } from '../sockets';
 
 @Injectable()
 export class PlaneService {
@@ -18,6 +19,7 @@ export class PlaneService {
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -35,16 +37,17 @@ export class PlaneService {
       );
   })
 
-  addPlane = (plane: Plane): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}plane/addPlane`, plane)
+  addPlane = (plane: Plane): Promise<number> => new Promise((resolve) => {
+    this.http.post<number>(`${this.config.api}plane/addPlane`, plane)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${plane.name} successfully created`);
-          resolve(true);
+          this.sync.triggerPlane(data);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(0);
         }
       );
   })
@@ -54,6 +57,7 @@ export class PlaneService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${plane.name} successfully updated`);
+          this.sync.triggerPlane(plane.id);
           resolve(true);
         },
         err => {
@@ -68,6 +72,7 @@ export class PlaneService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${plane.name} successfully removed`);
+          this.sync.triggerPlane(plane.id);
           resolve(true);
         },
         err => {

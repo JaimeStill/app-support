@@ -8,12 +8,16 @@ import {
 } from '@angular/core';
 
 import {
+  PersonModel,
+  PlaneModel
+} from '../../models';
+
+import {
   TemplateService,
-  TriggerService
+  SyncSocket
 } from '../../services';
 
 import { Subscription } from 'rxjs';
-import { PersonModel } from '../../models';
 
 @Component({
   selector: 'template-people',
@@ -24,22 +28,22 @@ export class TemplatePeopleComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   @Input() size = 420;
-  @Input() templatePlaneId: number;
+  @Input() plane: PlaneModel;
   @Output() remove = new EventEmitter<PersonModel>();
   @Output() transfer = new EventEmitter<PersonModel>();
 
   constructor(
-    public trigger: TriggerService,
+    private sync: SyncSocket,
     public templateSvc: TemplateService
   ) { }
 
   ngOnInit() {
-    this.sub = this.trigger.templatePeople.subscribe(id => {
-      if (id && id === this.templatePlaneId)
-        this.templateSvc.getTemplatePeople(this.templatePlaneId);
+    this.sub = this.sync.template$.subscribe(id => {
+      if (id && id === this.plane?.parentId)
+        this.templateSvc.getTemplatePeople(this.plane?.altId);
     });
 
-    this.templatePlaneId && this.templateSvc.getTemplatePeople(this.templatePlaneId);
+    this.plane?.altId && this.templateSvc.getTemplatePeople(this.plane.altId);
   }
 
   ngOnDestroy() {

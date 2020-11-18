@@ -26,7 +26,7 @@
                      [plane]="p"
                      (add)="addPeople($event)"
                      (remove)="removePlane($event)">
-        <template-people [templatePlaneId]="p.altId"
+        <template-people [plane]="p"
                          (remove)="removePerson($event, template)"
                          (transfer)="transferPerson($event, template)"></template-people>
       </plane-manager>

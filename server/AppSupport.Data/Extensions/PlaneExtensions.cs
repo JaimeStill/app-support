@@ -47,13 +47,16 @@ namespace AppSupport.Data.Extensions
             await db.Planes
                 .FindAsync(id);
 
-        public static async Task AddPlane(this AppDbContext db, Plane plane)
+        public static async Task<int> AddPlane(this AppDbContext db, Plane plane)
         {
             if (await plane.Validate(db))
             {
                 await db.Planes.AddAsync(plane);
                 await db.SaveChangesAsync();
+                return plane.Id;
             }
+
+            return 0;
         }
 
         public static async Task UpdatePlane(this AppDbContext db, Plane plane)

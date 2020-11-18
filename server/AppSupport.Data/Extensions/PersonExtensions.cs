@@ -85,13 +85,17 @@ namespace AppSupport.Data.Extensions
             await db.People
                 .FindAsync(id);
 
-        public static async Task AddPerson(this AppDbContext db, Person person)
+        public static async Task<int> AddPerson(this AppDbContext db, Person person)
         {
             if (await person.Validate(db))
             {
                 await db.People.AddAsync(person);
                 await db.SaveChangesAsync();
+
+                return person.Id;
             }
+
+            return 0;
         }
 
         public static async Task UpdatePerson(this AppDbContext db, Person person)

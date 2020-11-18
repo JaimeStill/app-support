@@ -53,13 +53,17 @@ namespace AppSupport.Data.Extensions
             await db.Ranks
                 .FindAsync(id);
 
-        public static async Task AddRank(this AppDbContext db, Rank rank)
+        public static async Task<int> AddRank(this AppDbContext db, Rank rank)
         {
             if (rank.Validate())
             {
                 await db.Ranks.AddAsync(rank);
                 await db.SaveChangesAsync();
+
+                return rank.Id;
             }
+
+            return 0;
         }
 
         public static async Task UpdateRank(this AppDbContext db, Rank rank)

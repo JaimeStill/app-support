@@ -36,7 +36,7 @@ namespace AppSupport.Web.Controllers
         public async Task<Branch> GetBranch([FromRoute]int id) => await db.GetBranch(id);
 
         [HttpPost("[action]")]
-        public async Task AddBranch([FromBody]Branch branch) => await db.AddBranch(branch);
+        public async Task<int> AddBranch([FromBody]Branch branch) => await db.AddBranch(branch);
 
         [HttpPost("[action]")]
         public async Task UpdateBranch([FromBody]Branch branch) => await db.UpdateBranch(branch);

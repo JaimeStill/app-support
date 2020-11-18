@@ -12,6 +12,7 @@ using AppSupport.Data.Extensions;
 using AppSupport.Data.Models;
 using AppSupport.Office;
 using AppSupport.Office.Extensions;
+using System.Net.Http.Headers;
 
 namespace AppSupport.Web.Controllers
 {
@@ -56,15 +57,30 @@ namespace AppSupport.Web.Controllers
         public async Task<int> GenerateManifest([FromRoute]int id) => await db.GenerateManifest(id);
 
         [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> CreateManifestStream([FromRoute]int id)
+        {
+            var manifest = await db.GetManifestModel(id);
+            var res = manifest.GenerateDocument(office.Directory);
+            var path = Path.Join(office.Directory, $"{manifest.Title.UrlEncode()}.xlsx");
+            var bytes = await System.IO.File.ReadAllBytesAsync(path);
+            System.IO.File.Delete(path);
+
+            return new FileContentResult(bytes, "application/octet")
+            {
+                FileDownloadName = $"{manifest.Title.UrlEncode()}.xlsx"
+            };
+        }
+
+        [HttpGet("[action]/{id}")]
         public async Task<string[]> CreateManifestSpreadsheet([FromRoute]int id)
         {
             var manifest = await db.GetManifestModel(id);
-            var path = Path.Join(office.Directory, id.ToString());
+            var path = Path.Join(office.Directory, "manifest", id.ToString());
             path.EnsureDirectoryExists();
             var res = manifest.GenerateDocument(path);
 
             return res
-                ? new string[] { "office", id.ToString(), $"{manifest.Title.UrlEncode()}.xlsx" }
+                ? new string[] { "office", "manifest", id.ToString(), $"{manifest.Title.UrlEncode()}.xlsx" }
                 : null;
         }
 

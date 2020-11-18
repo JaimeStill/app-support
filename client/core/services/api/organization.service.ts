@@ -5,9 +5,10 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from '../snacker.service';
-import { ServerConfig } from '../../config';
 import { Organization } from '../../models';
+import { ServerConfig } from '../../config';
+import { SnackerService } from '../snacker.service';
+import { SyncSocket } from '../sockets';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,13 @@ export class OrganizationService {
 
   private currentOrg = new BehaviorSubject<Organization>(null);
   currentOrg$ = this.currentOrg.asObservable();
+
   setCurrentOrg = (org: Organization) => this.currentOrg.next(org);
 
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -49,16 +52,17 @@ export class OrganizationService {
       );
   })
 
-  addOrganization = (organization: Organization): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}organization/addOrganization`, organization)
+  addOrganization = (organization: Organization): Promise<number> => new Promise((resolve) => {
+    this.http.post<number>(`${this.config.api}organization/addOrganization`, organization)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${organization.name} successfully created`);
-          resolve(true);
+          this.sync.triggerOrganization(data);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(0);
         }
       );
   })
@@ -68,6 +72,7 @@ export class OrganizationService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${organization.name} successfully updated`);
+          this.sync.triggerOrganization(organization.id);
           resolve(true);
         },
         err => {
@@ -82,6 +87,7 @@ export class OrganizationService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${organization.name} successfully removed`);
+          this.sync.triggerOrganization(organization.id);
           resolve(true);
         },
         err => {

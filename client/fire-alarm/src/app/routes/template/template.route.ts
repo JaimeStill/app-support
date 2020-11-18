@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 
 import {
@@ -18,9 +19,11 @@ import {
   TemplatePeopleDialog,
   TemplatePlaneDialog,
   TemplateTransferDialog,
-  TemplateService
+  TemplateService,
+  SyncSocket
 } from 'core';
 
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -31,11 +34,15 @@ import { MatDialog } from '@angular/material/dialog';
       TemplateService,
     ]
 })
-export class TemplateRoute implements OnInit {
+export class TemplateRoute implements OnInit, OnDestroy {
+  private sub: Subscription;
+  private id: number;
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private sync: SyncSocket,
     public templateSvc: TemplateService,
     public manifestSvc: ManifestService
   ) { }
@@ -52,12 +59,18 @@ export class TemplateRoute implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params) {
         if (params.has('id')) {
-          const id = Number.parseInt(params.get('id'));
-          this.loadTemplate(id);
+          this.id = Number.parseInt(params.get('id'));
+          this.loadTemplate(this.id);
         } else
           this.navigate();
       }
     })
+
+    this.sub = this.sync.template$.subscribe(id => (id && this.id) && (id === this.id) && this.loadTemplate(id));
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   editTemplate = (template: Template) => this.dialog.open(TemplateDialog, {
@@ -129,7 +142,7 @@ export class TemplateRoute implements OnInit {
   .afterClosed()
   .subscribe(async result => {
     if (result) {
-     const res = await this.templateSvc.removeTemplatePerson(p);
+     const res = await this.templateSvc.removeTemplatePerson(t.id, p);
      res && this.templateSvc.getTemplatePlanes(t.id);
     }
   })

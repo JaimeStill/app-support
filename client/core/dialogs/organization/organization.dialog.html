@@ -5,6 +5,9 @@
   </h2>
   <mat-dialog-content fxLayout="column"
                       fxLayoutAlign="start stretch">
+    <ng-container *ngIf="update">
+      <p class="color warn mat-subheading-2">The organization you are editing has been modified</p>
+    </ng-container>
     <mat-form-field>
       <mat-label>Organization</mat-label>
       <input matInput

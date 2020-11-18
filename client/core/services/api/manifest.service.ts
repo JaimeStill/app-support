@@ -13,11 +13,11 @@ import {
   PlaneModel
 } from '../../models';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { ServerConfig } from '../../config';
+import { SyncSocket } from '../sockets';
 import { SnackerService } from '../snacker.service';
-import { TriggerService } from '../trigger.service';
 
 @Injectable()
 export class ManifestService {
@@ -34,7 +34,7 @@ export class ManifestService {
   constructor(
     private http: HttpClient,
     private snacker: SnackerService,
-    private trigger: TriggerService,
+    private sync: SyncSocket,
     @Optional() private config: ServerConfig
   ) { }
 
@@ -65,6 +65,31 @@ export class ManifestService {
       )
   })
 
+  createManifestStream = (id: number): Promise<Blob> => new Promise((resolve) => {
+    this.http.get<HttpResponse<Blob>>(`${this.config.api}manifest/createManifestStream/${id}`, { responseType: 'blob', observe: 'response' } as Object)
+      .subscribe(
+        data => {
+          const filename = data.headers
+            .get('content-disposition')
+            .split(';')
+            .filter(value => value.includes('filename='))[0]
+            .split('=')[1];
+
+          const link = document.createElement('a');
+          link.href = window.URL.createObjectURL(data.body);
+          link.download = filename;
+          link.click();
+
+          resolve(data.body);
+        },
+        err => {
+          console.log('error', err);
+          this.snacker.sendErrorMessage(err.error);
+          resolve(null);
+        }
+      )
+  })
+
   createManifestSpreadsheet = (id: number): Promise<string[]> => new Promise((resolve) => {
     this.http.get<string[]>(`${this.config.api}manifest/createManifestSpreadsheet/${id}`)
       .subscribe(
@@ -84,6 +109,7 @@ export class ManifestService {
       .subscribe(
         data => {
           this.snacker.sendSuccessMessage(`${manifest.title} successfully created`);
+          this.sync.triggerManifest(data);
           resolve(data);
         },
         err => {
@@ -98,6 +124,7 @@ export class ManifestService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${manifest.title} successfully updated`);
+          this.sync.triggerManifest(manifest.id);
           resolve(true);
         },
         err => {
@@ -116,6 +143,7 @@ export class ManifestService {
             : `${manifest.title} set to Closed`;
 
           this.snacker.sendSuccessMessage(message);
+          this.sync.triggerManifest(manifest.id);
           resolve(true);
         },
         err => {
@@ -130,6 +158,7 @@ export class ManifestService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${manifest.title} successfully removed`);
+          this.sync.triggerManifest(manifest.id);
           resolve(true);
         },
         err => {
@@ -204,6 +233,7 @@ export class ManifestService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Manifest planes successfully updated`);
+          this.sync.triggerManifest(manifestId);
           resolve(true);
         },
         err => {
@@ -218,6 +248,7 @@ export class ManifestService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.name} removed from manifest`);
+          this.sync.triggerManifest(p.parentId);
           resolve(true);
         },
         err => {
@@ -243,12 +274,12 @@ export class ManifestService {
         err => this.snacker.sendErrorMessage(err.error)
       );
 
-  addManifestPeople = (manifestPlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
+  addManifestPeople = (manifestId: number, manifestPlaneId: number, people: Person[]): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}manifest/addManifestPeople/${manifestPlaneId}`, people)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`Manifest plane people successfully updated`);
-          this.trigger.manifestPeople.next(manifestPlaneId);
+          this.sync.triggerManifest(manifestId);
           resolve(true);
         },
         err => {
@@ -276,8 +307,7 @@ export class ManifestService {
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${person.lastName}, ${person.firstName} move to ${plane.name}`);
-          this.trigger.manifestPeople.next(plane.altId);
-          this.trigger.manifestPeople.next(person.parentId);
+          this.sync.triggerManifest(plane.parentId);
           resolve(true);
         },
         err => {
@@ -287,12 +317,12 @@ export class ManifestService {
       )
   })
 
-  removeManifestPerson = (p: PersonModel): Promise<boolean> => new Promise((resolve) => {
+  removeManifestPerson = (manifestId: number, p: PersonModel): Promise<boolean> => new Promise((resolve) => {
     this.http.post(`${this.config.api}manifest/removeManifestPerson`, { id: p.altId, manifestPlaneId: p.parentId, personId: p.id } as ManifestPerson)
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage(`${p.lastName}, ${p.firstName} removed from manifest plane`);
-          this.trigger.manifestPeople.next(p.parentId);
+          this.sync.triggerManifest(manifestId);
           resolve(true);
         },
         err => {
