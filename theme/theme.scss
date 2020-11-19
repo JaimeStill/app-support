@@ -19,6 +19,7 @@ $dark-success: mat-color(mat-palette($mat-green, A200));
 $dark-info: mat-color(mat-palette($mat-light-blue, A200));
 
 .app-light {
+  @import '~prism-themes/themes/prism-material-light';
   $default-theme: mat-light-theme($light-primary, $light-accent);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
@@ -50,6 +51,7 @@ $dark-info: mat-color(mat-palette($mat-light-blue, A200));
 }
 
 .app-dark {
+  @import '~prism-themes/themes/prism-material-dark';
   $default-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
