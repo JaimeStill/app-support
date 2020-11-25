@@ -1,0 +1,91 @@
+html, body, app-root, .app-frame {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-container {
+  overflow: auto;
+  height: calc(100% - 64px);
+  box-sizing: border-box;
+}
+
+@media (min-width: 0) and (max-width: 599px) {
+  .app-container {
+    height: calc(100% - 56px);
+  }
+}
+
+mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
+  font-size: 12px;
+
+  label.mat-form-field-label {
+      font-weight: bold;
+  }
+}
+
+mat-toolbar.mat-toolbar.app-toolbar {
+  padding: 0 8px;
+
+  button.mat-icon-button,
+  mat-form-field.mat-form-field {
+    margin: 0 8px 0 0;
+  }
+
+  button.mat-stroked-button {
+    margin: 0 4px;
+  }
+
+  button.mat-stroked-button:first-child {
+    margin-left: 8px;
+  }
+
+  span.header {
+    margin-right: 24px;
+  }
+}
+
+nav.mat-tab-nav-bar.wrapped div.mat-tab-links {
+  flex-wrap: wrap;
+}
+
+nav.mat-tab-nav-bar.scrolled {
+  white-space: nowrap;
+  overflow: auto;
+
+  div.mat-tab-links {
+    display: block;
+  }
+}
+
+a.mat-tab-link,
+mat-tab.mat-tab {
+  min-width: 80px;
+}
+
+mat-tab-group.mat-tab-group.flexible div.mat-tab-labels {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-items: space-evenly;
+
+  div.mat-tab-label {
+    flex-grow: 1;
+    flex-basis: auto;
+    min-width: 0;
+  }
+}
+
+nav.mat-tab-nav-bar.flexible div.mat-tab-links {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-items: space-evenly;
+
+  a.mat-tab-link {
+    flex-grow: 1;
+    flex-basis: auto;
+    min-width: 0;
+  }
+}

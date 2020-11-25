@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -10,8 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-using AppSupport.Identity;
-
+[assembly:SupportedOSPlatform("windows")]
 namespace AppSupport.Identity.Mock
 {
     public class MockProvider : IUserProvider

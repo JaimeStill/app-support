@@ -8,7 +8,7 @@
   </mat-toolbar>
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
-           class="container">
+           class="p8">
     <p><strong>Last Updated: </strong> {{manifest?.dateUpdated | date:'dd MMM yyyy HH:mm:ss'}}</p>
     <p>
       <strong>Created:</strong> {{manifest?.dateCreated | date:'dd MMM yyyy'}}
@@ -28,7 +28,7 @@
   <ng-container *ngIf="manifestSvc.manifestPlanes$ | async as planes else loading">
     <section fxLayout="row | wrap"
              fxLayoutAlign="start start"
-             class="container"
+             class="p8"
              *ngIf="planes.length > 0">
       <plane-detail *ngFor="let plane of planes"
                     [plane]="plane"></plane-detail>

@@ -5,7 +5,7 @@
     Add Plane
   </button>
 </mat-toolbar>
-<section class="container">
+<section class="p8">
   <p class="mat-title">Planes</p>
   <ng-template #loading>
     <mat-progress-bar mode="indeterminate"
@@ -15,7 +15,7 @@
     <section fxLayout="row"
              fxLayoutAlign="center stretch"
              fxLayoutGap="8px"
-             class="container">
+             class="p8">
       <searchbar label="Search Planes"
                  fxFlex
                  [minimum]="1"
@@ -30,7 +30,7 @@
     <section fxLayout="row | wrap"
              fxLayoutAlign="start stretch"
              *ngIf="query?.data.length > 0"
-             class="container">
+             class="p8">
       <plane-admin-card *ngFor="let p of query.data"
                   [plane]="p"
                   (edit)="editPlane($event)"

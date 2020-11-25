@@ -7,7 +7,7 @@
 </ng-template>
 <section fxLayout="column"
          fxLayoutAlign="start stretch"
-         class="container"
+         class="p8"
          *ngIf="manifestSrc.queryResult$ | async as qr else loading">
   <section fxLayout="row"
            fxLayoutAlign="start center">
@@ -25,7 +25,7 @@
   <ng-container *ngIf="qr.data?.length > 0">
     <manifest-detail *ngFor="let manifest of qr.data"
                      [manifest]="manifest"
-                     (generate)="generateStream($event)"></manifest-detail>
+                     (generate)="generateSpreadsheet($event)"></manifest-detail>
   </ng-container>
   <p class="mat-subheading-2"
      *ngIf="!(qr.data?.length > 0)">No Open Manifests Available</p>

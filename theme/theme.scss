@@ -1,83 +1,109 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~roboto-fontface/css/roboto/roboto-fontface.css';
+@import './elevation.scss';
 @import './icons.scss';
+@import './layout.scss';
 @import './styles.scss';
 @import './snacker.scss';
 @import './glow.scss';
-@import './utils.scss';
+@import './utility.scss';
 
-$light-primary: mat-palette($mat-blue, 800);
-$light-accent: mat-palette($mat-amber, 500);
+$light-primary: mat-palette($mat-light-blue, 700);
+$light-accent: mat-palette($mat-blue-gray, 600);
 $light-warn: mat-palette($mat-red, 500);
 $light-success: mat-color(mat-palette($mat-green, A700));
 $light-info: mat-color(mat-palette($mat-light-blue, A700));
+$light-warning: mat-color(mat-palette($mat-amber, A400));
 
-$dark-primary: mat-palette($mat-blue, A200);
-$dark-accent: mat-palette($mat-amber, A200);
+$dark-primary: mat-palette($mat-light-blue, A400);
+$dark-accent: mat-palette($mat-blue-gray, 200);
 $dark-warn: mat-palette($mat-red, A200);
 $dark-success: mat-color(mat-palette($mat-green, A200));
 $dark-info: mat-color(mat-palette($mat-light-blue, A200));
+$dark-warning: mat-color(mat-palette($mat-amber, A200));
 
 .app-light {
-  @import '~prism-themes/themes/prism-material-light';
-  $default-theme: mat-light-theme($light-primary, $light-accent);
+  $default-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
 
   .color.success {
-    color: $light-success;
+    color: $light-success!important;
   }
 
   .color.info {
-    color: $light-info;
+    color: $light-info!important;
+  }
+
+  .color.warning {
+    color: $light-warning!important;
   }
 
   .background.success {
-    color: $light-success;
+    color: $light-success!important;
   }
 
   .background.info {
-    color: $light-info;
+    color: $light-info!important;
+  }
+
+  .background.warning {
+    color: $light-warning!important;
   }
 
   .card-outline-success {
-    border: 1px solid $light-success;
+    border: 1px solid $light-success!important;
   }
 
   .card-outline-info {
-    border: 1px solid $light-info;
+    border: 1px solid $light-info!important;
+  }
+
+  .card-outline-warning {
+    border: 1px solid $light-warning!important;
   }
 }
 
 .app-dark {
-  @import '~prism-themes/themes/prism-material-dark';
   $default-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include style-theme($default-theme);
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
 
   .color.success {
-    color: $dark-success;
+    color: $dark-success!important;
   }
 
   .color.info {
-    color: $dark-info;
+    color: $dark-info!important;
+  }
+
+  .color.warning {
+    color: $dark-warning!important;
   }
 
   .background.success {
-    color: $dark-success;
+    color: $dark-success!important;
   }
 
   .background.info {
-    color: $dark-info;
+    color: $dark-info!important;
+  }
+
+  .background.warning {
+    color: $dark-warning!important;
   }
 
   .card-outline-success {
-    border: 1px solid $dark-success;
+    border: 1px solid $dark-success!important;
   }
 
   .card-outline-info {
-    border: 1px solid $dark-info;
+    border: 1px solid $dark-info!important;
+  }
+
+  .card-outline-warning {
+    border: 1px solid $dark-warning!important;
   }
 }

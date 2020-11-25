@@ -1,11 +1,13 @@
 using System;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Security.Principal;
 using System.Threading.Tasks;
 
 using AppSupport.Core.Extensions;
 
+[assembly:SupportedOSPlatform("windows")]
 namespace AppSupport.Identity
 {
     public class AdUser

@@ -57,32 +57,8 @@ namespace AppSupport.Web.Controllers
         public async Task<int> GenerateManifest([FromRoute]int id) => await db.GenerateManifest(id);
 
         [HttpGet("[action]/{id}")]
-        public async Task<IActionResult> CreateManifestStream([FromRoute]int id)
-        {
-            var manifest = await db.GetManifestModel(id);
-            var res = manifest.GenerateDocument(office.Directory);
-            var path = Path.Join(office.Directory, $"{manifest.Title.UrlEncode()}.xlsx");
-            var bytes = await System.IO.File.ReadAllBytesAsync(path);
-            System.IO.File.Delete(path);
-
-            return new FileContentResult(bytes, "application/octet")
-            {
-                FileDownloadName = $"{manifest.Title.UrlEncode()}.xlsx"
-            };
-        }
-
-        [HttpGet("[action]/{id}")]
-        public async Task<string[]> CreateManifestSpreadsheet([FromRoute]int id)
-        {
-            var manifest = await db.GetManifestModel(id);
-            var path = Path.Join(office.Directory, "manifest", id.ToString());
-            path.EnsureDirectoryExists();
-            var res = manifest.GenerateDocument(path);
-
-            return res
-                ? new string[] { "office", "manifest", id.ToString(), $"{manifest.Title.UrlEncode()}.xlsx" }
-                : null;
-        }
+        public async Task<IActionResult> CreateManifestSpreadsheet([FromRoute]int id) =>
+            await db.CreateManifestSpreadsheet(id, office.Directory);
 
         [HttpPost("[action]")]
         public async Task<int> AddManifest([FromBody]Manifest manifest) => await db.AddManifest(manifest);

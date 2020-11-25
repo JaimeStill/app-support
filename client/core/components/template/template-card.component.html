@@ -1,10 +1,10 @@
 <section fxLayout="column"
          fxLayoutAlign="start stretch"
-         class="background card elevated"
+         class="background card m4 elevated"
          [style.width.px]="size">
   <section fxLayout="row"
            fxLayoutAlign="start center"
-           class="background stacked container">
+           class="background stacked p8">
     <strong fxFlex>{{template?.title}}</strong>
     <button mat-icon-button
             color="warn"
@@ -26,7 +26,7 @@
   </section>
   <section fxLayout="column"
            fxLayoutAlign="start stretch"
-           class="container">
+           class="p8">
     <p>{{template?.description}}</p>
     <ng-template #loading>
       <mat-progress-bar mode="indeterminate"

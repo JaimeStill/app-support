@@ -8,7 +8,7 @@
       <mat-toolbar class="app-toolbar"
                    color="primary">
         <button mat-icon-button
-                color="accent"
+                class="color warning"
                 routerLink="home"
                 routerLinkActive="active">
           <mat-icon class="material-icons-outlined">whatshot</mat-icon>
@@ -49,7 +49,8 @@
         </button>
         <button mat-icon-button
                 (click)="themer.toggleTheme()">
-          <mat-icon [color]="themer.isLight ? 'accent' : 'default'">
+          <mat-icon class="color"
+                    [ngClass]="themer.isLight ? 'warning' : 'text'">
             {{themer.isLight ? 'brightness_5' : 'brightness_3'}}
           </mat-icon>
         </button>

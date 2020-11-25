@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace AppSupport.Identity.Extensions
 {
+
     public static class IdentityExtensions
     {
         public static IQueryable<UserPrincipal> FilterUsers(this IQueryable<UserPrincipal> principals) =>

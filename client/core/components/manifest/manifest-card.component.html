@@ -1,10 +1,10 @@
 <section fxLayout="column"
          fxLayoutAlign="start stretch"
-         class="background card elevated"
+         class="background card m4 elevated"
          [style.width.px]="size">
   <section fxLayout="row"
            fxLayoutAlign="start center"
-           class="background stacked container">
+           class="background stacked p8">
     <strong fxFlex>{{manifest?.title}}</strong>
     <button mat-icon-button
             color="warn"
@@ -32,7 +32,7 @@
   </section>
   <section fxLayout="column"
            fxLayoutAlign="start stretch"
-           class="container">
+           class="p8">
     <section fxLayout="row" fxLayoutAlign="space-between center">
       <p>Created: {{manifest?.dateCreated | date:'dd MMM yyyy'}}</p>
       <p *ngIf="manifest?.dateExecuted">Executed: {{manifest?.dateExecuted | date:'dd MMM yyyy'}}</p>

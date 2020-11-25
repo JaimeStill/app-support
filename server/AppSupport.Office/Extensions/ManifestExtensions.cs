@@ -1,14 +1,35 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
+
 using AppSupport.Core.Extensions;
+using AppSupport.Data;
+using AppSupport.Data.Extensions;
 using AppSupport.Data.Models;
+
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Spreadsheet;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace AppSupport.Office.Extensions
 {
     public static class ManifestExtensions
     {
+        public static async Task<FileContentResult> CreateManifestSpreadsheet(this AppDbContext db, int manifestId, string dir)
+        {
+            var manifest = await db.GetManifestModel(manifestId);
+            var res = manifest.GenerateDocument(dir);
+            var path = Path.Join(dir, $"{manifest.Title.UrlEncode()}.xlsx");
+            var bytes = await System.IO.File.ReadAllBytesAsync(path);
+            System.IO.File.Delete(path);
+
+            return new FileContentResult(bytes, "application/octet")
+            {
+                FileDownloadName = $"{manifest.Title.UrlEncode()}.xlsx"
+            };
+        }
+
         public static bool GenerateDocument(this ManifestModel manifest, string path)
         {
             try

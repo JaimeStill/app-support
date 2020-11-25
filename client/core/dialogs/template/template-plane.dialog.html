@@ -6,14 +6,14 @@
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
                fxFlex
-               class="container">
+               class="p8">
         <mat-toolbar>Available Planes</mat-toolbar>
         <ng-template #loading>
           <mat-progress-bar mode="indeterminate"
                             color="accent"></mat-progress-bar>
         </ng-template>
         <section *ngIf="templateSvc.planes$ | async as planes else loading"
-                 class="container"
+                 class="p8"
                  fxLayout="column"
                  fxLayoutAlign="start center">
           <ng-container *ngIf="planes?.length > 0">
@@ -31,10 +31,10 @@
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
                fxFlex
-               class="container">
+               class="p8">
         <mat-toolbar>Selected Planes</mat-toolbar>
         <section *ngIf="selected?.length > 0"
-                 class="container"
+                 class="p8"
                  fxLayout="column"
                  fxLayoutAlign="start center">
           <plane-card *ngFor="let p of selected"

@@ -13,7 +13,7 @@
       <section *ngIf="orgSvc.organizations$ | async as organizations else loading"
                fxLayout="column"
                fxLayoutAlign="start stretch"
-               class="container">
+               class="p8">
         <ng-container *ngIf="branchSvc.branches$ | async as branches else loading">
           <mat-form-field>
             <mat-label>Organization</mat-label>

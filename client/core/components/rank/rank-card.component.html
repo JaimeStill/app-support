@@ -1,11 +1,11 @@
 <section fxLayout="row"
          fxLayoutAlign="start stretch"
-         class="background card elevated"
+         class="background card m4 elevated"
          [style.width.px]="size">
   <section fxLayout="column"
            fxLayoutAlign="start stretch"
            fxFlex
-           class="container">
+           class="p8">
     <section fxLayout="row"
              fxLayoutAlign="start center">
       <p class="mat-body-strong"
@@ -17,7 +17,7 @@
   </section>
   <section fxLayout="column"
            fxLayoutAlign="space-between center"
-           class="background stacked container">
+           class="background stacked p8">
     <button mat-icon-button
             matTooltip="Edit"
             (click)="edit.emit(rank)">

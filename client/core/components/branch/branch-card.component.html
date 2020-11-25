@@ -1,13 +1,13 @@
 <section fxLayout="row"
          fxLayoutAlign="center center"
-         class="background card"
+         class="background card m4"
          [ngClass]="selected ? 'card-outline-primary' : 'card-outline-divider'"
          [style.width.px]="size">
-  <span class="mat-body-strong container"
+  <span class="mat-body-strong p8"
         fxFlex>{{branch?.name}}</span>
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
-           class="background stacked container">
+           class="background stacked p8">
     <button mat-icon-button
             color="warn"
             matTooltip="Remove"

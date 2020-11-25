@@ -9,7 +9,7 @@
       <section *ngIf="planes.length > 0"
                fxLayout="column"
                fxLayoutAlign="start center"
-               class="container">
+               class="p8">
         <section *ngFor="let p of planes">
           <plane-card *ngIf="!(p?.altId == data?.person?.parentId)"
                       [plane]="p"

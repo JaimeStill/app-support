@@ -6,14 +6,14 @@
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
                fxFlex
-               class="container">
+               class="p8">
         <mat-toolbar>Available People</mat-toolbar>
         <ng-template #loading>
           <mat-progress-bar mode="indeterminate"
                             color="accent"></mat-progress-bar>
         </ng-template>
         <section *ngIf="mpSrc.queryResult$ | async as qr else loading"
-                 class="container"
+                 class="p8"
                  fxLayout="column"
                  fxLayoutAlign="start stretch">
           <searchbar label="Search"
@@ -24,7 +24,7 @@
                      (clear)="mpSrc.clearSearch()"></searchbar>
           <section fxLayout="column"
                    fxLayoutAlign="start center"
-                   class="container"
+                   class="p8"
                    *ngIf="qr?.data?.length > 0">
             <person-card *ngFor="let p of qr?.data"
                          [blackout]="checkBlackout(p)"
@@ -50,10 +50,10 @@
       <section fxLayout="column"
                fxLayoutAlign="start stretch"
                fxFlex
-               class="container">
+               class="p8">
         <mat-toolbar>Selected People</mat-toolbar>
         <section *ngIf="selected?.length > 0"
-                 class="container"
+                 class="p8"
                  fxLayout="column"
                  fxLayoutAlign="start center">
           <person-card *ngFor="let p of selected"

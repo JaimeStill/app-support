@@ -1,4 +1,4 @@
-<section class="background card"
+<section class="background card m4"
          [ngClass]="plane?.reserved < plane?.capacity ? 'card-outline' : 'card-outline-warn'"
          [style.width.px]="width">
   <mat-toolbar>
@@ -17,7 +17,7 @@
       Add People
     </button>
   </mat-toolbar>
-  <section class="container" [style.max-height.px]="height">
+  <section class="p8" [style.max-height.px]="height">
     <ng-content></ng-content>
   </section>
 </section>

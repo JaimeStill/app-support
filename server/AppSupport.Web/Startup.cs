@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.Versioning;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -22,6 +24,7 @@ using AppSupport.Identity.Mock;
 using AppSupport.Office;
 using AppSupport.Web.Hubs;
 
+[assembly:SupportedOSPlatform("windows")]
 namespace AppSupport.Web
 {
     public class Startup
@@ -64,6 +67,11 @@ namespace AppSupport.Web
             {
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
                 options.UseSqlServer(Configuration.GetConnectionString("Project"));
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AppSupport", Version="V1" });
             });
 
             services.AddSignalR();
@@ -112,6 +120,8 @@ namespace AppSupport.Web
                 app.UseDeveloperExceptionPage();
                 app.UseAuthentication();
                 app.UseMockMiddleware();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AppSupport v1"));
             }
             else
             {

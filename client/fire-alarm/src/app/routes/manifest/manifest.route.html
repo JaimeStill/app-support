@@ -17,7 +17,7 @@
   <ng-container *ngIf="manifestSvc.manifestPlanes$ | async as planes else loading">
     <section fxLayout="row | wrap"
              fxLayoutAlign="start start"
-             class="background stacked container"
+             class="background stacked p8"
              *ngIf="planes?.length > 0">
       <plane-manager *ngFor="let p of planes"
                      [plane]="p"

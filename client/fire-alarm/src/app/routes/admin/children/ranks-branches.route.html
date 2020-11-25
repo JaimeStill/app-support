@@ -10,7 +10,7 @@
          fxLayoutAlign="start stretch">
   <section fxLayout="column"
            fxLayoutAlign="start stretch"
-           class="container">
+           class="p8">
     <p class="mat-title">Branches</p>
     <ng-template #loadingBranches>
       <mat-progress-bar mode="indeterminate"
@@ -38,7 +38,7 @@
   <section fxLayout="column"
            fxLayoutAlign="start stretch"
            fxFlex
-           class="container">
+           class="p8">
     <p class="mat-title">Ranks</p>
     <ng-container *ngIf="branch?.id > 0">
       <ng-template #loadingRanks>
@@ -49,7 +49,7 @@
         <section fxLayout="row"
                  fxLayoutAlign="center start"
                  fxLayoutGap="8px"
-                 class="container">
+                 class="p8">
           <searchbar label="Search Ranks"
                      fxFlex
                      [minimum]="1"
@@ -63,7 +63,7 @@
         </section>
         <section fxLayout="row | wrap"
                  fxLayoutAlign="start start"
-                 class="container">
+                 class="p8">
           <rank-card *ngFor="let r of query.data"
                      [rank]="r"
                      (edit)="editRank($event)"

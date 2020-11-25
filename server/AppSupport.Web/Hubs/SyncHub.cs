@@ -12,8 +12,6 @@ namespace AppSupport.Web.Hubs
         public async Task triggerPlane(int id) => await Clients.All.SendAsync("syncPlane", id);
         public async Task triggerRank(int id) => await Clients.All.SendAsync("syncRank", id);
         public async Task triggerTemplate(int id) => await Clients.All.SendAsync("syncTemplate", id);
-        public async Task triggerTemplatePlane(int id) => await Clients.All.SendAsync("syncTemplatePlane", id);
         public async Task triggerManifest(int id) => await Clients.All.SendAsync("syncManifest", id);
-        public async Task triggerManifestPlane(int id) => await Clients.All.SendAsync("syncManifestPlane", id);
     }
 }

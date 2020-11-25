@@ -1,6 +1,6 @@
 <section fxLayout="row"
          fxLayoutAlign="start center"
-         class="background card container"
+         class="background card m4 p8"
          [ngClass]="plane?.reserved < plane?.capacity ? 'card-outline' : 'card-outline-warn'">
   <span fxFlex>{{plane?.name}}</span>
   <span>{{plane?.reserved}} / {{plane?.capacity}}</span>

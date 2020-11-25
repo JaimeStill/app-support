@@ -1,10 +1,10 @@
 <section fxLayout="row"
          fxLayoutAlign="start center"
-         class="background card elevated"
+         class="background card m4 elevated"
          [style.width.px]="size">
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
-           class="container"
+           class="p8"
            fxFlex>
     <span class="mat-body-strong">{{plane?.name}}</span>
     <span>Capacity: {{plane?.capacity}}</span>
@@ -12,7 +12,7 @@
   </section>
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
-           class="background stacked container">
+           class="background stacked p8">
     <button mat-icon-button
             color="warn"
             matTOoltip="Remove"

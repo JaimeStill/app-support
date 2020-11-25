@@ -9,7 +9,7 @@
       <section *ngIf="planes.length > 0"
                fxLayout="column"
                fxLayoutAlign="start center"
-               class="container">
+               class="p8">
         <plane-card *ngFor="let p of planes"
                     [plane]="p"
                     (action)="selectPlane($event)"></plane-card>

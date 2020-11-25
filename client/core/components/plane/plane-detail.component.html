@@ -1,17 +1,17 @@
 <section fxLayout="column"
          fxLayoutAlign="start stretch"
-         class="background card"
+         class="background card m4"
          [ngClass]="plane?.reserved < plane?.capacity ? 'card-outline' : 'card-outline-warn'"
          [style.width.px]="size">
   <section fxLayout="row"
            fxLayoutAlign="space-between center"
-           class="container">
+           class="p8">
     <strong [style.margin-left.px]="12">{{plane?.name}}</strong>
     <span [style.margin-right.px]="12">{{plane?.reserved}} / {{plane?.capacity}}</span>
   </section>
   <section fxLayout="column"
            fxLayoutAlign="start end"
-           class="container">
+           class="p8">
     <ng-template #loading>
       <mat-progress-bar mode="indeterminate"
                         color="accent"></mat-progress-bar>

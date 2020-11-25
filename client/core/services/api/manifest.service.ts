@@ -65,8 +65,8 @@ export class ManifestService {
       )
   })
 
-  createManifestStream = (id: number): Promise<Blob> => new Promise((resolve) => {
-    this.http.get<HttpResponse<Blob>>(`${this.config.api}manifest/createManifestStream/${id}`, { responseType: 'blob', observe: 'response' } as Object)
+  createManifestSpreadsheet = (id: number): Promise<boolean> => new Promise((resolve) => {
+    this.http.get<HttpResponse<Blob>>(`${this.config.api}manifest/createManifestSpreadsheet/${id}`, { responseType: 'blob', observe: 'response' } as Object)
       .subscribe(
         data => {
           const filename = data.headers
@@ -80,26 +80,11 @@ export class ManifestService {
           link.download = filename;
           link.click();
 
-          resolve(data.body);
-        },
-        err => {
-          console.log('error', err);
-          this.snacker.sendErrorMessage(err.error);
-          resolve(null);
-        }
-      )
-  })
-
-  createManifestSpreadsheet = (id: number): Promise<string[]> => new Promise((resolve) => {
-    this.http.get<string[]>(`${this.config.api}manifest/createManifestSpreadsheet/${id}`)
-      .subscribe(
-        data => {
-          this.snacker.sendSuccessMessage(`${data.join('/')} successfully created`);
-          resolve(data);
+          resolve(true);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(null);
+          resolve(false);
         }
       )
   })
