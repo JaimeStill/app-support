@@ -35,7 +35,8 @@ import { MatDialog } from '@angular/material/dialog';
     ]
 })
 export class TemplateRoute implements OnInit, OnDestroy {
-  private sub: Subscription;
+  private subs = new Array<Subscription>();
+
   private id: number;
 
   constructor(
@@ -60,17 +61,25 @@ export class TemplateRoute implements OnInit, OnDestroy {
       if (params) {
         if (params.has('id')) {
           this.id = Number.parseInt(params.get('id'));
+
+          this.subs.push(
+            this.sync
+              .template$
+              .subscribe(id => (id && this.id) && (id === this.id) && this.loadTemplate(id)),
+            this.sync
+              .sync$
+              .subscribe(res => res && this.loadTemplate(this.id))
+          )
+
           this.loadTemplate(this.id);
         } else
           this.navigate();
       }
     })
-
-    this.sub = this.sync.template$.subscribe(id => (id && this.id) && (id === this.id) && this.loadTemplate(id));
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   editTemplate = (template: Template) => this.dialog.open(TemplateDialog, {

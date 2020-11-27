@@ -37,7 +37,16 @@ export class HomeRoute implements OnInit, OnDestroy {
           org?.id > 0 &&
           this.manifestSrc.setBaseUrl(`queryOpenManifests/${org.id}`)
         ),
-      this.sync.manifest$.subscribe(() => this.manifestSrc.forceRefresh())
+      this.sync
+        .manifest$
+        .subscribe(() =>
+          this.manifestSrc.forceRefresh()
+        ),
+      this.sync
+        .sync$
+        .subscribe(res =>
+          res && this.manifestSrc.forceRefresh()
+        )
     )
   }
 
@@ -45,7 +54,6 @@ export class HomeRoute implements OnInit, OnDestroy {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  generateSpreadsheet = async (manifest: Manifest) => {
+  generateSpreadsheet = async (manifest: Manifest) =>
     await this.manifestSvc.createManifestSpreadsheet(manifest.id);
-  }
 }

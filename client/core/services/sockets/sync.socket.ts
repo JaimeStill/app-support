@@ -27,6 +27,7 @@ export class SyncSocket {
   error$ = this.error.asObservable();
 
   // Event State
+  private sync = new BehaviorSubject<boolean>(false);
   private branch = new BehaviorSubject<number>(null);
   private organization = new BehaviorSubject<number>(null);
   private person = new BehaviorSubject<number>(null);
@@ -35,6 +36,7 @@ export class SyncSocket {
   private template = new BehaviorSubject<number>(null);
   private manifest = new BehaviorSubject<number>(null);
 
+  sync$ = this.sync.asObservable();
   branch$ = this.branch.asObservable();
   organization$ = this.organization.asObservable();
   person$ = this.person.asObservable();
@@ -44,6 +46,11 @@ export class SyncSocket {
   manifest$ = this.manifest.asObservable();
 
   private registerEvents = () => {
+    this.connection.on(
+      'sync',
+      () => this.sync.next(true)
+    );
+
     this.connection.on(
       'syncBranch',
       (id: number) => this.branch.next(id)
@@ -109,6 +116,9 @@ export class SyncSocket {
     if (this.connected.value) {
       await this.connection
         .invoke('triggerBranch', id);
+
+      await this.connection
+        .invoke('triggerSync');
     }
   }
 
@@ -116,6 +126,9 @@ export class SyncSocket {
     if (this.connected.value) {
       await this.connection
         .invoke('triggerOrganization', id);
+
+      await this.connection
+        .invoke('triggerSync');
     }
   }
 
@@ -123,6 +136,9 @@ export class SyncSocket {
     if (this.connected.value) {
       await this.connection
         .invoke('triggerPerson', id);
+
+      await this.connection
+        .invoke('triggerSync');
     }
   }
 
@@ -130,6 +146,9 @@ export class SyncSocket {
     if (this.connected.value) {
       await this.connection
         .invoke('triggerPlane', id);
+
+      await this.connection
+        .invoke('triggerSync');
     }
   }
 
@@ -137,6 +156,9 @@ export class SyncSocket {
     if (this.connected.value) {
       await this.connection
         .invoke('triggerRank', id);
+
+      await this.connection
+        .invoke('triggerSync');
     }
   }
 

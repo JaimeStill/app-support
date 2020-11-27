@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 
 import {
@@ -17,21 +18,27 @@ import {
   ManifestService,
   ManifestPeopleDialog,
   ManifestPlaneDialog,
-  ManifestTransferDialog
+  ManifestTransferDialog,
+  SyncSocket
 } from 'core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'manifest-route',
   templateUrl: 'manifest.route.html',
   providers: [ManifestService]
 })
-export class ManifestRoute implements OnInit {
+export class ManifestRoute implements OnInit, OnDestroy {
+  private subs = new Array<Subscription>();
+  private id: number;
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private sync: SyncSocket,
     public manifestSvc: ManifestService
   ) { }
 
@@ -47,13 +54,32 @@ export class ManifestRoute implements OnInit {
     this.route.paramMap.subscribe(params => {
       if (params) {
         if (params.has('id')) {
-          const id = Number(params.get('id'));
-          this.loadManifest(id);
+          this.id = Number(params.get('id'));
+
+          this.subs.push(
+            this.sync
+              .manifest$
+              .subscribe(id => (id && this.id) && (id === this.id) && this.loadManifest(id)),
+            this.sync
+              .sync$
+              .subscribe(res =>
+                res && this.loadManifest(this.id)
+              )
+          )
+
+          this.loadManifest(this.id);
         } else
           this.navigate();
       }
     })
   }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  generateSpreadsheet = async (manifest: Manifest) =>
+    await this.manifestSvc.createManifestSpreadsheet(manifest.id);
 
   editManifest = (manifest: Manifest) => this.dialog.open(ManifestDialog, {
     data: manifest,

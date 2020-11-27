@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   providers: [ ManifestService ]
 })
 export class ManifestPeopleComponent implements OnInit, OnDestroy {
-  private sub: Subscription;
+  private subs = new Array<Subscription>();
 
   @Input() size = 420;
   @Input() plane: PlaneModel;
@@ -38,15 +38,20 @@ export class ManifestPeopleComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.sub = this.sync.manifest$.subscribe(id => {
-      if (id && id === this.plane?.parentId)
-        this.manifestSvc.getManifestPeople(this.plane?.altId);
-    });
+    this.subs.push(
+      this.sync.manifest$.subscribe(id => {
+        if (id && id === this.plane?.parentId)
+          this.manifestSvc.getManifestPeople(this.plane?.altId);
+      }),
+      this.sync
+        .sync$
+        .subscribe(res => res && this.manifestSvc.getManifestPeople(this.plane?.altId))
+    )
 
     this.plane?.altId && this.manifestSvc.getManifestPeople(this.plane.altId);
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 }

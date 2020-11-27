@@ -3,5 +3,6 @@
                     color="accent"></mat-progress-bar>
 </ng-template>
 <ng-container *ngIf="manifestSvc.manifest$ | async as manifest else loading">
-  <manifest-detail [manifest]="manifest"></manifest-detail>
+  <manifest-detail [manifest]="manifest"
+                   (generate)="generateSpreadsheet($event)"></manifest-detail>
 </ng-container>

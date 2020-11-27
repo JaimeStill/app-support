@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  Component,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 
 import {
   Branch,
@@ -10,8 +13,12 @@ import {
   BranchService,
   BranchSource,
   RankService,
-  RankSource
+  RankSource,
+  SyncSocket
 } from 'core';
+
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ranks-branches-route',
@@ -23,16 +30,33 @@ import {
     RankSource
   ]
 })
-export class RanksBranchesRoute {
+export class RanksBranchesRoute implements OnInit, OnDestroy {
+  private subs = new Array<Subscription>();
   branch: Branch;
 
   constructor(
     private dialog: MatDialog,
+    private sync: SyncSocket,
     public branchSvc: BranchService,
     public branchSrc: BranchSource,
     public rankSvc: RankService,
     public rankSrc: RankSource
   ) { }
+
+  ngOnInit() {
+    this.subs.push(
+      this.sync
+        .branch$
+        .subscribe(() => this.branchSrc.forceRefresh()),
+      this.sync
+        .rank$
+        .subscribe(() => this.rankSrc.forceRefresh())
+    )
+  }
+
+  ngOnDestroy() {
+
+  }
 
   addBranch = () => this.dialog.open(BranchDialog, {
     data: {} as Branch,

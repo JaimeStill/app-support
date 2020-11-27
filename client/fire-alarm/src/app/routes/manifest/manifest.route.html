@@ -6,6 +6,9 @@
   <mat-toolbar class="app-toolbar">
     <span class="header"><strong>Manifest - </strong>{{manifest?.title}}</span>
     <button mat-stroked-button
+            color="primary"
+            (click)="generateSpreadsheet(manifest)">Generate Spreadsheet</button>
+    <button mat-stroked-button
             (click)="editManifest(manifest)">Edit Manifest</button>
     <button mat-stroked-button
             (click)="managePlanes(manifest)">Manage Planes</button>

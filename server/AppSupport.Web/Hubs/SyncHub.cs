@@ -6,6 +6,7 @@ namespace AppSupport.Web.Hubs
 {
     public class SyncHub : Hub
     {
+        public async Task triggerSync() => await Clients.All.SendAsync("sync");
         public async Task triggerBranch(int id) => await Clients.All.SendAsync("syncBranch", id);
         public async Task triggerOrganization(int id) => await Clients.All.SendAsync("syncOrganization", id);
         public async Task triggerPerson(int id) => await Clients.All.SendAsync("syncPerson", id);

@@ -8,6 +8,7 @@ import {
   ConfirmDialog,
   ManifestService,
   OrganizationService,
+  SyncSocket,
   Template,
   TemplateDialog,
   TemplateService,
@@ -28,28 +29,37 @@ import { Router } from '@angular/router';
   ]
 })
 export class TemplatesRoute implements OnInit, OnDestroy {
-  sub: Subscription;
+  private subs = new Array<Subscription>();
 
   constructor(
     private dialog: MatDialog,
     private manifestSvc: ManifestService,
     private router: Router,
+    private sync: SyncSocket,
     public orgSvc: OrganizationService,
     public templateSrc: TemplateSource,
     public templateSvc: TemplateService
   ) { }
 
   ngOnInit() {
-    this.sub = this.orgSvc
-      .currentOrg$
-      .subscribe(org =>
-        org?.id > 0 &&
-        this.templateSrc.setBaseUrl(org.id)
-      );
+    this.subs.push(
+      this.orgSvc
+        .currentOrg$
+        .subscribe(org =>
+          org?.id > 0 &&
+          this.templateSrc.setBaseUrl(org.id)
+        ),
+      this.sync
+        .sync$
+        .subscribe(res => res && this.templateSrc.forceRefresh()),
+      this.sync
+        .template$
+        .subscribe(() => this.templateSrc.forceRefresh())
+    )
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   addTemplate = () => this.dialog.open(TemplateDialog, {

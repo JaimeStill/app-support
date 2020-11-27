@@ -9,7 +9,8 @@ import {
   ManifestService,
   ManifestSource,
   Manifest,
-  OrganizationService
+  OrganizationService,
+  SyncSocket
 } from 'core';
 
 import { Subscription } from 'rxjs';
@@ -22,27 +23,35 @@ import { Router } from '@angular/router';
   providers: [ManifestService, ManifestSource]
 })
 export class ManifestsClosedRoute implements OnInit, OnDestroy {
-  sub: Subscription;
+  private subs = new Array<Subscription>();
 
   constructor(
     private dialog: MatDialog,
     private manifestSvc: ManifestService,
     private orgSvc: OrganizationService,
     private router: Router,
+    private sync: SyncSocket,
     public manifestSrc: ManifestSource
   ) { }
 
   ngOnInit() {
-    this.sub = this.orgSvc
-      .currentOrg$
-      .subscribe(org =>
-        org?.id > 0 &&
-        this.manifestSrc.setBaseUrl(`queryClosedManifests/${org.id}`)
-      );
+    this.subs.push(
+      this.orgSvc
+        .currentOrg$
+        .subscribe(org =>
+          org?.id > 0 &&
+          this.manifestSrc.setBaseUrl(`queryClosedManifests/${org.id}`)
+        ),
+      this.sync
+        .sync$
+        .subscribe(res =>
+          res && this.manifestSrc.forceRefresh()
+        )
+    )
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   viewManifest = (manifest: Manifest) => this.router.navigate(['view-manifest', manifest?.id]);

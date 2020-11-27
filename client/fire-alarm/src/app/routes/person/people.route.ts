@@ -1,14 +1,20 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 
 import {
   ConfirmDialog,
   Person,
   PersonDialog,
   PersonService,
-  PersonSource
+  PersonSource,
+  SyncSocket
 } from 'core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'people-route',
@@ -18,12 +24,25 @@ import { MatDialog } from '@angular/material/dialog';
     PersonSource
   ]
 })
-export class PeopleRoute {
+export class PeopleRoute implements OnInit, OnDestroy {
+  private sub: Subscription;
+
   constructor(
     private dialog: MatDialog,
+    private sync: SyncSocket,
     public personSrc: PersonSource,
     public personSvc: PersonService
   ) { }
+
+  ngOnInit() {
+    this.sub = this.sync
+      .person$
+      .subscribe(() => this.personSrc.forceRefresh());
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   addPerson = () => this.dialog.open(PersonDialog, {
     data: { } as Person,
