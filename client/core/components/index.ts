@@ -23,6 +23,11 @@ import {
   PlaneManagerComponent
 } from './plane';
 
+import {
+  QueryCardComponent,
+  QueryEditorComponent
+} from './query';
+
 import { RankCardComponent } from './rank';
 import { SearchbarComponent } from './searchbar';
 
@@ -46,6 +51,8 @@ export const Components = [
   PlaneDetailComponent,
   PlaneDisplayComponent,
   PlaneManagerComponent,
+  QueryCardComponent,
+  QueryEditorComponent,
   RankCardComponent,
   SearchbarComponent,
   TemplateCardComponent,
@@ -58,6 +65,7 @@ export * from './manifest';
 export * from './organization';
 export * from './person';
 export * from './plane';
+export * from './query';
 export * from './rank';
 export * from './searchbar';
 export * from './template';

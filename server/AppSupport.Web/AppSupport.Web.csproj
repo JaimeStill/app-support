@@ -20,6 +20,7 @@
     <ProjectReference Include="..\AppSupport.Identity\AppSupport.Identity.csproj" />
     <ProjectReference Include="..\AppSupport.Identity.Mock\AppSupport.Identity.Mock.csproj" />
     <ProjectReference Include="..\AppSupport.Office\AppSupport.Office.csproj" />
+    <ProjectReference Include="..\AppSupport.Sql\AppSupport.Sql.csproj" />
   </ItemGroup>
 
 </Project>

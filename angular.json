@@ -23,17 +23,6 @@
               "tsConfig": "client/core/tsconfig.lib.prod.json"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "client/core/tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -273,6 +262,128 @@
           "options": {
             "tsConfig": [
               "client/fire-alarm/tsconfig.app.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "cerebro": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "inlineTemplate": false,
+          "inlineStyle": false,
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:module": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "client/cerebro",
+      "sourceRoot": "client/cerebro/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/cerebro",
+            "index": "client/cerebro/src/index.html",
+            "main": "client/cerebro/src/main.ts",
+            "polyfills": "client/cerebro/src/polyfills.ts",
+            "tsConfig": "client/cerebro/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "client/cerebro/src/favicon.ico",
+              "client/cerebro/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./assets",
+                "output": "client/cerebro/src/assets"
+              }
+            ],
+            "styles": [
+              "theme/theme.scss"
+            ],
+            "scripts": [
+              "node_modules/hammerjs/hammer.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "client/cerebro/src/environments/environment.ts",
+                  "with": "client/cerebro/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cerebro:build",
+            "port": 3001
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cerebro:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cerebro:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "client/cerebro/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"

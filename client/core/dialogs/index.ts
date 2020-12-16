@@ -11,6 +11,7 @@ import {
 import { OrganizationDialog } from './organization';
 import { PersonDialog } from './person';
 import { PlaneDialog } from './plane';
+import { QueryDialog } from './query';
 import { RankDialog } from './rank';
 
 import {
@@ -31,6 +32,7 @@ export const Dialogs = [
   OrganizationDialog,
   PersonDialog,
   PlaneDialog,
+  QueryDialog,
   RankDialog,
   TemplateDialog,
   TemplatePeopleDialog,
@@ -46,5 +48,6 @@ export * from './manifest';
 export * from './organization';
 export * from './person';
 export * from './plane';
+export * from './query';
 export * from './rank';
 export * from './template';

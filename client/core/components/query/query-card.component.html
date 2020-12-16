@@ -1,0 +1,58 @@
+<section fxLayout="row"
+         fxLayoutAlign="start stretch"
+         class="background card"
+         [ngClass]="selected ? 'card-outline-primary' : 'card-outline-divider'"
+         [style.width.px]="size"
+         (mouseenter)="hovered = true"
+         (mouseleave)="hovered = false">
+  <section fxLayout="row"
+           fxLayoutAlign="start center"
+           class="p4"
+           fxFlex>
+    <button mat-icon-button
+            (click)="select.emit(query)">
+      <mat-icon color="primary"
+                *ngIf="selected"
+                class="fa-lg"
+                fontSet="fas"
+                fontIcon="fa-database"></mat-icon>
+      <mat-icon *ngIf="!(selected)"
+                class="fa-lg"
+                fontSet="fas"
+                fontIcon="fa-database"></mat-icon>
+    </button>
+    <span class="mx4">{{query.name}}.sql</span>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="background stacked p4">
+    <mat-icon *ngIf="!(hovered)">menu_open</mat-icon>
+    <ng-container *ngIf="hovered">
+      <button mat-icon-button
+              color="warn"
+              (click)="remove.emit(query)">
+        <mat-icon class="fa-lg"
+                  fontSet="fas"
+                  fontIcon="fa-trash"></mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="download.emit(query)">
+        <mat-icon class="fa-lg"
+                  fontSet="fas"
+                  fontIcon="fa-file-download"></mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="fork.emit(query)">
+        <mat-icon class="fa-lg"
+                  fontSet="fas"
+                  fontIcon="fa-code-branch"></mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="edit.emit(query)">
+        <mat-icon class="fa-lg"
+                  fontSet="fas"
+                  fontIcon="fa-edit"></mat-icon>
+      </button>
+    </ng-container>
+  </section>
+</section>

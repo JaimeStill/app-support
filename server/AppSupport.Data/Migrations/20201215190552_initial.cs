@@ -34,6 +34,25 @@ namespace AppSupport.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Query",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Server = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: ".\\DevSql"),
+                    Database = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "AdventureWorksLT2019"),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EditorFont = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "Cascadia Code"),
+                    EditorFontSize = table.Column<int>(type: "int", nullable: false, defaultValue: 14),
+                    EditorTabSpacing = table.Column<int>(type: "int", nullable: false, defaultValue: 2)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Query", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -413,6 +432,9 @@ namespace AppSupport.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ManifestPerson");
+
+            migrationBuilder.DropTable(
+                name: "Query");
 
             migrationBuilder.DropTable(
                 name: "TemplatePerson");

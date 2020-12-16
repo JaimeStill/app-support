@@ -7,14 +7,12 @@ html, body, app-root, .app-frame {
 
 .app-container {
   overflow: auto;
-  height: calc(100% - 64px);
+  height: calc(100% - 84px);
   box-sizing: border-box;
 }
 
-@media (min-width: 0) and (max-width: 599px) {
-  .app-container {
-    height: calc(100% - 56px);
-  }
+section.toolbar-container {
+  height: calc(100% - 64px);
 }
 
 mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
@@ -87,5 +85,20 @@ nav.mat-tab-nav-bar.flexible div.mat-tab-links {
     flex-grow: 1;
     flex-basis: auto;
     min-width: 0;
+  }
+}
+
+img {
+  max-width: 99%;
+  max-height: 800px;
+}
+
+@media (min-width: 0) and (max-width: 599px) {
+  .app-container {
+    height: calc(100% - 76px);
+  }
+
+  section.toolbar-container {
+    height: calc(100% - 56px);
   }
 }

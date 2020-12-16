@@ -1,0 +1,11 @@
+<textarea matInput
+          class="card-outline-divider m0 editor"
+          placeholder="Query"
+          spellcheck="false"
+          #editor
+          [(ngModel)]="query.value"
+          [ngClass]="resize ? 'resize-horizontal' : 'no-resize'"
+          [style.font-size.px]="query.editorFontSize"
+          [style.padding.px]="padding"
+          [style.font-family]="query.editorFont"
+          (keydown)="checkInput($event)"></textarea>

@@ -1,0 +1,87 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>
+    <span *ngIf="query?.id > 0">Update Query</span>
+    <span *ngIf="!(query?.id > 0)">Add Query</span>
+  </h2>
+  <mat-dialog-content>
+    <section fxLayout="column"
+             fxLayoutAlign="start stretch"
+             fxLayoutGap="4px"
+             class="p8">
+      <h2 fxFlexAlign="center">Editor Preview</h2>
+      <textarea class="my12"
+                spellcheck="false"
+                #editor
+                [style.height.px]="156"
+                [style.padding.px]="8"
+                [style.font-family]="query?.editorFont"
+                [style.font-size.px]="query?.editorFontSize"
+                [style.resize]="'none'"
+                [disabled]="true"></textarea>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput
+               [(ngModel)]="query.name"
+               #queryName />
+        <mat-hint *ngIf="validName && query?.name">{{query.name}} is available</mat-hint>
+        <mat-hint class="color warn"
+                  *ngIf="!(query?.name)">Query must have a name</mat-hint>
+        <mat-hint class="color warn"
+                  *ngIf="!(validName) && query?.name">{{query.name}} is taken</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Server</mat-label>
+        <input matInput
+               [(ngModel)]="query.server" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Database</mat-label>
+        <input matInput
+               [(ngModel)]="query.database" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Editor Font</mat-label>
+        <mat-select [(ngModel)]="query.editorFont">
+          <mat-option value="Cascadia Code">Cascadia Code</mat-option>
+          <mat-option value="Consolas">Consolas</mat-option>
+          <mat-option value="Fira Code Retina">Fira Code Retina</mat-option>
+          <mat-option value="Ubuntu">Ubuntu</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <section fxLayout="row"
+               fxLayoutAlign="start center"
+               fxLayoutGap="8px">
+        <span>Editor Font Size</span>
+        <mat-slider fxFlex
+                    [value]="query.editorFontSize"
+                    [min]="10"
+                    [max]="24"
+                    [step]="2"
+                    [thumbLabel]="true"
+                    (input)="updateFontSize($event)"></mat-slider>
+        <span>{{query.editorFontSize}}</span>
+      </section>
+      <section fxLayout="row"
+               fxLayoutAlign="start center"
+               fxLayoutGap="8px">
+        <span>Editor Tab Spacing</span>
+        <mat-slider fxFlex
+                    [value]="query.editorTabSpacing"
+                    [min]="2"
+                    [max]="8"
+                    [step]="2"
+                    [thumbLabel]="true"
+                    (input)="updateTabSpacing($event)"></mat-slider>
+        <span>{{query.editorTabSpacing}}</span>
+      </section>
+    </section>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-stroked-button
+            color="primary"
+            [disabled]="!(validName) || !(query?.name)"
+            (click)="saveQuery()">Save</button>
+    <button mat-stroked-button
+            mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>

@@ -121,6 +121,10 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .overflow {
   overflow: auto;
 }

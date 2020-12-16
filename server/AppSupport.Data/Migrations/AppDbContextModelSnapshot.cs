@@ -238,6 +238,49 @@ namespace AppSupport.Data.Migrations
                     b.ToTable("Plane");
                 });
 
+            modelBuilder.Entity("AppSupport.Data.Entities.Query", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Database")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("AdventureWorksLT2019");
+
+                    b.Property<string>("EditorFont")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Cascadia Code");
+
+                    b.Property<int>("EditorFontSize")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(14);
+
+                    b.Property<int>("EditorTabSpacing")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(2);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Server")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue(".\\DevSql");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Query");
+                });
+
             modelBuilder.Entity("AppSupport.Data.Entities.Rank", b =>
                 {
                     b.Property<int>("Id")

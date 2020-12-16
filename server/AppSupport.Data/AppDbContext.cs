@@ -1,5 +1,6 @@
 using System.Linq;
 using AppSupport.Data.Entities;
+using AppSupport.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppSupport.Data
@@ -15,6 +16,7 @@ namespace AppSupport.Data
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Person> People { get; set; }
         public DbSet<Plane> Planes { get; set; }
+        public DbSet<Query> Queries { get; set; }
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<TemplatePlane> TemplatePlanes { get; set; }
@@ -23,6 +25,8 @@ namespace AppSupport.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.SetDefaultQueryValues();
+
             modelBuilder
                 .Entity<Person>()
                 .HasOne(x => x.Executive)

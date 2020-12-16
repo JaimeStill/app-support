@@ -1,0 +1,57 @@
+<mat-toolbar class="app-toolbar">
+  <span fxFlex
+        *ngIf="!(query?.name)">Query Editor</span>
+  <span fxFlex
+        *ngIf="query?.name">{{query.name}}.sql</span>
+  <button mat-stroked-button
+          color="primary"
+          (click)="addQuery()">Add Query</button>
+  <ng-container *ngIf="query">
+    <button mat-stroked-button (click)="closeQuery()">Close Query</button>
+    <button mat-stroked-button (click)="saveQuery()">Save Query</button>
+    <button mat-stroked-button (click)="executeQuery()">Execute Query</button>
+  </ng-container>
+</mat-toolbar>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="querySvc.queries$ | async as queries else loading">
+  <section fxLayout="row"
+           fxLayoutAlign="start start"
+           class="toolbar-container">
+    <section fxLayout="column"
+             fxLayoutAlign="start stretch"
+             fxFlex="20"
+             fxLayoutGap="4px"
+             class="px4 py8">
+      <ng-container *ngIf="queries.length > 0">
+        <query-card *ngFor="let q of queries"
+                    [query]="q"
+                    [selected]="selected(q)"
+                    (select)="selectQuery($event)"
+                    (remove)="removeQuery($event)"
+                    (download)="downloadQuery($event)"
+                    (fork)="forkQuery($event)"
+                    (edit)="editQuery($event)"></query-card>
+      </ng-container>
+      <p *ngIf="!(queries.length > 0)"
+         class="mat-subheading-2">No Queries Available</p>
+    </section>
+    <section fxFlex="60"
+             fxFill>
+      <p fxFlexAlign="center"
+         class="mat-title"
+         *ngIf="!(query)">Select a Query</p>
+      <query-editor *ngIf="query"
+                    [query]="query"></query-editor>
+    </section>
+    <section fxFlex="20"
+             class="py8 px4">
+      <span>Results</span>
+      <ng-container *ngIf="results?.length> 0">
+        <pre *ngFor="let r of results"><code>{{r | json}}</code></pre>
+      </ng-container>
+    </section>
+  </section>
+</ng-container>

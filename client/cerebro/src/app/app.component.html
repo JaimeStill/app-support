@@ -1,0 +1,26 @@
+<section class="mat-typography mat-app-background app-frame"
+         [ngClass]="themer.isLight ? 'app-light' : 'app-dark'">
+  <ng-container *ngIf="banner.config$ | async as config else loading">
+    <banner [label]="config.label"
+            [background]="config.background"
+            [color]="config.color"></banner>
+    <mat-toolbar class="app-toolbar"
+                 color="primary">
+      <span fxFlex>Cerebro</span>
+      <button mat-icon-button
+              (click)="themer.toggleTheme()">
+        <mat-icon class="color"
+                  [ngClass]="themer.isLight ? 'warning' : 'text'">
+          {{themer.isLight ? 'brightness_5' : 'brightness_3'}}
+        </mat-icon>
+      </button>
+    </mat-toolbar>
+    <section class="app-container">
+      <router-outlet></router-outlet>
+    </section>
+  </ng-container>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+</section>

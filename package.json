@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build core",
-    "cache:server": "dotnet restore ./server --packages nuget_packages",
-    "restore": "dotnet restore ./server -s nuget_packages",
+    "start:cerebro": "ng serve cerebro",
     "start:docs": "ng serve docs",
     "start:fire-alarm": "ng serve fire-alarm",
     "start:server": "dotnet run --project ./server/AppSupport.Web",
