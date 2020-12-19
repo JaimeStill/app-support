@@ -15,6 +15,11 @@ section.toolbar-container {
   height: calc(100% - 64px);
 }
 
+section.scroll-container {
+  height: 100%;
+  overflow: auto;
+}
+
 mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
   font-size: 12px;
 
@@ -25,6 +30,12 @@ mat-toolbar.mat-toolbar mat-form-field.mat-form-field {
 
 mat-toolbar.mat-toolbar.app-toolbar {
   padding: 0 8px;
+
+  span.header-font {
+    font-family: 'mandalore-halftone-italic';
+    font-size: 48px;
+    margin: 12px 12px 12px 0;
+  }
 
   button.mat-icon-button,
   mat-form-field.mat-form-field {

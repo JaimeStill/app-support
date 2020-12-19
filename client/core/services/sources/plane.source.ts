@@ -5,13 +5,13 @@ import {
 
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { QueryService } from '../abstract';
+import { ApiQueryService } from '../abstract';
 import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Plane } from '../../models';
 
 @Injectable()
-export class PlaneSource extends QueryService<Plane> implements DataSource<Plane> {
+export class PlaneSource extends ApiQueryService<Plane> implements DataSource<Plane> {
   columns = [
     'capacity',
     'name',

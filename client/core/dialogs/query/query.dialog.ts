@@ -27,7 +27,7 @@ import {
 import {
   CoreService,
   SnackerService,
-  SqlQueryService
+  QueryService
 } from '../../services';
 
 import { MatSliderChange } from '@angular/material/slider';
@@ -49,7 +49,7 @@ export class QueryDialog implements AfterContentChecked, AfterViewInit, OnInit, 
     private dialogRef: MatDialogRef<QueryDialog>,
     private snacker: SnackerService,
     @Inject(MAT_DIALOG_DATA) public query: Query,
-    public querySvc: SqlQueryService
+    public querySvc: QueryService
   ) { }
 
   ngAfterContentChecked() {
@@ -103,7 +103,7 @@ export class QueryDialog implements AfterContentChecked, AfterViewInit, OnInit, 
         ? await this.querySvc.updateQuery(this.query)
         : await this.querySvc.addQuery(this.query);
 
-      res && this.dialogRef.close(true);
+      res && this.dialogRef.close(res);
 
     } else {
       this.snacker.sendErrorMessage('Query must have a name!');

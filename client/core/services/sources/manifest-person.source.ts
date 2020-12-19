@@ -5,13 +5,13 @@ import {
 
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { QueryService } from '../abstract';
+import { ApiQueryService } from '../abstract';
 import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Person } from '../../models';
 
 @Injectable()
-export class ManifestPersonSource extends QueryService<Person> implements DataSource<Person> {
+export class ManifestPersonSource extends ApiQueryService<Person> implements DataSource<Person> {
   columns = [];
 
   constructor(

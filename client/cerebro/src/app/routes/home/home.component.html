@@ -1,15 +1,20 @@
 <mat-toolbar class="app-toolbar">
-  <span fxFlex
+  <span class="header-font"
+        fxFlex
         *ngIf="!(query?.name)">Query Editor</span>
-  <span fxFlex
+  <span class="header-font"
+        fxFlex
         *ngIf="query?.name">{{query.name}}.sql</span>
   <button mat-stroked-button
           color="primary"
           (click)="addQuery()">Add Query</button>
   <ng-container *ngIf="query">
-    <button mat-stroked-button (click)="closeQuery()">Close Query</button>
-    <button mat-stroked-button (click)="saveQuery()">Save Query</button>
-    <button mat-stroked-button (click)="executeQuery()">Execute Query</button>
+    <button mat-stroked-button
+            (click)="closeQuery()">Close Query</button>
+    <button mat-stroked-button
+            (click)="saveQuery()">Save Query</button>
+    <button mat-stroked-button
+            (click)="executeQuery()">Execute Query</button>
   </ng-container>
 </mat-toolbar>
 <ng-template #loading>
@@ -38,19 +43,24 @@
       <p *ngIf="!(queries.length > 0)"
          class="mat-subheading-2">No Queries Available</p>
     </section>
-    <section fxFlex="60"
-             fxFill>
-      <p fxFlexAlign="center"
-         class="mat-title"
+    <section fxFlex="50"
+             fxFill
+             class="py8">
+      <p class="mat-title mx12"
          *ngIf="!(query)">Select a Query</p>
       <query-editor *ngIf="query"
                     [query]="query"></query-editor>
     </section>
-    <section fxFlex="20"
-             class="py8 px4">
-      <span>Results</span>
+    <section fxFlex="30"
+             class="p4 scroll-container"
+             fxLayout="column"
+             fxLayoutAlign="start stretch"
+             *ngIf="results">
       <ng-container *ngIf="results?.length> 0">
-        <pre *ngFor="let r of results"><code>{{r | json}}</code></pre>
+        <section class="background card card-outline-divider m4 p8"
+                 *ngFor="let result of results">
+          <pre class="pre-wrap"><code>{{result | json}}</code></pre>
+        </section>
       </ng-container>
     </section>
   </section>

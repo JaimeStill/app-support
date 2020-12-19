@@ -20,7 +20,7 @@ import {
 } from 'rxjs/operators';
 
 @Injectable()
-export abstract class QueryService<T> {
+export abstract class ApiQueryService<T> {
   private requestUrl = new Subject<string>();
   private forceRefreshUrl = new Subject<string>();
 

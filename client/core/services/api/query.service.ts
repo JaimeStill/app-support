@@ -12,7 +12,7 @@ import { ServerConfig } from '../../config';
 @Injectable({
   providedIn: 'root'
 })
-export class SqlQueryService {
+export class QueryService {
   private queries = new BehaviorSubject<Query[]>(null);
   private query = new BehaviorSubject<Query>(null);
 
@@ -74,30 +74,30 @@ export class SqlQueryService {
       )
   })
 
-  addQuery = (query: Query): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}query/addQuery`, query)
+  addQuery = (query: Query): Promise<Query> => new Promise((resolve) => {
+    this.http.post<Query>(`${this.config.api}query/addQuery`, query)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${query.name} successfully created`);
-          resolve(true);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(null);
         }
       )
   })
 
-  updateQuery = (query: Query): Promise<boolean> => new Promise((resolve) => {
-    this.http.post(`${this.config.api}query/updateQuery`, query)
+  updateQuery = (query: Query): Promise<Query> => new Promise((resolve) => {
+    this.http.post<Query>(`${this.config.api}query/updateQuery`, query)
       .subscribe(
-        () => {
+        data => {
           this.snacker.sendSuccessMessage(`${query.name} successfully updated`);
-          resolve(true);
+          resolve(data);
         },
         err => {
           this.snacker.sendErrorMessage(err.error);
-          resolve(false);
+          resolve(null);
         }
       )
   })

@@ -51,7 +51,7 @@ namespace AppSupport.Data.Extensions
             return check is null;
         }
 
-        public static async Task AddQuery(this AppDbContext db, Query query)
+        public static async Task<Query> AddQuery(this AppDbContext db, Query query)
         {
             if (await query.Validate(db))
             {
@@ -59,16 +59,24 @@ namespace AppSupport.Data.Extensions
 
                 await db.Queries.AddAsync(query);
                 await db.SaveChangesAsync();
+
+                return query;
             }
+
+            return null;
         }
 
-        public static async Task UpdateQuery(this AppDbContext db, Query query)
+        public static async Task<Query> UpdateQuery(this AppDbContext db, Query query)
         {
             if (await query.Validate(db))
             {
                 db.Queries.Update(query);
                 await db.SaveChangesAsync();
+
+                return query;
             }
+
+            return null;
         }
 
         public static async Task RemoveQuery(this AppDbContext db, Query query)

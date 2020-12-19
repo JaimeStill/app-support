@@ -6,7 +6,9 @@
             [color]="config.color"></banner>
     <mat-toolbar class="app-toolbar"
                  color="primary">
-      <span fxFlex>Cerebro</span>
+      <span class="header-font cursor-pointer"
+            routerLink="home">ArgO - CerebrO</span>
+      <span fxFlex></span>
       <button mat-icon-button
               (click)="themer.toggleTheme()">
         <mat-icon class="color"

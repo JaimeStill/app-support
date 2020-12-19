@@ -5,13 +5,13 @@ import {
 
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { QueryService } from '../abstract';
+import { ApiQueryService } from '../abstract';
 import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Template } from '../../models';
 
 @Injectable()
-export class TemplateSource extends QueryService<Template> implements DataSource<Template> {
+export class TemplateSource extends ApiQueryService<Template> implements DataSource<Template> {
   columns = [
     'title',
     'description'

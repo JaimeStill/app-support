@@ -5,13 +5,13 @@ import {
 
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
-import { QueryService } from '../abstract';
+import { ApiQueryService } from '../abstract';
 import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Manifest } from '../../models';
 
 @Injectable()
-export class ManifestSource extends QueryService<Manifest> implements DataSource<Manifest> {
+export class ManifestSource extends ApiQueryService<Manifest> implements DataSource<Manifest> {
   columns = [
     'title',
     'description',

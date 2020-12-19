@@ -15,7 +15,6 @@ export class QueryCardComponent {
   hovered = false;
 
   @Input() query: Query;
-  @Input() size = 320;
   @Input() selected = false;
   @Output() download = new EventEmitter<Query>();
   @Output() edit = new EventEmitter<Query>();

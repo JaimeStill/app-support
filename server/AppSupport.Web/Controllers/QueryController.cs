@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using AppSupport.Data;
 using AppSupport.Data.Entities;
 using AppSupport.Data.Extensions;
-using SqlCore;
+using AppSupport.Sql;
 
 namespace AppSupport.Web.Controllers
 {
@@ -45,10 +45,10 @@ namespace AppSupport.Web.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task AddQuery([FromBody]Query query) => await db.AddQuery(query);
+        public async Task<Query> AddQuery([FromBody]Query query) => await db.AddQuery(query);
 
         [HttpPost("[action]")]
-        public async Task UpdateQuery([FromBody]Query query) => await db.UpdateQuery(query);
+        public async Task<Query> UpdateQuery([FromBody]Query query) => await db.UpdateQuery(query);
 
         [HttpPost("[action]")]
         public async Task RemoveQuery([FromBody]Query query) => await db.RemoveQuery(query);

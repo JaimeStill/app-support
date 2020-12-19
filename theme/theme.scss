@@ -1,15 +1,16 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~roboto-fontface/css/roboto/roboto-fontface.css';
 @import './elevation.scss';
+@import './glow.scss';
 @import './icons.scss';
 @import './layout.scss';
 @import './styles.scss';
 @import './snacker.scss';
-@import './glow.scss';
+@import './typography.scss';
 @import './utility.scss';
 
 $light-primary: mat-palette($mat-light-blue, 700);
-$light-accent: mat-palette($mat-blue-gray, 600);
+$light-accent: mat-palette($mat-blue-gray, 700);
 $light-warn: mat-palette($mat-red, 500);
 $light-success: mat-color(mat-palette($mat-green, A700));
 $light-info: mat-color(mat-palette($mat-light-blue, A700));

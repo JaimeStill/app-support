@@ -7,7 +7,7 @@ import {
   ConfirmDialog,
   Query,
   QueryDialog,
-  SqlQueryService
+  QueryService
 } from 'core';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'home-route',
   templateUrl: 'home.component.html',
-  providers: [ SqlQueryService ]
+  providers: [ QueryService ]
 })
 export class HomeComponent implements OnInit {
   query: Query;
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    public querySvc: SqlQueryService
+    public querySvc: QueryService
   ) { }
 
   ngOnInit() {
@@ -50,7 +50,38 @@ export class HomeComponent implements OnInit {
     width: '800px'
   })
   .afterClosed()
-  .subscribe(res => res && this.querySvc.getQueries());
+  .subscribe((res: Query) => {
+    if (res) {
+      this.query = res;
+      this.querySvc.getQueries();
+    }
+  })
+
+  forkQuery = (query: Query) => this.dialog.open(QueryDialog, {
+    data: Object.assign({} as Query, query, { id: null, name: null }),
+    disableClose: true,
+    width: '800px'
+  })
+  .afterClosed()
+  .subscribe((res: Query) => {
+    if (res) {
+      this.query = res;
+      this.querySvc.getQueries();
+    }
+  });
+
+  editQuery = (query: Query) => this.dialog.open(QueryDialog, {
+    data: Object.assign({} as Query, query),
+    disableClose: true,
+    width: '800px'
+  })
+  .afterClosed()
+  .subscribe((res: Query) => {
+    if (res) {
+      this.query = res;
+      this.querySvc.getQueries();
+    }
+  });
 
   removeQuery = (query: Query) => this.dialog.open(ConfirmDialog, {
     data: {
@@ -64,34 +95,29 @@ export class HomeComponent implements OnInit {
   .subscribe(async result => {
     if (result) {
       const res = await this.querySvc.removeQuery(query);
-      res && this.querySvc.getQueries();
+
+      if (res) {
+        this.query = this.query.id === query.id
+          ? null
+          : this.query;
+
+        this.querySvc.getQueries();
+      }
     }
   })
 
-  downloadQuery = (query: Query) => this.querySvc.downloadQuery(query);
-
-  forkQuery = (query: Query) => this.dialog.open(QueryDialog, {
-    data: Object.assign({} as Query, query, { id: null, name: null }),
-    disableClose: true,
-    width: '800px'
-  })
-  .afterClosed()
-  .subscribe(res => res && this.querySvc.getQueries());
-
-  editQuery = (query: Query) => this.dialog.open(QueryDialog, {
-    data: Object.assign({} as Query, query),
-    disableClose: true,
-    width: '800px'
-  })
-  .afterClosed()
-  .subscribe(res => res && this.querySvc.getQueries());
-
-  closeQuery = () => this.query = this.results = null;
-
   saveQuery = async () => {
     const res = await this.querySvc.updateQuery(this.query);
-    res && this.querySvc.getQueries();
+
+    if (res) {
+      this.query = res;
+      this.querySvc.getQueries();
+    }
   }
+
+  downloadQuery = (query: Query) => this.querySvc.downloadQuery(query);
+
+  closeQuery = () => this.query = this.results = null;
 
   executeQuery = async () => this.results = await this.querySvc.executeQuery(this.query);
 }
