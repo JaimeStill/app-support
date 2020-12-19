@@ -29,6 +29,10 @@ $dark-warning: mat-color(mat-palette($mat-amber, A200));
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
 
+  .prism-theme {
+    @import '~prism-themes/themes/prism-material-light';
+  }
+
   .color.success {
     color: $light-success!important;
   }
@@ -71,6 +75,10 @@ $dark-warning: mat-color(mat-palette($mat-amber, A200));
   @include style-theme($default-theme);
   @include style-glow($default-theme);
   @include angular-material-theme($default-theme);
+
+  .prism-theme {
+    @import '~prism-themes/themes/prism-material-dark';
+  }
 
   .color.success {
     color: $dark-success!important;

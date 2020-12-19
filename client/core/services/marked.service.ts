@@ -34,7 +34,7 @@ export class MarkedService {
 
       const langClass = `language-${lang}`;
 
-      return `<pre class="${langClass}"><code class="${langClass}">${code}</code></pre>`;
+      return `<pre class="prism-theme ${langClass}"><code>${code}</code></pre>`;
     };
 
     this.parser.setOptions({
