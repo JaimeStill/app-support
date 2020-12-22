@@ -5,6 +5,12 @@ html, body, app-root, .app-frame {
   height: 100%;
 }
 
+.docs-container {
+  overflow: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 .app-container {
   overflow: auto;
   height: calc(100% - 84px);

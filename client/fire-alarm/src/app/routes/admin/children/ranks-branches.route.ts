@@ -50,12 +50,12 @@ export class RanksBranchesRoute implements OnInit, OnDestroy {
         .subscribe(() => this.branchSrc.forceRefresh()),
       this.sync
         .rank$
-        .subscribe(() => this.rankSrc.forceRefresh())
+        .subscribe(() => this.branch && this.rankSrc.forceRefresh())
     )
   }
 
   ngOnDestroy() {
-
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
   addBranch = () => this.dialog.open(BranchDialog, {
