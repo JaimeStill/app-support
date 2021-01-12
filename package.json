@@ -8,6 +8,7 @@
     "start:cerebro": "ng serve cerebro",
     "start:docs": "ng serve docs",
     "start:fire-alarm": "ng serve fire-alarm",
+    "start:migration": "ng serve migration",
     "start:server": "dotnet run --project ./server/AppSupport.Web",
     "watch": "ng build core --watch"
   },

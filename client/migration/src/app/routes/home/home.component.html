@@ -1,0 +1,28 @@
+<mat-toolbar class="app-toolbar">
+  <span class="header-font">Home</span>
+  <span fxFlex></span>
+  <button mat-stroked-button [disabled]="importing" (click)="importSalesCustomers()">Import Sales Customers</button>
+  <button mat-stroked-button
+          [disabled]="importing"
+          (click)="importCustomers()">Import Customers</button>
+</mat-toolbar>
+<mat-progress-bar *ngIf="loading"
+                  mode="indeterminate"
+                  color="accent"></mat-progress-bar>
+<section class="p4"
+         fxLayout="column"
+         fxLayoutAlign="start stretch">
+  <searchbar label="Search Customers"
+             [minimum]="2"
+             (search)="searchCustomers($event)"
+             (clear)="clearCustomers()"></searchbar>
+</section>
+<section *ngIf="customers?.length > 0"
+         fxLayout="row | wrap"
+         fxLayoutAlign="start start">
+  <customer-card *ngFor="let c of customers"
+                 [customer]="c"
+                 (action)="importCustomer($event)"></customer-card>
+</section>
+<p *ngIf="customers === null && !(customers?.length > 0)" class="mat-subheading-2 m4">Begin typing to find customers</p>
+<p *ngIf="customers !== null && !(customers?.length > 0)" class="mat-subheading-2 m4">No Customers Found</p>

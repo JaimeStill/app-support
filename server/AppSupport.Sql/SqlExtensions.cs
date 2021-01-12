@@ -12,17 +12,17 @@ namespace AppSupport.Sql
     {
         static string Interpolate(this string script, string prop) =>
             script.Replace(
-                $"[{prop.Split(':')[0].ToLower()}]",
+                $"[{prop.Split(':')[0]}]",
                 prop.Split(':')[1]
             );
 
-        public static string InterpolateScriptProps(this string script, string props)
+        public static string InterpolateScriptProps(this string script, string props, char split = ',')
         {
             string result = script;
 
-            if (props.Contains(','))
+            if (props.Contains(split))
             {
-                foreach (var prop in props.Split(','))
+                foreach (var prop in props.Split(split))
                 {
                     if (prop.Contains(':'))
                     {

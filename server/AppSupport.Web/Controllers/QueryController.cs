@@ -44,6 +44,24 @@ namespace AppSupport.Web.Controllers
             return Ok(result);
         }
 
+        [HttpPost("[action]/{*props}")]
+        [Produces("application/json")]
+        public async Task<IActionResult> ExecuteQueryWithProps([FromBody]Query query, [FromRoute]string props)
+        {
+            // expect: key:value/key:value/key:value
+            var script = query.Value.InterpolateScriptProps(props, '/');
+
+            using var connection = await query.Server
+                .BuildConnectionString(query.Database)
+                .InitalizeConnection();
+
+            using var command = connection.InitializeCommand(script);
+            var reader = await command.ResilientQuery();
+            var result = await reader.ReadResults();
+
+            return Ok(result);
+        }
+
         [HttpPost("[action]")]
         public async Task<Query> AddQuery([FromBody]Query query) => await db.AddQuery(query);
 

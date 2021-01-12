@@ -1,0 +1,19 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="background card card-outline-divider p4 m4"
+         [style.width.px]="size">
+  <section fxLayout="row"
+           fxLayoutAlign="start center">
+    <span fxFlex
+          class="mat-subheading-2 m4">{{customer?.customerId}} - {{customer?.title}} {{customer?.lastName}}, {{customer?.firstName}}</span>
+    <button class="mat-stroked-button"
+            (click)="action.emit(customer)">
+      {{actionLabel}}
+    </button>
+  </section>
+  <a class="m4"
+     href="mailto:{{customer?.emailAddress}}"
+     target="_blank">{{customer?.emailAddress}}</a>
+  <span class="m4">{{customer?.companyName}}</span>
+  <span class="m4">{{customer?.phone}}</span>
+</section>

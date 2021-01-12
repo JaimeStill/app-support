@@ -1,0 +1,22 @@
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate"
+                    color="accent"></mat-progress-bar>
+</ng-template>
+<ng-container *ngIf="customer !== null else loading">
+  <ng-container *ngIf="orders !== null else loading">
+    <customer-card class="m4"
+                   actionLabel="Close"
+                   [customer]="customer"
+                   (action)="close()"></customer-card>
+    <p *ngIf="!(orders?.length > 0)"
+       class="mat-subheading-2">No Orders Available</p>
+    <ng-container *ngIf="orders?.length > 0">
+      <p class="mat-title m4">Orders</p>
+      <section fxLayout="column"
+               fxLayoutAlign="start stretch">
+        <sales-order *ngFor="let order of orders"
+                     [order]="order"></sales-order>
+      </section>
+    </ng-container>
+  </ng-container>
+</ng-container>

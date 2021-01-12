@@ -1,0 +1,35 @@
+<section class="p8">
+  <p class="mat-title">Customers</p>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="customerSrc.queryResult$ | async as query else loading">
+    <section fxLayout="row"
+             fxLayoutAlign="center stretch"
+             fxLayoutGap="8px"
+             class="p8">
+      <searchbar label="Search Customers"
+                 fxFlex
+                 [minimum]="1"
+                 (search)="customerSrc.onSearch($event)"
+                 (clear)="customerSrc.clearSearch()"></searchbar>
+      <mat-paginator [length]="query?.totalCount"
+                     [pageSize]="query?.pageSize"
+                     [pageSizeOptions]="customerSrc.pageSizeOptions"
+                     [pageIndex]="query?.page - 1"
+                     (page)="customerSrc.onPage($event)"></mat-paginator>
+    </section>
+    <section fxLayout="row | wrap"
+             fxLayoutAlign="start stretch"
+             *ngIf="query?.data.length > 0"
+             class="p8">
+      <customer-card *ngFor="let c of query.data"
+                     actionLabel="View"
+                     [customer]="c"
+                     (action)="viewCustomer($event)"></customer-card>
+    </section>
+    <p class="mat-subheading-2"
+       *ngIf="!(query?.data.length > 0)">No Customers Available</p>
+  </ng-container>
+</section>

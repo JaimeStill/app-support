@@ -74,6 +74,32 @@ export class QueryService {
       )
   })
 
+  executeTypedQuery<T>(query: Query): Promise<T[]> {
+    return new Promise((resolve => {
+      this.http.post<T[]>(`${this.config.api}query/executeQuery`, query)
+        .subscribe(
+          data => resolve(data),
+          err => {
+            this.snacker.sendErrorMessage(err.error);
+            resolve(null);
+          }
+        )
+    }))
+  }
+
+  executeTypedQueryWithProps<T>(query: Query, props: string): Promise<T[]> {
+    return new Promise((resolve => {
+      this.http.post<T[]>(`${this.config.api}query/executeQueryWithProps/${props}`, query)
+        .subscribe(
+          data => resolve(data),
+          err => {
+            this.snacker.sendErrorMessage(err.error);
+            resolve(null);
+          }
+        )
+    }))
+  }
+
   addQuery = (query: Query): Promise<Query> => new Promise((resolve) => {
     this.http.post<Query>(`${this.config.api}query/addQuery`, query)
       .subscribe(

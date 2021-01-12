@@ -1,4 +1,5 @@
 export * from './branch.service';
+export * from './customer.service';
 export * from './manifest.service';
 export * from './organization.service';
 export * from './person.service';

@@ -1,0 +1,19 @@
+<section fxLayout="row"
+         fxLayoutAlign="start center"
+         class="background stacked card-outline-divider p4 m4">
+  <span [style.text-align]="'center'"
+        fxFlex="20"
+        class="m4">Quantity: {{detail?.orderQty}}</span>
+  <span [style.text-align]="'center'"
+        fxFlex="20"
+        class="m4">Sale Price: {{detail?.salePrice | currency}}</span>
+  <span [style.text-align]="'center'"
+        fxFlex="20"
+        class="m4">Product #: {{detail?.productNumber}}</span>
+  <span [style.text-align]="'center'"
+        fxFlex="20"
+        class="m4">Product: {{detail?.productName}}</span>
+  <span [style.text-align]="'center'"
+        fxFlex="20"
+        class="m4">MSRP: {{detail?.productPrice | currency}}</span>
+</section>

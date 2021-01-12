@@ -1,4 +1,5 @@
 export * from './branch';
+export * from './customer';
 export * from './manifest';
 export * from './manifest-plane';
 export * from './manifest-person';

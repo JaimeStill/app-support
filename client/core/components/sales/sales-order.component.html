@@ -1,0 +1,42 @@
+<section fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="background card card-outline-divider p4 m4">
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center">
+    <span class="mat-title m4">Sales Order Number: {{order?.salesOrderNumber}}</span>
+    <span class="mat-title m4">Purchase Order Number: {{order?.purchaseOrderNumber}}</span>
+    <span class="mat-title m4">Account Number: {{order?.accountNumber}}</span>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center">
+    <span class="mat-title m4">Order Date: {{order?.orderDate | date:'dd MMM yyyy'}}</span>
+    <span class="mat-title m4">Total Due: {{order?.totalDue | currency}}</span>
+  </section>
+  <section fxLayout="row"
+           fxLayoutAlign="space-between center"
+           class="mt12">
+    <span class="mat-title m4">Details</span>
+    <button mat-icon-button
+            [matTooltip]="expanded ? 'collapse' : 'expand'"
+            (click)="toggleExpanded()">
+      <mat-icon *ngIf="expanded">keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="!(expanded)">keyboard_arrow_right</mat-icon>
+    </button>
+  </section>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate"
+                      color="accent"></mat-progress-bar>
+  </ng-template>
+  <ng-container *ngIf="details !== null else loading">
+    <ng-container *ngIf="expanded">
+      <section *ngIf="details?.length > 0"
+               fxLayout="column"
+               fxLayoutAlign="start stretch">
+        <sales-detail *ngFor="let detail of details"
+                      [detail]="detail"></sales-detail>
+      </section>
+      <p *ngIf="!(details?.length > 0)"
+         class="mat-subheading-2">No Details Available</p>
+    </ng-container>
+  </ng-container>
+</section>

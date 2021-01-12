@@ -1,5 +1,6 @@
 import { BannerComponent } from './banner';
 import { BranchCardComponent } from './branch';
+import { CustomerCardComponent } from './customer';
 
 import {
   ManifestCardComponent,
@@ -29,6 +30,12 @@ import {
 } from './query';
 
 import { RankCardComponent } from './rank';
+
+import {
+  SalesDetailComponent,
+  SalesOrderComponent
+} from './sales';
+
 import { SearchbarComponent } from './searchbar';
 
 import {
@@ -39,6 +46,7 @@ import {
 export const Components = [
   BannerComponent,
   BranchCardComponent,
+  CustomerCardComponent,
   ManifestCardComponent,
   ManifestDetailComponent,
   ManifestPeopleComponent,
@@ -54,6 +62,8 @@ export const Components = [
   QueryCardComponent,
   QueryEditorComponent,
   RankCardComponent,
+  SalesDetailComponent,
+  SalesOrderComponent,
   SearchbarComponent,
   TemplateCardComponent,
   TemplatePeopleComponent
@@ -61,11 +71,13 @@ export const Components = [
 
 export * from './banner';
 export * from './branch';
+export * from './customer';
 export * from './manifest';
 export * from './organization';
 export * from './person';
 export * from './plane';
 export * from './query';
 export * from './rank';
+export * from './sales';
 export * from './searchbar';
 export * from './template';
