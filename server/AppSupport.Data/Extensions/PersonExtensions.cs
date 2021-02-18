@@ -123,7 +123,7 @@ namespace AppSupport.Data.Extensions
             var check = await db.People
                 .FirstOrDefaultAsync(x =>
                     x.Id != person.Id &&
-                    x.FirstName.ToLower() == person.FirstName.ToLower()
+                    x.Ssn.ToLower() == person.Ssn.ToLower()
                 );
 
             if (check != null)

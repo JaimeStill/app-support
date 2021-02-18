@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-import { SnackerService } from '..';
+import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Customer } from '../../models';
 

@@ -15,10 +15,10 @@ import {
 } from 'rxjs/operators';
 
 import { MatSelectChange } from '@angular/material/select';
-import { Organization } from 'client/core';
 
 import {
   BannerService,
+  Organization,
   OrganizationService,
   ThemeService
 } from 'core';

@@ -3,13 +3,10 @@ import {
   Optional
 } from '@angular/core';
 
-import {
-  ApiQueryService,
-  SnackerService
-} from '../../services';
-
 import { DataSource } from '@angular/cdk/table';
 import { HttpClient } from '@angular/common/http';
+import { ApiQueryService } from '../abstract';
+import { SnackerService } from '../snacker.service';
 import { ServerConfig } from '../../config';
 import { Customer } from '../../models';
 

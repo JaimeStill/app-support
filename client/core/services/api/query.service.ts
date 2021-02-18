@@ -5,7 +5,7 @@ import {
 
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from '..';
+import { SnackerService } from '../snacker.service';
 import { Query } from '../../models';
 import { ServerConfig } from '../../config';
 
