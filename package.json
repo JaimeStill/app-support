@@ -6,6 +6,7 @@
     "build": "ng build core",
     "restore": "dotnet restore ./server -s nuget-packages",
     "start:cerebro": "ng serve cerebro",
+    "start:data": "py -m flask run -p 5050",
     "start:docs": "ng serve docs",
     "start:fire-alarm": "ng serve fire-alarm",
     "start:migration": "ng serve migration",

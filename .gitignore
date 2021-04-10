@@ -2,6 +2,7 @@
 
 offline-cache
 **/nuget-packages
+**/.pyenv
 
 # compiled output
 /dist
